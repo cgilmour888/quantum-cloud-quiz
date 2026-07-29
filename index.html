@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#040711">
+  <meta name="description" content="Quantum Cloud Quiz is a cinematic, adaptive AWS practice arena with 23 original exams, mixed drills, learner analytics, profiles, and mastery certificates.">
+  <title>Quantum Cloud Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Oxanium:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/cloud-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <canvas id="stormCanvas" aria-hidden="true"></canvas>
+  <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+  <div class="lab-shell" aria-hidden="true">
+    <div class="lab-grid"></div>
+    <div class="lab-horizon"></div>
+    <div class="lab-column lab-column-left"></div>
+    <div class="lab-column lab-column-right"></div>
+    <div class="lab-console-glow"></div>
+  </div>
+
+  <div class="living-frame" aria-hidden="true">
+    <div class="frame-edge frame-edge-top"></div>
+    <div class="frame-edge frame-edge-right"></div>
+    <div class="frame-edge frame-edge-bottom"></div>
+    <div class="frame-edge frame-edge-left"></div>
+
+    <div class="corner-gyro corner-gyro-nw">
+      <span class="gyro-core"></span><span class="gyro-ring gyro-ring-1"></span><span class="gyro-ring gyro-ring-2"></span><span class="gyro-ring gyro-ring-3"></span><span class="gyro-ring gyro-ring-4"></span>
+    </div>
+    <div class="corner-gyro corner-gyro-ne">
+      <span class="gyro-core"></span><span class="gyro-ring gyro-ring-1"></span><span class="gyro-ring gyro-ring-2"></span><span class="gyro-ring gyro-ring-3"></span><span class="gyro-ring gyro-ring-4"></span>
+    </div>
+    <div class="corner-gyro corner-gyro-sw">
+      <span class="gyro-core"></span><span class="gyro-ring gyro-ring-1"></span><span class="gyro-ring gyro-ring-2"></span><span class="gyro-ring gyro-ring-3"></span><span class="gyro-ring gyro-ring-4"></span>
+    </div>
+    <div class="corner-gyro corner-gyro-se">
+      <span class="gyro-core"></span><span class="gyro-ring gyro-ring-1"></span><span class="gyro-ring gyro-ring-2"></span><span class="gyro-ring gyro-ring-3"></span><span class="gyro-ring gyro-ring-4"></span>
+    </div>
+  </div>
+
+  <header class="topbar glass-rail">
+    <button class="brand" type="button" data-action="dashboard" aria-label="Open Quantum Cloud Quiz dashboard">
+      <span class="brand-orbit"><span class="brand-core">☁</span></span>
+      <span class="brand-copy">
+        <strong class="brand-title" data-text="QUANTUM CLOUD QUIZ">QUANTUM CLOUD QUIZ</strong>
+        <small>AWS Cloud Mastery Arena</small>
+      </span>
+    </button>
+
+    <nav class="top-actions" aria-label="Primary controls">
+      <button class="icon-button" type="button" data-action="dashboard" title="Play / dashboard">
+        <span aria-hidden="true">▶</span><span class="button-label">Play</span>
+      </button>
+      <button class="icon-button" type="button" data-action="pause" title="Pause or resume" disabled>
+        <span aria-hidden="true">Ⅱ</span><span class="button-label">Pause</span>
+      </button>
+      <button class="icon-button" type="button" data-action="upload" title="Upload exams or restore progress">
+        <span aria-hidden="true">⇧</span><span class="button-label">Upload</span>
+      </button>
+      <button class="icon-button" type="button" data-action="scores" title="Score history and metrics">
+        <span aria-hidden="true">⌁</span><span class="button-label">Scores</span>
+      </button>
+      <button class="icon-button" type="button" data-action="profile" title="Profile and avatar">
+        <span class="nav-avatar" id="navAvatar" aria-hidden="true">⚛</span><span class="button-label">Profile</span>
+      </button>
+      <button class="icon-button" type="button" data-action="sound" title="Toggle cinematic sound">
+        <span id="soundIcon" aria-hidden="true">♩</span><span class="button-label">Sound</span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <div id="modalRoot" class="modal-root" aria-live="polite"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
