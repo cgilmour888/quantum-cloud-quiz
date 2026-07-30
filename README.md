@@ -1,65 +1,79 @@
-# Quantum Cloud Quiz
+# Quantum Cloud Living Scene
 
-Quantum Cloud Quiz is an immersive AWS cloud-computing practice examination platform featuring adaptive scoring, learner profiles, topic analytics, progress tracking, certificates of mastery, and a cinematic interactive storm environment.
+This package creates the animated Neon Storm Exam Lab scene using the approved static artwork as the permanent master layer.
 
-## Current Architecture
+## Included effects
 
-This release is a static website designed for deployment through Cloudflare Pages.
+- Full uncropped 1672 × 941 master artwork
+- Preserved exterior mechanical border
+- Breathing storm-cloud illumination
+- Procedural multi-depth rain
+- Irregular lightning sequences
+- Atmospheric mist
+- Four counter-rotating gyroscope overlays
+- Subtle tablet breathing and scanning energy
+- Slightly emphasized engraved tablet markings
+- Seamless OGG/Opus soundtrack with MP3 fallback
+- Accessible soundtrack and FX controls
+- Reduced-motion support
+- Page-visibility animation suspension
+- Root or subdirectory deployment support
 
-- Static HTML, CSS, and JavaScript
-- AWS practice exams stored in `data/exams.json`
-- Local browser profile and progress storage
-- Downloadable mastery certificates
-- Custom quiz upload support
-- Progressive Web App support
-- Architecture prepared for future API and database integration
+## Install into a new React/Vite repository
 
-## Cloudflare Pages Deployment
+1. Back up the repository.
+2. Extract this archive at the repository root.
+3. Run:
 
-Use these settings:
-
-- Framework preset: `None`
-- Build command: `exit 0`
-- Build output directory: `.`
-- Production branch: `main`
-- Root directory: leave blank
-
-The `index.html` file must remain at the repository root.
-
-## Project Structure
-
-```text
-quantum-cloud-quiz/
-├── assets/
-│   ├── cloud-mark.svg
-│   └── nimbus-supercell.png
-├── data/
-│   └── exams.json
-├── js/
-│   ├── analytics.js
-│   ├── app.js
-│   ├── audio-engine.js
-│   ├── certificate.js
-│   ├── constants.js
-│   ├── fx-engine.js
-│   ├── progress-repository.js
-│   ├── quiz-engine.js
-│   ├── repository.js
-│   ├── storage.js
-│   └── storm-engine.js
-├── DEPLOYMENT-NOTE.txt
-├── index.html
-├── manifest.webmanifest
-├── README.md
-├── styles.css
-└── sw.js
+```bash
+npm install
+npm run dev
 ```
 
-## Data and Privacy
+4. Verify the scene locally.
+5. Build it:
 
-The current static release stores profile data, progress, scores, and preferences in the user's browser. A future release can replace local browser storage with an authenticated API and cloud database without redesigning the interface.
+```bash
+npm run build
+```
 
-## Author
+6. Commit and push the files to GitHub.
 
-**Carl Gilmour**
+## Integrate into an existing React/Vite repository
 
+Add these folders and assets:
+
+```text
+public/audio/
+public/images/neon-storm-cloud-exam-dashboard.png
+src/components/audio/
+src/components/scene/
+src/hooks/
+```
+
+Then merge the supplied `src/App.jsx` composition into the existing application rather than deleting unrelated routes or components.
+
+The essential composition is:
+
+```jsx
+<>
+  <AnimatedExamScene />
+  <BackgroundSoundtrack volume={0.18} />
+</>
+```
+
+Do not replace an existing `package.json` blindly when it contains additional dependencies. The supplied package file is a complete minimal baseline for a new React/Vite site.
+
+## Deployment base path
+
+Root domain deployments require no additional configuration.
+
+For a deployment under `/quantum-cloud/`, create `.env.production` containing:
+
+```env
+VITE_PUBLIC_BASE_PATH=/quantum-cloud/
+```
+
+## Browser autoplay behavior
+
+Modern browsers may require one click, tap, or key press before audible playback. The soundtrack component attempts playback, detects a blocked attempt, and retries automatically after the first interaction.
