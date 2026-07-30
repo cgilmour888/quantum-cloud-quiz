@@ -1,0 +1,32 @@
+{
+  // Cloudflare Workers configuration for quantum-cloud-quiz
+  "name": "quantum-cloud-living-scene",
+  "type": "javascript",
+  "main": "dist/index.js",
+  "compatibility_date": "2024-07-30",
+  "env": {
+    "production": {
+      "name": "quantum-cloud-living-scene-prod",
+      "route": "example.com/*",
+      "zone_id": ""
+    },
+    "staging": {
+      "name": "quantum-cloud-living-scene-staging",
+      "route": "staging.example.com/*",
+      "zone_id": ""
+    }
+  },
+  "build": {
+    "command": "npm run build",
+    "cwd": "./",
+    "watch_paths": [
+      "src/**/*.{js,jsx,ts,tsx,css}"
+    ]
+  },
+  "observability": {
+    "enabled": false
+  },
+  "limits": {
+    "cpu_ms": 50
+  }
+}
