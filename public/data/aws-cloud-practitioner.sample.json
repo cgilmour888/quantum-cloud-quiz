@@ -1,0 +1,22 @@
+{
+  "exam": {
+    "id": "aws-cloud-practitioner",
+    "title": "AWS Certified Cloud Practitioner",
+    "version": "starter-sample",
+    "questions": [
+      {
+        "id": "question-001",
+        "question": "What is the primary function of a load balancer in cloud computing?",
+        "options": [
+          { "id": "A", "text": "To store large amounts of data" },
+          { "id": "B", "text": "To distribute incoming network traffic across multiple servers" },
+          { "id": "C", "text": "To encrypt data during transmission" },
+          { "id": "D", "text": "To monitor user activity on the cloud" }
+        ],
+        "correctAnswer": "B",
+        "category": "Cloud Technology and Services",
+        "explanation": "A load balancer distributes traffic across multiple targets to improve availability and responsiveness."
+      }
+    ]
+  }
+}

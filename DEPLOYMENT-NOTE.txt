@@ -1,5 +1,0 @@
-QUANTUM CLOUD QUIZ — GITHUB ROOT PACKAGE
-
-Extract this ZIP before uploading. Upload the CONTENTS of this folder to the root of your GitHub repository.
-The repository root must contain index.html, styles.css, manifest.webmanifest, sw.js, and the folders assets, data, and js.
-Do not upload this ZIP file itself. Cloudflare Pages does not need a .nojekyll file.

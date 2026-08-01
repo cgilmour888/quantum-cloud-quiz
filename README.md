@@ -1,79 +1,34 @@
-# Quantum Cloud Living Scene
+# Quantum Cloud Quiz — Clean MASTER Baseline
 
-This package creates the animated Neon Storm Exam Lab scene using the approved static artwork as the permanent master layer.
+This repository package establishes the latest approved MASTER artwork as the immutable visual baseline and supplies a clean React/Vite architecture for independent animation engines.
 
-## Included effects
-
-- Full uncropped 1672 × 941 master artwork
-- Preserved exterior mechanical border
-- Breathing storm-cloud illumination
-- Procedural multi-depth rain
-- Irregular lightning sequences
-- Atmospheric mist
-- Four counter-rotating gyroscope overlays
-- Subtle tablet breathing and scanning energy
-- Slightly emphasized engraved tablet markings
-- Seamless OGG/Opus soundtrack with MP3 fallback
-- Accessible soundtrack and FX controls
-- Reduced-motion support
-- Page-visibility animation suspension
-- Root or subdirectory deployment support
-
-## Install into a new React/Vite repository
-
-1. Back up the repository.
-2. Extract this archive at the repository root.
-3. Run:
+## Start locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-4. Verify the scene locally.
-5. Build it:
+Production verification:
 
 ```bash
 npm run build
+npm run preview
 ```
 
-6. Commit and push the files to GitHub.
+## Included
 
-## Integrate into an existing React/Vite repository
+- latest approved source artwork;
+- canonical 4K PNG MASTER;
+- production 4K WebP derivative;
+- SHA-256 integrity verification;
+- single shared SceneEngine loop;
+- normalized geometry map;
+- semantic event bus;
+- disabled independent engine modules;
+- starter dataset schema and AWS sample question;
+- animation roadmap and mission statement.
 
-Add these folders and assets:
+## Critical rule
 
-```text
-public/audio/
-public/images/neon-storm-cloud-exam-dashboard.png
-src/components/audio/
-src/components/scene/
-src/hooks/
-```
-
-Then merge the supplied `src/App.jsx` composition into the existing application rather than deleting unrelated routes or components.
-
-The essential composition is:
-
-```jsx
-<>
-  <AnimatedExamScene />
-  <BackgroundSoundtrack volume={0.18} />
-</>
-```
-
-Do not replace an existing `package.json` blindly when it contains additional dependencies. The supplied package file is a complete minimal baseline for a new React/Vite site.
-
-## Deployment base path
-
-Root domain deployments require no additional configuration.
-
-For a deployment under `/quantum-cloud/`, create `.env.production` containing:
-
-```env
-VITE_PUBLIC_BASE_PATH=/quantum-cloud/
-```
-
-## Browser autoplay behavior
-
-Modern browsers may require one click, tap, or key press before audible playback. The soundtrack component attempts playback, detects a blocked attempt, and retries automatically after the first interaction.
+Do not edit the MASTER artwork. Animation is implemented only through transparent layers positioned above it.
