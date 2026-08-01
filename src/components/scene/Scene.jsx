@@ -4,23 +4,18 @@ import { assetPath } from '../../utils/assetPath.js';
 
 export function Scene() {
   const stageRef = useRef(null);
-  useSceneEngine(stageRef);
+  const borderFrameCanvasRef = useRef(null);
+
+  useSceneEngine({
+    stageRef,
+    borderFrameCanvasRef,
+  });
 
   return (
     <section
       className="scene-shell"
       aria-label="Quantum Cloud Quiz training environment"
     >
-      {/*
-       * Atmospheric viewport-filling extension.
-       * This copy is decorative only and is never used for animation geometry.
-       */}
-      
-
-      {/*
-       * Protected 16:9 MASTER stage.
-       * The MASTER and every future animation layer share these dimensions.
-       */}
       <div ref={stageRef} className="scene-stage">
         <picture className="scene-artwork">
           <source
@@ -34,6 +29,18 @@ export function Scene() {
             draggable={false}
           />
         </picture>
+
+        {/*
+         * Phase 2: dedicated, transparent BorderFrameEngine surface.
+         * No pixels are drawn during this phase. The canvas exists solely as
+         * the exact full-stage rendering plane for the original border masks.
+         */}
+        <canvas
+          ref={borderFrameCanvasRef}
+          className="scene-layer scene-layer--border-frame"
+          data-scene-engine="border-frame"
+          aria-hidden="true"
+        />
 
         <canvas
           className="scene-layer scene-layer--atmosphere"

@@ -141,6 +141,13 @@ textarea {
   pointer-events: none;
 }
 
+.scene-layer--border-frame {
+  z-index: 15;
+  display: block;
+  background: transparent;
+  mix-blend-mode: normal;
+}
+
 .scene-layer--atmosphere {
   z-index: 10;
 }
