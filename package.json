@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "npm run verify:master && vite build",
     "preview": "vite preview",
-    "verify:master": "node scripts/verify-master.mjs"
+    "verify:master": "node scripts/verify-master.mjs",
+    "verify:gameplay": "node scripts/verify-gameplay-core.mjs",
+    "test:gameplay": "node --test tests/*.test.mjs",
+    "test": "npm run test:gameplay"
   },
   "dependencies": {
     "react": "^19.1.1",
