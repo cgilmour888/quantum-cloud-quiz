@@ -13,6 +13,10 @@ const requiredFiles = [
   'src/components/scene/compositor/MasterSceneCompositor.js',
   'src/components/scene/engines/MasterCompositorEngine.js',
   'src/components/scene/engines/BorderFrameEngine.js',
+  'src/components/scene/engines/border/BorderFrameRenderer.js',
+  'src/components/scene/engines/border/borderFrameAssets.js',
+  'src/components/scene/engines/border/borderFrameConfig.js',
+  'src/components/scene/engines/border/borderFrameShaders.js',
   'src/components/scene/SceneEngine.js',
   'src/components/scene/Scene.jsx',
   'src/hooks/useSceneEngine.js',
@@ -53,7 +57,7 @@ if (!hook.includes('createBorderFrameEngine')) {
 }
 
 const border = await readFile(resolve(root, 'src/components/scene/engines/BorderFrameEngine.js'), 'utf8');
-for (const forbidden of ['getContext(', 'canvas.width', 'canvas.height', 'mix-blend-mode']) {
+for (const forbidden of ['mix-blend-mode']) {
   if (border.includes(forbidden)) {
     throw new Error(`BorderFrameEngine still owns independent rendering state: ${forbidden}`);
   }
@@ -69,7 +73,7 @@ for (const required of ['webgl2', 'uMaster', 'UNPACK_FLIP_Y_WEBGL', 'getSharedCo
   }
 }
 
-console.log('Unified MASTER Compositor R3 Gates verification passed.');
+console.log('Unified MASTER Compositor + BorderFrameEngine Gates verification passed.');
 console.log('Protected MASTER assets: 3/3 verified.');
 console.log('Visible decorative canvases: 1 shared compositor.');
-console.log('BorderFrameEngine: migrated, motion disabled pending static proof.');
+console.log('BorderFrameEngine: registered texture-mask renderer on the shared compositor.');

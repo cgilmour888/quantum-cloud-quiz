@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "4.1.0",
+  "purpose": "Deterministic static border-mask proof views independent of the live renderer",
+  "masterSha256": "5c98bd5ef760bdc04c85ca461336064b24d44456029906632474e843b6c3495c",
+  "proofs": {
+    "border-isolated-4k.png": {
+      "width": 3840,
+      "height": 2160,
+      "sha256": "99525e27d9fb6d0b2c43fd1388a127f8759f4f45222bae2a232460d4c0a52ef2",
+      "bytes": 91379
+    },
+    "border-occlusion-4k.png": {
+      "width": 3840,
+      "height": 2160,
+      "sha256": "9f8ac36e33a252c2af1d9fb60a0261bb431e579619d8f924359097e0e763ce99",
+      "bytes": 82723
+    },
+    "border-overlay-4k.png": {
+      "width": 3840,
+      "height": 2160,
+      "sha256": "4d46aec52dde98f52046d160e09448f736fd5f45f1b9fce1703910642953c242",
+      "bytes": 10085236
+    },
+    "border-phase-4k.png": {
+      "width": 3840,
+      "height": 2160,
+      "sha256": "c97c0a860cf4be5c995352f68594026852156a98f6df287f7f596be673da9b89",
+      "bytes": 100819
+    },
+    "master-4k.png": {
+      "width": 3840,
+      "height": 2160,
+      "sha256": "5c98bd5ef760bdc04c85ca461336064b24d44456029906632474e843b6c3495c",
+      "bytes": 13375171
+    }
+  }
+}

@@ -206,30 +206,26 @@ function createCanvas2DRenderer(canvas) {
   let image = null;
   let width = 1;
   let height = 1;
-  let dirty = true;
 
   return {
     type: 'canvas2d',
 
     upload(nextImage) {
       image = nextImage;
-      dirty = true;
     },
 
     resize(nextWidth, nextHeight) {
       width = nextWidth;
       height = nextHeight;
-      dirty = true;
     },
 
     render() {
-      if (!image || !dirty) return;
+      if (!image) return;
       context.setTransform(1, 0, 0, 1, 0, 0);
       context.imageSmoothingEnabled = true;
       context.imageSmoothingQuality = 'high';
       context.clearRect(0, 0, width, height);
       context.drawImage(image, 0, 0, width, height);
-      dirty = false;
     },
 
     getSharedContext() {

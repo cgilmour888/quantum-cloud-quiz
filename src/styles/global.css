@@ -191,3 +191,59 @@ textarea {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * R4.1 deterministic static proof surface.
+ *
+ * Proof routes bypass the live border renderer and show precomposited 4K
+ * diagnostics. This prevents a failed renderer from silently displaying the
+ * unchanged MASTER and being mistaken for a valid isolated/phase proof.
+ */
+.border-proof-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+  pointer-events: none;
+}
+
+.border-proof-layer__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center;
+  user-select: none;
+}
+
+.border-proof-layer__badge {
+  position: absolute;
+  top: max(12px, 1.4vw);
+  left: 50%;
+  display: grid;
+  gap: 0.2rem;
+  min-width: min(680px, calc(100vw - 32px));
+  padding: 0.65rem 1rem;
+  transform: translateX(-50%);
+  border: 1px solid rgba(61, 225, 255, 0.82);
+  border-radius: 0.55rem;
+  color: #eafbff;
+  background: rgba(0, 5, 11, 0.92);
+  box-shadow: 0 0 18px rgba(31, 202, 255, 0.30);
+  font-size: clamp(0.72rem, 0.72vw, 0.95rem);
+  line-height: 1.25;
+  text-align: center;
+  letter-spacing: 0.035em;
+}
+
+.border-proof-layer__badge strong {
+  color: #54e6ff;
+  letter-spacing: 0.16em;
+}

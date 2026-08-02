@@ -1,0 +1,7 @@
+package.json
+src/components/scene/Scene.jsx
+src/components/scene/debug/BorderFrameProofLayer.jsx
+src/components/scene/engines/BorderFrameEngine.js
+src/styles/global.css
+scripts/verify-border-proof-r4-1-gates.mjs
+public/images/master/derived/border-frame/proofs/static-4k

@@ -16,6 +16,12 @@ export const SceneEvents = Object.freeze({
   SETTINGS_CHANGED: 'settings:changed',
   AUDIO_ENABLED: 'audio:enabled',
   AUDIO_MUTED: 'audio:muted',
+  PLACARD_HOVERED: 'profile:placard-hovered',
+  PLACARD_FOCUSED: 'profile:placard-focused',
+  PLACARD_ACTIVATED: 'profile:placard-activated',
+  BUSINESS_CARD_OPENED: 'profile:business-card-opened',
+  BUSINESS_CARD_CLOSED: 'profile:business-card-closed',
+  SOCIAL_LINK_ACTIVATED: 'profile:social-link-activated',
   VISIBILITY_CHANGED: 'scene:visibility-changed',
 });
 

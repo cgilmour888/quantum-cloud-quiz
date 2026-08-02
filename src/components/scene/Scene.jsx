@@ -2,10 +2,15 @@ import { useRef } from 'react';
 import { QuizInterface } from '../quiz/QuizInterface.jsx';
 import { useSceneEngine } from '../../hooks/useSceneEngine.js';
 import { assetPath } from '../../utils/assetPath.js';
+import {
+  BorderFrameProofLayer,
+  readBorderFrameProofMode,
+} from './debug/BorderFrameProofLayer.jsx';
 
 export function Scene() {
   const stageRef = useRef(null);
   const compositorCanvasRef = useRef(null);
+  const borderProofMode = readBorderFrameProofMode();
 
   useSceneEngine({
     stageRef,
@@ -21,6 +26,7 @@ export function Scene() {
         ref={stageRef}
         className="scene-stage"
         data-compositor-ready="false"
+        data-border-proof-mode={borderProofMode ?? 'live'}
       >
         <picture className="scene-artwork scene-artwork--fallback" aria-hidden="true">
           <source
@@ -55,6 +61,7 @@ export function Scene() {
         />
 
         <QuizInterface eventTargetRef={stageRef} />
+        <BorderFrameProofLayer mode={borderProofMode} />
       </div>
     </section>
   );
