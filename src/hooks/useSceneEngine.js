@@ -1,29 +1,41 @@
 import { useEffect, useRef } from 'react';
 import { SceneEngine } from '../components/scene/SceneEngine.js';
+import { createMasterCompositorEngine } from '../components/scene/engines/MasterCompositorEngine.js';
 import { createBorderFrameEngine } from '../components/scene/engines/BorderFrameEngine.js';
+import { assetPath } from '../utils/assetPath.js';
 
-export function useSceneEngine({ stageRef, borderFrameCanvasRef }) {
+export function useSceneEngine({ stageRef, compositorCanvasRef }) {
   const engineRef = useRef(null);
 
   useEffect(() => {
     const stage = stageRef.current;
-    const borderFrameCanvas = borderFrameCanvasRef.current;
+    const compositorCanvas = compositorCanvasRef.current;
 
-    if (!stage || !borderFrameCanvas) return undefined;
+    if (!stage || !compositorCanvas) return undefined;
 
     const scene = new SceneEngine({ quality: 'high' });
     engineRef.current = scene;
 
+    const compositorEngine = createMasterCompositorEngine({
+      canvas: compositorCanvas,
+      stage,
+      sources: [
+        assetPath('images/master/MASTER.webp'),
+        assetPath('images/master/MASTER.png'),
+      ],
+    });
+
+    scene.register(compositorEngine);
     scene.register(
       createBorderFrameEngine({
-        canvas: borderFrameCanvas,
+        compositorEngine,
         stage,
       }),
     );
 
     const resizeScene = () => {
       const { width, height } = stage.getBoundingClientRect();
-      scene.resize(width, height, window.devicePixelRatio || 1);
+      scene.resize(width, height, globalThis.devicePixelRatio || 1);
     };
 
     const resizeObserver = new ResizeObserver(resizeScene);
@@ -37,7 +49,7 @@ export function useSceneEngine({ stageRef, borderFrameCanvasRef }) {
       scene.destroy();
       engineRef.current = null;
     };
-  }, [stageRef, borderFrameCanvasRef]);
+  }, [stageRef, compositorCanvasRef]);
 
   return engineRef;
 }

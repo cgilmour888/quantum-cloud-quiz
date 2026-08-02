@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run verify:master && vite build",
+    "build": "npm run verify:master && npm run verify:compositor && vite build",
     "preview": "vite preview",
     "verify:master": "node scripts/verify-master.mjs",
     "verify:gameplay": "node scripts/verify-gameplay-core.mjs",
     "verify:gameplay-r2": "node scripts/verify-gameplay-r2-gates.mjs",
     "test:gameplay": "node --test tests/*.test.mjs",
-    "test": "npm run test:gameplay"
+    "test": "npm run test:gameplay",
+    "verify:compositor": "node scripts/verify-compositor-r3-gates.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",

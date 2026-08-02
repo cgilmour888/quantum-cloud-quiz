@@ -5,11 +5,11 @@ import { assetPath } from '../../utils/assetPath.js';
 
 export function Scene() {
   const stageRef = useRef(null);
-  const borderFrameCanvasRef = useRef(null);
+  const compositorCanvasRef = useRef(null);
 
   useSceneEngine({
     stageRef,
-    borderFrameCanvasRef,
+    compositorCanvasRef,
   });
 
   return (
@@ -17,8 +17,12 @@ export function Scene() {
       className="scene-shell"
       aria-label="Quantum Cloud Quiz training environment"
     >
-      <div ref={stageRef} className="scene-stage">
-        <picture className="scene-artwork">
+      <div
+        ref={stageRef}
+        className="scene-stage"
+        data-compositor-ready="false"
+      >
+        <picture className="scene-artwork scene-artwork--fallback" aria-hidden="true">
           <source
             srcSet={assetPath('images/master/MASTER.webp')}
             type="image/webp"
@@ -26,26 +30,28 @@ export function Scene() {
           <img
             className="scene-master"
             src={assetPath('images/master/MASTER.png')}
-            alt="Quantum Cloud Quiz cyberpunk training interface"
+            alt=""
             draggable={false}
           />
         </picture>
 
         <canvas
-          ref={borderFrameCanvasRef}
-          className="scene-layer scene-layer--border-frame"
-          data-scene-engine="border-frame"
+          ref={compositorCanvasRef}
+          className="scene-layer scene-layer--compositor"
+          data-scene-engine="master-compositor"
           aria-hidden="true"
         />
 
         <canvas
           className="scene-layer scene-layer--atmosphere"
           aria-hidden="true"
+          hidden
         />
 
         <svg
           className="scene-layer scene-layer--geometry"
           aria-hidden="true"
+          hidden
         />
 
         <QuizInterface eventTargetRef={stageRef} />

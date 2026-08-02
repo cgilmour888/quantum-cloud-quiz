@@ -41,8 +41,8 @@ const scene = await readFile(resolve(root, 'src/components/scene/Scene.jsx'), 'u
 if (!scene.includes('<QuizInterface eventTargetRef={stageRef} />')) {
   throw new Error('Scene.jsx does not mount the corrected live QuizInterface.');
 }
-if (!scene.includes('scene-layer--border-frame')) {
-  throw new Error('The validated dedicated border-frame canvas was removed.');
+if (!scene.includes('scene-layer--compositor')) {
+  throw new Error('The validated unified MASTER compositor canvas is missing.');
 }
 
 const css = await readFile(resolve(root, 'src/styles/quiz-interface.css'), 'utf8');

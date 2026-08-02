@@ -1,6 +1,6 @@
 # Animation Engine Roadmap
 
-All engines are disabled until a static alignment proof is approved.
+The unified MASTER compositor is active. Decorative engines remain disabled until each engine's static isolation proof is approved.
 
 1. BorderFrameEngine
 2. DashboardEngine
@@ -26,3 +26,7 @@ Every engine must implement:
 - `render()`
 - `handleEvent(eventName, payload)`
 - `destroy()`
+
+## Unified rendering rule
+
+Decorative engines do not own independently scaled visible canvases. They render through the shared MASTER compositor context so the MASTER texture, masks, and effects use one normalized UV plane.

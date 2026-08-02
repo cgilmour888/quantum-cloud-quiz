@@ -23,6 +23,7 @@ npm run preview
 - production 4K WebP derivative;
 - SHA-256 integrity verification;
 - single shared SceneEngine loop;
+- unified WebGL2/Canvas 2D MASTER compositor;
 - normalized geometry map;
 - semantic event bus;
 - disabled independent engine modules;
@@ -31,4 +32,4 @@ npm run preview
 
 ## Critical rule
 
-Do not edit the MASTER artwork. Animation is implemented only through transparent layers positioned above it.
+Do not edit the MASTER artwork. Decorative animation is implemented inside the unified MASTER compositor so every engine shares the exact same texture coordinates and viewport transform. Semantic quiz controls remain accessible DOM elements.

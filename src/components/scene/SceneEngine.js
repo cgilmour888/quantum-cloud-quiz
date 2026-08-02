@@ -1,3 +1,18 @@
+const DEFAULT_GEOMETRY = Object.freeze({
+  width: 1,
+  height: 1,
+  devicePixelRatio: 1,
+});
+
+function createEngineErrorEvent(id, phase, error) {
+  return {
+    id,
+    phase,
+    message: error instanceof Error ? error.message : String(error),
+    error,
+  };
+}
+
 export class SceneEngine {
   #engines = new Map();
   #events = new EventTarget();
@@ -5,25 +20,72 @@ export class SceneEngine {
   #lastTime = 0;
   #elapsed = 0;
   #running = false;
+  #geometry = DEFAULT_GEOMETRY;
 
-  constructor({ quality = 'high' } = {}) {
+  constructor({ quality = 'high', resources = {} } = {}) {
     this.quality = quality;
+    this.resources = resources;
     this.handleVisibility = this.handleVisibility.bind(this);
-    document.addEventListener('visibilitychange', this.handleVisibility);
+    globalThis.document?.addEventListener('visibilitychange', this.handleVisibility);
+  }
+
+  #orderedEntries() {
+    return [...this.#engines.values()].sort((left, right) => {
+      const priorityDelta = left.priority - right.priority;
+      return priorityDelta || left.order - right.order;
+    });
+  }
+
+  #invoke(entry, phase, ...args) {
+    if (!entry || entry.failed) return undefined;
+    const callback = entry.engine?.[phase];
+    if (typeof callback !== 'function') return undefined;
+
+    try {
+      return callback.apply(entry.engine, args);
+    } catch (error) {
+      entry.failed = true;
+      const detail = createEngineErrorEvent(entry.engine.id, phase, error);
+      this.emit('scene:engine-error', detail);
+      console.error(`[SceneEngine] ${entry.engine.id}.${phase} failed`, error);
+      return undefined;
+    }
   }
 
   register(engine) {
     if (!engine?.id) throw new Error('Every scene engine requires a unique id.');
     if (this.#engines.has(engine.id)) throw new Error(`Engine already registered: ${engine.id}`);
-    this.#engines.set(engine.id, engine);
-    engine.init?.({ scene: this, quality: this.quality });
+
+    const entry = {
+      engine,
+      priority: Number.isFinite(engine.priority) ? engine.priority : 0,
+      order: this.#engines.size,
+      failed: false,
+    };
+
+    this.#engines.set(engine.id, entry);
+    this.#invoke(entry, 'init', {
+      scene: this,
+      quality: this.quality,
+      resources: this.resources,
+      geometry: this.#geometry,
+    });
+    this.#invoke(entry, 'resize', this.#geometry);
+
     return () => this.unregister(engine.id);
   }
 
   unregister(id) {
-    const engine = this.#engines.get(id);
-    engine?.destroy?.();
+    const entry = this.#engines.get(id);
+    if (!entry) return false;
+
+    this.#invoke(entry, 'destroy');
     this.#engines.delete(id);
+    return true;
+  }
+
+  getEngine(id) {
+    return this.#engines.get(id)?.engine ?? null;
   }
 
   on(eventName, listener) {
@@ -32,52 +94,71 @@ export class SceneEngine {
   }
 
   emit(eventName, detail = {}) {
-    this.#events.dispatchEvent(new CustomEvent(eventName, { detail }));
-    for (const engine of this.#engines.values()) {
-      engine.handleEvent?.(eventName, detail);
+    const CustomEventConstructor = globalThis.CustomEvent;
+    if (typeof CustomEventConstructor === 'function') {
+      this.#events.dispatchEvent(new CustomEventConstructor(eventName, { detail }));
+    }
+
+    for (const entry of this.#orderedEntries()) {
+      this.#invoke(entry, 'handleEvent', eventName, detail);
     }
   }
 
-  resize(width, height, devicePixelRatio = window.devicePixelRatio || 1) {
-    const geometry = { width, height, devicePixelRatio };
-    for (const engine of this.#engines.values()) engine.resize?.(geometry);
+  resize(width, height, devicePixelRatio = globalThis.devicePixelRatio || 1) {
+    this.#geometry = {
+      width: Math.max(1, Number(width) || 1),
+      height: Math.max(1, Number(height) || 1),
+      devicePixelRatio: Math.max(1, Number(devicePixelRatio) || 1),
+    };
+
+    for (const entry of this.#orderedEntries()) {
+      this.#invoke(entry, 'resize', this.#geometry);
+    }
   }
 
   start() {
-    if (this.#running) return;
+    if (this.#running || typeof globalThis.requestAnimationFrame !== 'function') return;
     this.#running = true;
-    this.#lastTime = performance.now();
-    this.#frameId = requestAnimationFrame(this.tick);
+    this.#lastTime = globalThis.performance?.now?.() ?? Date.now();
+    this.#frameId = globalThis.requestAnimationFrame(this.tick);
   }
 
   stop() {
     this.#running = false;
-    if (this.#frameId) cancelAnimationFrame(this.#frameId);
+    if (this.#frameId !== null && typeof globalThis.cancelAnimationFrame === 'function') {
+      globalThis.cancelAnimationFrame(this.#frameId);
+    }
     this.#frameId = null;
   }
 
   tick = (time) => {
     if (!this.#running) return;
-    const delta = Math.min((time - this.#lastTime) / 1000, 0.1);
+
+    const delta = Math.min(Math.max((time - this.#lastTime) / 1000, 0), 0.1);
     this.#lastTime = time;
     this.#elapsed += delta;
 
-    for (const engine of this.#engines.values()) {
-      engine.update?.(delta, this.#elapsed);
-      engine.render?.();
-    }
+    const entries = this.#orderedEntries();
+    for (const entry of entries) this.#invoke(entry, 'update', delta, this.#elapsed);
+    for (const entry of entries) this.#invoke(entry, 'render');
 
-    this.#frameId = requestAnimationFrame(this.tick);
+    this.#frameId = globalThis.requestAnimationFrame(this.tick);
   };
 
   handleVisibility() {
-    if (document.hidden) this.stop();
+    const hidden = Boolean(globalThis.document?.hidden);
+    this.emit('scene:visibility-changed', { hidden });
+    if (hidden) this.stop();
     else this.start();
   }
 
   destroy() {
     this.stop();
-    document.removeEventListener('visibilitychange', this.handleVisibility);
-    for (const id of [...this.#engines.keys()]) this.unregister(id);
+    globalThis.document?.removeEventListener('visibilitychange', this.handleVisibility);
+
+    for (const entry of this.#orderedEntries().reverse()) {
+      this.#invoke(entry, 'destroy');
+    }
+    this.#engines.clear();
   }
 }

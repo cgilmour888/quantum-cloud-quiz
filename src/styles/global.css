@@ -109,6 +109,17 @@ textarea {
   padding: 0;
 }
 
+.scene-artwork--fallback {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 120ms linear;
+}
+
+.scene-stage[data-compositor-ready='true'] .scene-artwork--fallback {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .scene-master {
   position: absolute;
   inset: 0;
@@ -141,11 +152,17 @@ textarea {
   pointer-events: none;
 }
 
-.scene-layer--border-frame {
-  z-index: 15;
+.scene-layer--compositor {
+  z-index: 5;
   display: block;
-  background: transparent;
-  mix-blend-mode: normal;
+  background: #000;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scene-stage[data-compositor-ready='true'] .scene-layer--compositor {
+  opacity: 1;
+  visibility: visible;
 }
 
 .scene-layer--atmosphere {
