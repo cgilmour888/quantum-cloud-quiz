@@ -12,7 +12,24 @@ export const SceneEvents = Object.freeze({
   SCORE_REVEAL: 'quiz:score-reveal',
   DATASET_LOADED: 'quiz:dataset-loaded',
   DATASET_REJECTED: 'quiz:dataset-rejected',
+  DASHBOARD_NAVIGATED: 'dashboard:navigated',
+  SETTINGS_CHANGED: 'settings:changed',
   AUDIO_ENABLED: 'audio:enabled',
   AUDIO_MUTED: 'audio:muted',
   VISIBILITY_CHANGED: 'scene:visibility-changed',
 });
+
+export function dispatchSceneEvent(target, eventName, detail = {}) {
+  if (!target?.dispatchEvent || !eventName) return false;
+
+  const CustomEventConstructor = target.ownerDocument?.defaultView?.CustomEvent
+    ?? globalThis.CustomEvent;
+
+  if (typeof CustomEventConstructor !== 'function') return false;
+
+  return target.dispatchEvent(new CustomEventConstructor(eventName, {
+    bubbles: true,
+    composed: true,
+    detail,
+  }));
+}

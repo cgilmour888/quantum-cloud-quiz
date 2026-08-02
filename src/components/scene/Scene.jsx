@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { QuizInterface } from '../quiz/QuizInterface.jsx';
 import { useSceneEngine } from '../../hooks/useSceneEngine.js';
 import { assetPath } from '../../utils/assetPath.js';
 
@@ -30,11 +31,6 @@ export function Scene() {
           />
         </picture>
 
-        {/*
-         * Phase 2: dedicated, transparent BorderFrameEngine surface.
-         * No pixels are drawn during this phase. The canvas exists solely as
-         * the exact full-stage rendering plane for the original border masks.
-         */}
         <canvas
           ref={borderFrameCanvasRef}
           className="scene-layer scene-layer--border-frame"
@@ -52,15 +48,7 @@ export function Scene() {
           aria-hidden="true"
         />
 
-        <div
-          className="scene-layer scene-layer--interface"
-          aria-hidden="true"
-        />
-
-        <div
-          className="scene-layer scene-layer--controls"
-          aria-label="Interactive controls layer"
-        />
+        <QuizInterface eventTargetRef={stageRef} />
       </div>
     </section>
   );

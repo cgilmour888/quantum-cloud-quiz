@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "verify:master": "node scripts/verify-master.mjs",
     "verify:gameplay": "node scripts/verify-gameplay-core.mjs",
+    "verify:gameplay-r2": "node scripts/verify-gameplay-r2-gates.mjs",
     "test:gameplay": "node --test tests/*.test.mjs",
     "test": "npm run test:gameplay"
   },
