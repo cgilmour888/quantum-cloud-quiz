@@ -4,6 +4,7 @@ export const BORDER_FRAME_CHANNELS = Object.freeze({
     speed: 0.055,
     baseCurrent: 0.10,
     pulseWidth: 0.042,
+    packetCount: 3,
     voltageFrequency: 0.72,
     junctionGain: 0.48,
     bloomGain: 0.34,
@@ -12,14 +13,23 @@ export const BORDER_FRAME_CHANNELS = Object.freeze({
   }),
   orange: Object.freeze({
     direction: -1,
-    speed: 0.038,
-    baseCurrent: 0.075,
-    pulseWidth: 0.058,
-    voltageFrequency: 0.46,
-    junctionGain: 0.62,
-    bloomGain: 0.38,
-    maximumIntensity: 0.86,
-    color: Object.freeze([1.0, 0.28, 0.035]),
+    speed: 0.082,
+    baseCurrent: 0.16,
+    carrierFloor: 0.14,
+    carrierWaveGain: 0.24,
+    packetGain: 0.50,
+    trailGain: 0.28,
+    pulseWidth: 0.072,
+    packetCount: 4,
+    voltageFrequency: 0.74,
+    voltageFloor: 0.72,
+    voltageSwing: 0.28,
+    junctionGain: 0.84,
+    bloomGain: 0.64,
+    haloGain: 0.44,
+    maximumIntensity: 0.94,
+    color: Object.freeze([1.0, 0.17, 0.012]),
+    hotColor: Object.freeze([1.0, 0.245, 0.028]),
   }),
   purple: Object.freeze({
     primaryDirection: 1,
@@ -28,6 +38,7 @@ export const BORDER_FRAME_CHANNELS = Object.freeze({
     secondarySpeed: 0.014,
     baseCurrent: 0.065,
     pulseWidth: 0.095,
+    packetCount: 2,
     voltageFrequency: 0.21,
     junctionGain: 0.30,
     bloomGain: 0.27,
@@ -36,16 +47,28 @@ export const BORDER_FRAME_CHANNELS = Object.freeze({
   }),
 });
 
+export const BORDER_FRAME_CHANNEL_MODES = Object.freeze({
+  cyan: Object.freeze([1, 0, 0]),
+  orange: Object.freeze([0, 1, 0]),
+  dual: Object.freeze([1, 1, 0]),
+  all: Object.freeze([1, 1, 1]),
+});
+
+export function resolveBorderFrameChannelMode(value) {
+  const key = typeof value === 'string' ? value.toLowerCase() : '';
+  return Object.hasOwn(BORDER_FRAME_CHANNEL_MODES, key) ? key : 'dual';
+}
+
 export const BORDER_FRAME_QUALITY = Object.freeze({
   conservative: Object.freeze({
-    shaderQuality: 0.48,
-    voltageDetail: 0.45,
-    bloomStrength: 0.45,
+    shaderQuality: 0.62,
+    voltageDetail: 0.42,
+    bloomStrength: 0.68,
   }),
   balanced: Object.freeze({
-    shaderQuality: 0.72,
+    shaderQuality: 0.82,
     voltageDetail: 0.72,
-    bloomStrength: 0.72,
+    bloomStrength: 0.84,
   }),
   high: Object.freeze({
     shaderQuality: 1.0,
@@ -57,8 +80,8 @@ export const BORDER_FRAME_QUALITY = Object.freeze({
 export const BORDER_FRAME_LIMITS = Object.freeze({
   maximumActiveImpulses: 8,
   maximumCombinedEmission: 0.94,
-  normalBloomCeiling: 0.35,
-  completionBloomCeiling: 0.52,
+  normalBloomCeiling: 0.44,
+  completionBloomCeiling: 0.56,
 });
 
 export function wrapPhase(value) {

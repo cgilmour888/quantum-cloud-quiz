@@ -86,7 +86,7 @@ function createWebGLRenderer(sharedContext, assets) {
     dataTexture = createTexture(gl, dataImage, gl.TEXTURE2);
 
     const names = [
-      'uEmissive', 'uData', 'uTime', 'uEventGain', 'uSpeedGain',
+      'uEmissive', 'uData', 'uTime', 'uEventGain', 'uChannelEnable', 'uSpeedGain',
       'uJunctionGain', 'uReducedMotion', 'uQuality', 'uBloomStrength', 'uProofMode',
     ];
     for (const name of names) uniforms[name] = gl.getUniformLocation(program, name);
@@ -130,6 +130,7 @@ function createWebGLRenderer(sharedContext, assets) {
       gl.bindTexture(gl.TEXTURE_2D, dataTexture);
       gl.uniform1f(uniforms.uTime, state.time);
       gl.uniform3fv(uniforms.uEventGain, state.eventChannels);
+      gl.uniform3fv(uniforms.uChannelEnable, state.channelEnable);
       gl.uniform1f(uniforms.uSpeedGain, state.speedGain);
       gl.uniform1f(uniforms.uJunctionGain, state.junctionGain);
       gl.uniform1f(uniforms.uReducedMotion, state.reducedMotion ? 1 : 0);
@@ -191,7 +192,7 @@ function createCanvas2DRenderer(sharedContext, assets) {
     manifest = nextManifest;
     layers = {
       cyan: tintChannel(emissiveImage, 0, [10, 220, 255]),
-      orange: tintChannel(emissiveImage, 1, [255, 72, 9]),
+      orange: tintChannel(emissiveImage, 1, [255, 56, 5]),
       purple: tintChannel(emissiveImage, 2, [171, 31, 255]),
     };
     ready = true;
@@ -223,9 +224,18 @@ function createCanvas2DRenderer(sharedContext, assets) {
       }
 
       const motion = state.reducedMotion ? 0.12 : 1;
-      const cyan = 0.25 + 0.22 * Math.sin(state.time * 4.2 * motion) + state.eventChannels[0] * 0.28;
-      const orange = 0.20 + 0.20 * Math.sin(state.time * 2.7 * motion + 1.4) + state.eventChannels[1] * 0.28;
-      const purple = 0.16 + 0.15 * Math.sin(state.time * 1.3 * motion + 0.7) + state.eventChannels[2] * 0.22;
+      const channelEnable = state.channelEnable ?? [1, 1, 0];
+      const cyan = channelEnable[0] * (
+        0.25 + 0.22 * Math.sin(state.time * 4.2 * motion) + state.eventChannels[0] * 0.28
+      );
+      const orangeCarrier = 0.58 + 0.14 * Math.sin(state.time * 5.1 * motion + 1.4);
+      const orangeSurge = 0.10 * Math.sin(state.time * 9.8 * motion + 0.3);
+      const orange = channelEnable[1] * (
+        orangeCarrier + orangeSurge + state.eventChannels[1] * 0.24
+      );
+      const purple = channelEnable[2] * (
+        0.16 + 0.15 * Math.sin(state.time * 1.3 * motion + 0.7) + state.eventChannels[2] * 0.22
+      );
       context.save();
       context.globalCompositeOperation = proofMode === 1 ? 'source-over' : 'screen';
       drawLayer(layers.purple, state.width, state.height, proofMode === 1 ? 0.72 : purple);

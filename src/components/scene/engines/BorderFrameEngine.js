@@ -6,7 +6,11 @@ import {
 import { createBorderFrameRenderer } from './border/BorderFrameRenderer.js';
 import { BorderFramePerformanceController } from './border/BorderFramePerformanceController.js';
 import { BorderFrameSurgeController } from './border/BorderFrameSurgeController.js';
-import { BORDER_FRAME_LIMITS } from './border/borderFrameConfig.js';
+import {
+  BORDER_FRAME_CHANNEL_MODES,
+  BORDER_FRAME_LIMITS,
+  resolveBorderFrameChannelMode,
+} from './border/borderFrameConfig.js';
 
 const EVENT_PROFILES = Object.freeze({
   [SceneEvents.EXAM_STARTED]: Object.freeze({
@@ -66,6 +70,13 @@ const PROOF_MODES = Object.freeze({
   occlusion: 4,
 });
 
+
+function readChannelMode() {
+  const requested = new URLSearchParams(globalThis.location?.search ?? '')
+    .get('qcq-border-channel');
+  return resolveBorderFrameChannelMode(requested);
+}
+
 function prefersReducedMotion() {
   return Boolean(globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
 }
@@ -92,6 +103,8 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
 
   const reducedMotion = prefersReducedMotion();
   const proofMode = readProofMode();
+  const channelMode = readChannelMode();
+  const channelEnable = BORDER_FRAME_CHANNEL_MODES[channelMode];
   const surges = new BorderFrameSurgeController(BORDER_FRAME_LIMITS.maximumActiveImpulses);
   const performance = new BorderFramePerformanceController({
     initial: 'balanced',
@@ -165,6 +178,8 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
       stage.dataset.borderRenderingPlane = 'shared-master-compositor';
       stage.dataset.borderPlacardMode = 'fully-excluded-independent-button';
       stage.dataset.borderProofMode = String(proofMode);
+      stage.dataset.borderChannelMode = channelMode;
+      stage.dataset.borderOrangeMode = 'persistent-counter-clockwise-carrier';
     },
 
     resize() {
@@ -195,6 +210,7 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
         reducedMotion,
         quality: performance.state,
         eventChannels: surgeState.channels,
+        channelEnable,
         speedGain: surgeState.speedGain,
         junctionGain: surgeState.junctionGain,
       });
@@ -222,6 +238,8 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
       delete stage.dataset.borderRenderingPlane;
       delete stage.dataset.borderPlacardMode;
       delete stage.dataset.borderProofMode;
+      delete stage.dataset.borderChannelMode;
+      delete stage.dataset.borderOrangeMode;
       delete stage.dataset.borderAtlasVariant;
       delete stage.dataset.borderRenderer;
       delete stage.dataset.borderQuality;

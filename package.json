@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run verify:master && npm run verify:compositor && npm run verify:border-install-r4-2 && npm run verify:border-r4 && npm run verify:border-proof-r4-1 && vite build",
+    "build": "npm run verify:master && npm run verify:compositor && npm run verify:border-install-r4-2 && npm run verify:border-r4 && npm run verify:border-proof-r4-1 && npm run verify:border-orange-r4-4 && vite build",
     "preview": "vite preview",
     "verify:master": "node scripts/verify-master.mjs",
     "verify:compositor": "node scripts/verify-compositor-r3-gates.mjs",
@@ -15,7 +15,8 @@
     "test:gameplay": "node --test tests/*.test.mjs",
     "test": "npm run test:gameplay",
     "verify:border-proof-r4-1": "node scripts/verify-border-proof-r4-1-gates.mjs",
-    "verify:border-install-r4-2": "node scripts/verify-border-install-r4-2.mjs"
+    "verify:border-install-r4-2": "node scripts/verify-border-install-r4-2.mjs",
+    "verify:border-orange-r4-4": "node scripts/verify-border-orange-r4-4.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",
