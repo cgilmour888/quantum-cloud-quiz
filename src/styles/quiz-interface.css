@@ -440,3 +440,155 @@
     transition: none;
   }
 }
+
+/* R5.5 — placard becomes an independent, trim-anchored control. */
+.qcq-placard-hit-zone {
+  position: absolute;
+  z-index: 60;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.qcq-placard-hit-zone:focus-visible {
+  outline: none;
+}
+
+/* R5.5.3 — placard visuals are rendered only by BorderFrameEngine. */
+/* Business card is a temporary tablet presentation mode; quiz state remains mounted. */
+.qcq-profile-card {
+  position: absolute;
+  z-index: 35;
+  left: 34.39%;
+  top: 25.93%;
+  width: 33.13%;
+  height: 46.23%;
+  overflow: hidden;
+  color: #f5f7ff;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(24, 12, 43, 0.97), rgba(1, 5, 12, 0.985) 64%, #000207 100%);
+  clip-path: polygon(2.4% 0, 97.4% 0, 100% 4.8%, 99.2% 95.2%, 96.8% 100%, 2.5% 100%, 0 95%, 0 5%);
+  box-shadow:
+    inset 0 0 1.4dvh rgba(91, 198, 255, 0.18),
+    inset 0 0 3.1dvh rgba(165, 60, 255, 0.15),
+    0 0 1.1dvh rgba(0, 0, 0, 0.92);
+  pointer-events: auto;
+}
+
+.qcq-profile-card__close {
+  position: absolute;
+  z-index: 4;
+  top: 2.4%;
+  left: 16%;
+  width: 68%;
+  height: 10.8%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #dff8ff;
+  background: transparent;
+  font-family: var(--qcq-display-serif);
+  font-size: clamp(9px, 1.75dvh, 38px);
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 0.7dvh rgba(64, 221, 255, 0.72);
+  cursor: pointer;
+}
+
+.qcq-profile-card__close:hover,
+.qcq-profile-card__close:focus-visible {
+  color: #ffffff;
+  outline: none;
+  text-shadow:
+    0 0 0.7dvh rgba(64, 221, 255, 0.95),
+    0 0 1.2dvh rgba(192, 87, 255, 0.72);
+}
+
+.qcq-profile-card__body {
+  position: absolute;
+  inset: 13.5% 3.4% 3.2%;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 1.4%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.qcq-profile-card__artwork {
+  display: block;
+  width: min(94%, 980px);
+  max-height: 74%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 0.55dvh rgba(117, 213, 255, 0.30))
+    drop-shadow(0 0 1.1dvh rgba(178, 73, 255, 0.22));
+  user-select: none;
+}
+
+.qcq-profile-card__email {
+  display: grid;
+  place-items: center;
+  min-width: 44%;
+  min-height: clamp(20px, 3.3dvh, 70px);
+  padding-inline: 5%;
+  color: #89edff;
+  border: 1px solid rgba(78, 220, 255, 0.42);
+  border-radius: 0.35rem;
+  background: rgba(3, 19, 32, 0.72);
+  font-family: var(--qcq-display-serif);
+  font-size: clamp(8px, 1.45dvh, 31px);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-shadow: 0 0 0.55dvh rgba(52, 220, 255, 0.75);
+}
+
+.qcq-profile-card__email:hover,
+.qcq-profile-card__email:focus-visible {
+  color: #ffffff;
+  outline: none;
+  border-color: rgba(201, 116, 255, 0.82);
+  box-shadow: 0 0 0.8dvh rgba(158, 57, 255, 0.36);
+}
+
+.qcq-profile-card__socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 0.58vw, 16px);
+  width: 72%;
+  min-height: clamp(22px, 4.4dvh, 94px);
+}
+
+.qcq-profile-card__social {
+  display: grid;
+  place-items: center;
+  width: clamp(24px, 4.0dvh, 86px);
+  aspect-ratio: 1;
+  border: 0;
+  background: transparent;
+  filter: drop-shadow(0 0 0.4dvh rgba(75, 211, 255, 0.30));
+}
+
+.qcq-profile-card__social img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+}
+
+.qcq-profile-card__social--unconfigured {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.qcq-live-interface[data-calibration='true'] .qcq-placard-hit-zone {
+  outline: 2px dashed rgba(255, 221, 88, 0.94);
+  outline-offset: -2px;
+}

@@ -18,6 +18,9 @@ export function getBorderFrameAssetUrls(variant) {
     manifest: assetPath(`${ROOT}/manifest.json`),
     emissiveAtlas: assetPath(`${ROOT}/runtime/${normalized}/border-emissive-atlas.png`),
     dataAtlas: assetPath(`${ROOT}/runtime/${normalized}/border-data-atlas.png`),
+    purpleTrueMask: assetPath(`${ROOT}/runtime/${normalized}/purple-border-production-r5.5.3.png`),
+    purplePhase: assetPath(`${ROOT}/runtime/${normalized}/purple-flow-phase-r5.5.3.png`),
+    placardInteractionMask: assetPath(`${ROOT}/runtime/${normalized}/placard-interaction-mask-r5.5.3.png`),
   });
 }
 

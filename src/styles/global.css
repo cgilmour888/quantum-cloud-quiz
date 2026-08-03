@@ -247,3 +247,47 @@ textarea {
   color: #54e6ff;
   letter-spacing: 0.16em;
 }
+
+
+/* R5.3 channel-parity diagnostics: one variable at a time on the proven cyan path. */
+.scene-stage[data-border-diagnostic-mode='purple-cyan-clone'] .qcq-live-interface,
+.scene-stage[data-border-diagnostic-mode='purple-cyan-tracer'] .qcq-live-interface,
+.scene-stage[data-border-diagnostic-mode='purple-mask-cyan-phase'] .qcq-live-interface,
+.scene-stage[data-border-diagnostic-mode='purple-mask-tracer'] .qcq-live-interface {
+  display: none;
+}
+
+.scene-stage[data-border-diagnostic-mode='purple-cyan-clone']::after,
+.scene-stage[data-border-diagnostic-mode='purple-cyan-tracer']::after,
+.scene-stage[data-border-diagnostic-mode='purple-mask-cyan-phase']::after,
+.scene-stage[data-border-diagnostic-mode='purple-mask-tracer']::after {
+  position: absolute;
+  z-index: 1200;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(197, 128, 255, 0.9);
+  border-radius: 0.5rem;
+  color: #f2dcff;
+  background: rgba(8, 0, 18, 0.9);
+  font: 600 0.78rem/1.25 system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.scene-stage[data-border-diagnostic-mode='purple-cyan-clone']::after {
+  content: 'R5.3 PURPLE CYAN-CLONE · COUNTER-CLOCKWISE';
+}
+
+.scene-stage[data-border-diagnostic-mode='purple-cyan-tracer']::after {
+  content: 'R5.3 PURPLE TRACER ON APPROVED CYAN ROUTE · COUNTER-CLOCKWISE';
+}
+
+.scene-stage[data-border-diagnostic-mode='purple-mask-cyan-phase']::after {
+  content: 'R5.4 TRUE PURPLE MASK · APPROVED CYAN PHASE · COUNTER-CLOCKWISE';
+}
+
+.scene-stage[data-border-diagnostic-mode='purple-mask-tracer']::after {
+  content: 'R5.4 TRUE PURPLE TRACER · LOWER-CENTER CIRCUIT EXTENSIONS ACTIVE';
+}

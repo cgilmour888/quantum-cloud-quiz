@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "5.4.3",
+  "revision": "5.4.3",
+  "purpose": "Canonical lower-center nameplate mapping shared by isolated, registration, and live-purple inspection views",
+  "canonicalPlane": {
+    "x": 0,
+    "y": 0,
+    "width": 3840,
+    "height": 2160,
+    "centerX": 1920,
+    "centerY": 1080
+  },
+  "sourceAssets": {
+    "master": "public/images/master/MASTER.png",
+    "purpleMask": "public/images/master/derived/border-frame/source/border-purple-emissive-r5.4.png",
+    "livePurpleMask2160": "public/images/master/derived/border-frame/runtime/2160/purple-true-mask-r5.4.png"
+  },
+  "nameplateFace": {
+    "classification": "physical inner face only",
+    "polygon3840x2160": [[1455,1995],[2385,1995],[2445,2035],[2445,2075],[2385,2100],[1455,2100],[1395,2075],[1395,2035]],
+    "bounds": {"x":1395,"y":1995,"width":1050,"height":105},
+    "center": {"x":1920,"y":2047.5}
+  },
+  "focusViewport": {
+    "x": 0,
+    "y": 1780,
+    "width": 3840,
+    "height": 535,
+    "centerX": 1920,
+    "centerY": 2047.5,
+    "preserveAspectRatio": "xMidYMid meet"
+  },
+  "alignment": {
+    "masterCenterX": 1920,
+    "maskCenterX": 1920,
+    "nameplateCenterX": 1920,
+    "focusCenterX": 1920,
+    "maximumHorizontalCenterErrorPixels": 1,
+    "actualHorizontalCenterErrorPixels": 0,
+    "sharedSourceOrigin": [0,0],
+    "singleAffineTransform": true,
+    "separateFocusRasterRetired": true
+  },
+  "liveAnimation": {
+    "geometry": "true purple mask R5.4.2",
+    "phase": "approved cyan phase",
+    "direction": "counter-clockwise",
+    "equationsChanged": false,
+    "diagnosticRoutes": ["purple-mask-cyan-phase", "purple-mask-tracer"]
+  },
+  "legacy": {
+    "retiredFromRouting": "public/images/master/derived/border-frame/proofs/static-4k/purple-lower-center-focus-4k.png",
+    "retentionReason": "audit and backward verification only",
+    "runtimeReferenced": false
+  }
+}

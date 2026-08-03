@@ -60,6 +60,9 @@ function createWebGLRenderer(sharedContext, assets) {
   let vao = null;
   let emissiveTexture = null;
   let dataTexture = null;
+  let purpleTrueMaskTexture = null;
+  let purplePhaseTexture = null;
+  let placardInteractionMaskTexture = null;
   let ready = false;
   let destroyed = false;
   let manifest = null;
@@ -67,14 +70,26 @@ function createWebGLRenderer(sharedContext, assets) {
   const uniforms = {};
 
   async function init() {
-    const [nextManifest, emissiveImage, dataImage] = await Promise.all([
+    const [nextManifest, emissiveImage, dataImage, purpleTrueMaskImage, purplePhaseImage, placardInteractionMaskImage] = await Promise.all([
       loadBorderFrameManifest(assets.manifest),
       loadBorderFrameImage(assets.emissiveAtlas),
       loadBorderFrameImage(assets.dataAtlas),
+      loadBorderFrameImage(assets.purpleTrueMask),
+      loadBorderFrameImage(assets.purplePhase),
+      loadBorderFrameImage(assets.placardInteractionMask),
     ]);
     if (destroyed) return;
 
-    if (emissiveImage.width !== dataImage.width || emissiveImage.height !== dataImage.height) {
+    if (
+      emissiveImage.width !== dataImage.width
+      || emissiveImage.height !== dataImage.height
+      || emissiveImage.width !== purpleTrueMaskImage.width
+      || emissiveImage.height !== purpleTrueMaskImage.height
+      || emissiveImage.width !== purplePhaseImage.width
+      || emissiveImage.height !== purplePhaseImage.height
+      || emissiveImage.width !== placardInteractionMaskImage.width
+      || emissiveImage.height !== placardInteractionMaskImage.height
+    ) {
       throw new Error('BorderFrameEngine atlas dimensions do not match.');
     }
 
@@ -84,16 +99,23 @@ function createWebGLRenderer(sharedContext, assets) {
     if (!vao) throw new Error('Unable to allocate BorderFrameEngine VAO.');
     emissiveTexture = createTexture(gl, emissiveImage, gl.TEXTURE1);
     dataTexture = createTexture(gl, dataImage, gl.TEXTURE2);
+    purpleTrueMaskTexture = createTexture(gl, purpleTrueMaskImage, gl.TEXTURE3);
+    purplePhaseTexture = createTexture(gl, purplePhaseImage, gl.TEXTURE4);
+    placardInteractionMaskTexture = createTexture(gl, placardInteractionMaskImage, gl.TEXTURE5);
 
     const names = [
-      'uEmissive', 'uData', 'uTime', 'uEventGain', 'uChannelEnable', 'uSpeedGain',
+      'uEmissive', 'uData', 'uPurpleTrueMask', 'uPurplePhase', 'uPlacardInteractionMask', 'uPlacardInteraction', 'uTime', 'uEventGain', 'uChannelEnable', 'uSpeedGain',
       'uJunctionGain', 'uReducedMotion', 'uQuality', 'uBloomStrength', 'uProofMode',
+      'uDiagnosticMode',
     ];
     for (const name of names) uniforms[name] = gl.getUniformLocation(program, name);
 
     gl.useProgram(program);
     gl.uniform1i(uniforms.uEmissive, 1);
     gl.uniform1i(uniforms.uData, 2);
+    gl.uniform1i(uniforms.uPurpleTrueMask, 3);
+    gl.uniform1i(uniforms.uPurplePhase, 4);
+    gl.uniform1i(uniforms.uPlacardInteractionMask, 5);
     ready = true;
   }
 
@@ -110,7 +132,9 @@ function createWebGLRenderer(sharedContext, assets) {
       gl.disable(gl.SCISSOR_TEST);
       gl.colorMask(true, true, true, true);
 
-      if (proofMode >= 2) {
+      const diagnosticMode = Number(state.diagnosticMode) || 0;
+
+      if (diagnosticMode > 0 || proofMode >= 2) {
         gl.disable(gl.BLEND);
       } else if (proofMode === 1) {
         gl.enable(gl.BLEND);
@@ -128,15 +152,23 @@ function createWebGLRenderer(sharedContext, assets) {
       gl.bindTexture(gl.TEXTURE_2D, emissiveTexture);
       gl.activeTexture(gl.TEXTURE2);
       gl.bindTexture(gl.TEXTURE_2D, dataTexture);
+      gl.activeTexture(gl.TEXTURE3);
+      gl.bindTexture(gl.TEXTURE_2D, purpleTrueMaskTexture);
+      gl.activeTexture(gl.TEXTURE4);
+      gl.bindTexture(gl.TEXTURE_2D, purplePhaseTexture);
+      gl.activeTexture(gl.TEXTURE5);
+      gl.bindTexture(gl.TEXTURE_2D, placardInteractionMaskTexture);
       gl.uniform1f(uniforms.uTime, state.time);
       gl.uniform3fv(uniforms.uEventGain, state.eventChannels);
       gl.uniform3fv(uniforms.uChannelEnable, state.channelEnable);
+      gl.uniform3fv(uniforms.uPlacardInteraction, state.placardInteraction ?? [0, 0, 0]);
       gl.uniform1f(uniforms.uSpeedGain, state.speedGain);
       gl.uniform1f(uniforms.uJunctionGain, state.junctionGain);
       gl.uniform1f(uniforms.uReducedMotion, state.reducedMotion ? 1 : 0);
       gl.uniform1f(uniforms.uQuality, state.quality.shaderQuality);
       gl.uniform1f(uniforms.uBloomStrength, state.quality.bloomStrength);
       gl.uniform1i(uniforms.uProofMode, proofMode);
+      gl.uniform1i(uniforms.uDiagnosticMode, diagnosticMode);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       gl.disable(gl.BLEND);
     },
@@ -145,10 +177,16 @@ function createWebGLRenderer(sharedContext, assets) {
       ready = false;
       if (emissiveTexture) gl.deleteTexture(emissiveTexture);
       if (dataTexture) gl.deleteTexture(dataTexture);
+      if (purpleTrueMaskTexture) gl.deleteTexture(purpleTrueMaskTexture);
+      if (purplePhaseTexture) gl.deleteTexture(purplePhaseTexture);
+      if (placardInteractionMaskTexture) gl.deleteTexture(placardInteractionMaskTexture);
       if (vao) gl.deleteVertexArray(vao);
       if (program) gl.deleteProgram(program);
       emissiveTexture = null;
       dataTexture = null;
+      purpleTrueMaskTexture = null;
+      purplePhaseTexture = null;
+      placardInteractionMaskTexture = null;
       vao = null;
       program = null;
     },
@@ -184,16 +222,19 @@ function createCanvas2DRenderer(sharedContext, assets) {
   let layers = null;
 
   async function init() {
-    const [nextManifest, emissiveImage] = await Promise.all([
+    const [nextManifest, emissiveImage, purpleProductionImage, placardInteractionImage] = await Promise.all([
       loadBorderFrameManifest(assets.manifest),
       loadBorderFrameImage(assets.emissiveAtlas),
+      loadBorderFrameImage(assets.purpleTrueMask),
+      loadBorderFrameImage(assets.placardInteractionMask),
     ]);
     if (destroyed) return;
     manifest = nextManifest;
     layers = {
       cyan: tintChannel(emissiveImage, 0, [10, 220, 255]),
       orange: tintChannel(emissiveImage, 1, [255, 56, 5]),
-      purple: tintChannel(emissiveImage, 2, [171, 31, 255]),
+      purple: tintChannel(purpleProductionImage, 0, [171, 31, 255]),
+      placard: tintChannel(placardInteractionImage, 0, [213, 96, 255]),
     };
     ready = true;
   }
@@ -211,6 +252,20 @@ function createCanvas2DRenderer(sharedContext, assets) {
     render(state) {
       if (!ready || destroyed) return;
       const proofMode = Number(state.proofMode) || 0;
+      const diagnosticMode = Number(state.diagnosticMode) || 0;
+      if (diagnosticMode > 0) {
+        context.save();
+        context.globalCompositeOperation = 'source-over';
+        context.globalAlpha = 1;
+        context.fillStyle = '#000';
+        context.fillRect(0, 0, state.width, state.height);
+        context.fillStyle = '#d7b2ff';
+        context.font = '600 24px system-ui, sans-serif';
+        context.textAlign = 'center';
+        context.fillText('PURPLE CYAN-PARITY DIAGNOSTIC REQUIRES WEBGL2', state.width / 2, state.height / 2);
+        context.restore();
+        return;
+      }
       if (proofMode >= 2) {
         context.save();
         context.globalCompositeOperation = 'source-over';
@@ -224,7 +279,7 @@ function createCanvas2DRenderer(sharedContext, assets) {
       }
 
       const motion = state.reducedMotion ? 0.12 : 1;
-      const channelEnable = state.channelEnable ?? [1, 1, 0];
+      const channelEnable = state.channelEnable ?? [1, 1, 1];
       const cyan = channelEnable[0] * (
         0.25 + 0.22 * Math.sin(state.time * 4.2 * motion) + state.eventChannels[0] * 0.28
       );
@@ -239,6 +294,9 @@ function createCanvas2DRenderer(sharedContext, assets) {
       context.save();
       context.globalCompositeOperation = proofMode === 1 ? 'source-over' : 'screen';
       drawLayer(layers.purple, state.width, state.height, proofMode === 1 ? 0.72 : purple);
+      const placardInteraction = state.placardInteraction ?? [0, 0, 0];
+      const placardGain = Math.min(0.72, placardInteraction[0] * 0.16 + placardInteraction[1] * 0.22 + placardInteraction[2] * 0.58);
+      if (placardGain > 0) drawLayer(layers.placard, state.width, state.height, placardGain);
       drawLayer(layers.orange, state.width, state.height, proofMode === 1 ? 0.72 : orange);
       drawLayer(layers.cyan, state.width, state.height, proofMode === 1 ? 0.72 : cyan);
       context.restore();

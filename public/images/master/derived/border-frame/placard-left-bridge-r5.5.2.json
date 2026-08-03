@@ -1,0 +1,109 @@
+{
+  "revision": "5.5.2",
+  "canonicalPlane": {
+    "width": 3840,
+    "height": 2160
+  },
+  "leftBridgePolygon": [
+    [
+      1030,
+      1950
+    ],
+    [
+      1340,
+      1950
+    ],
+    [
+      1470,
+      1928
+    ],
+    [
+      1470,
+      2159
+    ],
+    [
+      1360,
+      2159
+    ],
+    [
+      1030,
+      2159
+    ]
+  ],
+  "physicalFacePolygon": [
+    [
+      1460,
+      1992
+    ],
+    [
+      2378,
+      1992
+    ],
+    [
+      2435,
+      2028
+    ],
+    [
+      2435,
+      2075
+    ],
+    [
+      2378,
+      2108
+    ],
+    [
+      1460,
+      2108
+    ],
+    [
+      1405,
+      2075
+    ],
+    [
+      1405,
+      2028
+    ]
+  ],
+  "runtime": {
+    "mask": "purple-border-production-r5.5.2.png",
+    "purplePhase": "purple-flow-phase-r5.5.2.png",
+    "normalAndDiagnosticsShareMask": true,
+    "normalAndDiagnosticsSharePhase": true,
+    "activationTrimPersistentWhenCardOpen": false,
+    "finiteActivationSurge": true
+  },
+  "metrics": {
+    "totalActivePixels": 238707,
+    "addedArtworkEdgePixels": 912,
+    "strengthenedLeftBridgePixels": 4951,
+    "leftBridgeActivePixels": 34103,
+    "innerFaceActivePixels": 0,
+    "ringStarAltarActivePixels": 0,
+    "leftBridgePhaseMinimum": 167,
+    "leftBridgePhaseMaximum": 174,
+    "phaseBinMedians": [
+      174.0,
+      174.0,
+      174.0,
+      173.0,
+      173.0,
+      173.0,
+      172.0,
+      172.0,
+      172.0,
+      171.0,
+      171.0,
+      171.0,
+      170.0,
+      170.0,
+      170.0,
+      169.0,
+      169.0,
+      169.0,
+      168.0,
+      168.0,
+      168.0,
+      167.0
+    ]
+  }
+}

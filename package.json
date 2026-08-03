@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run verify:master && npm run verify:compositor && npm run verify:border-install-r4-2 && npm run verify:border-r4 && npm run verify:border-proof-r4-1 && npm run verify:border-orange-r4-4 && vite build",
+    "build": "npm run verify:master && npm run verify:compositor && npm run verify:border-install-r4-2 && npm run verify:border-r4 && npm run verify:border-proof-r4-1 && npm run verify:border-orange-r4-4 && npm run verify:border-parity-r5-3 && npm run verify:border-purple-mask-r5-4 && npm run verify:border-purple-boundary-r5-4-1 && npm run verify:border-purple-boundary-r5-4-2 && npm run verify:border-nameplate-map-r5-4-3 && npm run verify:border-production-r5-5 && npm run verify:border-containment-r5-5-1 && npm run verify:border-r5-5-2 && npm run verify:border-r5-5-3 && vite build",
     "preview": "vite preview",
     "verify:master": "node scripts/verify-master.mjs",
     "verify:compositor": "node scripts/verify-compositor-r3-gates.mjs",
@@ -16,7 +16,16 @@
     "test": "npm run test:gameplay",
     "verify:border-proof-r4-1": "node scripts/verify-border-proof-r4-1-gates.mjs",
     "verify:border-install-r4-2": "node scripts/verify-border-install-r4-2.mjs",
-    "verify:border-orange-r4-4": "node scripts/verify-border-orange-r4-4.mjs"
+    "verify:border-orange-r4-4": "node scripts/verify-border-orange-r4-4.mjs",
+    "verify:border-parity-r5-3": "node scripts/verify-border-parity-r5-3.mjs",
+    "verify:border-purple-mask-r5-4": "node scripts/verify-border-purple-mask-r5-4.mjs",
+    "verify:border-purple-boundary-r5-4-1": "node scripts/verify-border-purple-boundary-r5-4-1.mjs",
+    "verify:border-purple-boundary-r5-4-2": "node scripts/verify-border-purple-boundary-r5-4-2.mjs",
+    "verify:border-nameplate-map-r5-4-3": "node scripts/verify-border-nameplate-map-r5-4-3.mjs",
+    "verify:border-production-r5-5": "node scripts/verify-border-production-r5-5.mjs",
+    "verify:border-containment-r5-5-1": "node scripts/verify-border-containment-r5-5-1.mjs",
+    "verify:border-r5-5-2": "node scripts/verify-border-left-bridge-r5-5-2.mjs",
+    "verify:border-r5-5-3": "node scripts/verify-border-microbridge-r5-5-3.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",

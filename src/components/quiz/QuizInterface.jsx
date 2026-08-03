@@ -16,6 +16,8 @@ import {
   SceneEvents,
   dispatchSceneEvent,
 } from '../scene/sceneEvents.js';
+import { PlacardControl } from '../scene/placard/PlacardControl.jsx';
+import { ProfileCardSurface } from '../profile/ProfileCardSurface.jsx';
 import '../../styles/quiz-interface.css';
 
 const ROW_TONES = Object.freeze(['cyan', 'magenta', 'emerald', 'orange']);
@@ -220,6 +222,7 @@ export function QuizInterface({ eventTargetRef }) {
   const [activePanel, setActivePanel] = useState('quiz');
   const [optionPage, setOptionPage] = useState(0);
   const actionRef = useRef(null);
+  const priorPanelRef = useRef('quiz');
   const calibration = useMemo(isCalibrationMode, []);
 
   const question = controller.question;
@@ -241,6 +244,25 @@ export function QuizInterface({ eventTargetRef }) {
   }, [eventTargetRef]);
 
   const returnToQuiz = useCallback(() => setActivePanel('quiz'), []);
+
+  const openBusinessCard = useCallback(() => {
+    if (activePanel !== 'profile') priorPanelRef.current = activePanel;
+    setActivePanel('profile');
+    const target = eventTargetRef?.current ?? globalThis.document?.documentElement;
+    dispatchSceneEvent(target, SceneEvents.BUSINESS_CARD_OPENED, {
+      source: 'placard',
+      geometryAuthority: 'lower-purple-trim',
+    });
+  }, [activePanel, eventTargetRef]);
+
+  const closeBusinessCard = useCallback(() => {
+    setActivePanel(priorPanelRef.current || 'quiz');
+    const target = eventTargetRef?.current ?? globalThis.document?.documentElement;
+    dispatchSceneEvent(target, SceneEvents.BUSINESS_CARD_CLOSED, {
+      source: 'tablet',
+      quizStatePreserved: true,
+    });
+  }, [eventTargetRef]);
 
   const restartAndReturn = useCallback(async () => {
     await controller.restart();
@@ -302,6 +324,12 @@ export function QuizInterface({ eventTargetRef }) {
 
   function handleKeyDown(event) {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+    if (event.key === 'Escape' && activePanel === 'profile') {
+      event.preventDefault();
+      closeBusinessCard();
+      return;
+    }
 
     if (event.key === 'Escape' && activePanel !== 'quiz') {
       event.preventDefault();
@@ -443,10 +471,23 @@ export function QuizInterface({ eventTargetRef }) {
       <DashboardControls activePanel={activePanel} onNavigate={navigate} />
 
       <section className="qcq-tablet-surface" aria-label="Quantum Cloud Quiz live tablet">
-        {activePanel === 'quiz'
-          ? renderQuizSurface()
-          : <PanelSurface panelModel={panelModel} />}
+        {activePanel === 'profile'
+          ? (
+            <ProfileCardSurface
+              eventTargetRef={eventTargetRef}
+              onClose={closeBusinessCard}
+            />
+          )
+          : activePanel === 'quiz'
+            ? renderQuizSurface()
+            : <PanelSurface panelModel={panelModel} />}
       </section>
+
+      <PlacardControl
+        eventTargetRef={eventTargetRef}
+        active={activePanel === 'profile'}
+        onActivate={openBusinessCard}
+      />
 
       <p className="qcq-live-status" aria-live="assertive">
         {controller.error || controller.feedback}

@@ -68,7 +68,33 @@ const PROOF_MODES = Object.freeze({
   isolated: 2,
   phase: 3,
   occlusion: 4,
+  'purple-true-mask': 5,
+  'purple-lower-center-boundary': 6,
+  'purple-lower-center-focus': 7,
+  'placard-circuit-containment': 8,
+  'placard-circuit-isolated': 9,
+  'placard-left-bridge-isolated': 10,
+  'placard-left-bridge-registration': 11,
+  'placard-left-bridge-phase': 12,
+  'placard-left-microbridge-isolated': 13,
+  'placard-left-microbridge-registration': 14,
+  'placard-left-microbridge-phase': 15,
+  'placard-interaction-mask': 16,
 });
+
+
+const DIAGNOSTIC_MODES = Object.freeze({
+  'purple-cyan-clone': 1,
+  'purple-cyan-tracer': 2,
+  'purple-mask-cyan-phase': 3,
+  'purple-mask-tracer': 4,
+});
+
+function readDiagnosticMode() {
+  const requested = new URLSearchParams(globalThis.location?.search ?? '')
+    .get('qcq-border-debug');
+  return Object.hasOwn(DIAGNOSTIC_MODES, requested) ? requested : 'none';
+}
 
 
 function readChannelMode() {
@@ -104,7 +130,11 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
   const reducedMotion = prefersReducedMotion();
   const proofMode = readProofMode();
   const channelMode = readChannelMode();
-  const channelEnable = BORDER_FRAME_CHANNEL_MODES[channelMode];
+  const diagnosticMode = readDiagnosticMode();
+  const diagnosticCode = DIAGNOSTIC_MODES[diagnosticMode] ?? 0;
+  const channelEnable = diagnosticCode > 0
+    ? BORDER_FRAME_CHANNEL_MODES.cyan.map(() => 0)
+    : BORDER_FRAME_CHANNEL_MODES[channelMode];
   const surges = new BorderFrameSurgeController(BORDER_FRAME_LIMITS.maximumActiveImpulses);
   const performance = new BorderFramePerformanceController({
     initial: 'balanced',
@@ -118,6 +148,18 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
   let time = 0;
   let lastDelta = 1 / 60;
   let surgeState = surges.snapshot();
+  let placardHoverActive = false;
+  let placardFocusActive = false;
+  let placardHoverGain = 0;
+  let placardFocusGain = 0;
+  let placardActivationGain = 0;
+
+  function approach(current, target, risePerSecond, fallPerSecond, delta) {
+    const rate = target > current ? risePerSecond : fallPerSecond;
+    const step = Math.max(0, Number(delta) || 0) * rate;
+    if (Math.abs(target - current) <= step) return target;
+    return current + Math.sign(target - current) * step;
+  }
 
   function destroyRenderer() {
     renderer?.destroy?.();
@@ -176,10 +218,16 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
     init() {
       stage.dataset.borderEngineState = proofMode === -1 ? 'master-proof' : 'waiting-for-compositor';
       stage.dataset.borderRenderingPlane = 'shared-master-compositor';
-      stage.dataset.borderPlacardMode = 'fully-excluded-independent-button';
+      stage.dataset.borderPlacardMode = 'physical-face-excluded-lower-center-circuit-active';
       stage.dataset.borderProofMode = String(proofMode);
       stage.dataset.borderChannelMode = channelMode;
       stage.dataset.borderOrangeMode = 'persistent-counter-clockwise-carrier';
+      stage.dataset.borderDiagnosticMode = diagnosticMode;
+      stage.dataset.borderDiagnosticControl = diagnosticCode > 0 ? 'approved-cyan-path' : 'none';
+      stage.dataset.borderPurplePhase = 'dedicated-left-microbridge-r5.5.3';
+      stage.dataset.borderPurpleGeometry = diagnosticCode >= 3
+        ? 'production-purple-r5.5.3-diagnostic'
+        : 'production-purple-r5.5.3';
     },
 
     resize() {
@@ -191,6 +239,9 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
       lastDelta = Math.max(0, Number(delta) || 0);
       time = elapsed;
       surgeState = surges.update(lastDelta);
+      placardHoverGain = approach(placardHoverGain, placardHoverActive ? 1 : 0, 9.0, 3.0, lastDelta);
+      placardFocusGain = approach(placardFocusGain, placardFocusActive ? 1 : 0, 7.0, 4.0, lastDelta);
+      placardActivationGain = Math.max(0, placardActivationGain - lastDelta / 0.85);
       performance.record(lastDelta);
       const quality = performance.state;
       stage.dataset.borderQuality = quality.tier;
@@ -207,16 +258,39 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
         width: sharedContext.width,
         height: sharedContext.height,
         proofMode,
+        diagnosticMode: diagnosticCode,
         reducedMotion,
         quality: performance.state,
         eventChannels: surgeState.channels,
         channelEnable,
         speedGain: surgeState.speedGain,
         junctionGain: surgeState.junctionGain,
+        placardInteraction: [placardHoverGain, placardFocusGain, placardActivationGain],
       });
     },
 
     handleEvent(eventName, detail = {}) {
+      if (eventName === SceneEvents.PLACARD_HOVER_ENTER || eventName === SceneEvents.PLACARD_HOVERED) {
+        placardHoverActive = true;
+        return;
+      }
+      if (eventName === SceneEvents.PLACARD_HOVER_LEAVE) {
+        placardHoverActive = false;
+        return;
+      }
+      if (eventName === SceneEvents.PLACARD_FOCUS_ENTER || eventName === SceneEvents.PLACARD_FOCUSED) {
+        placardFocusActive = true;
+        return;
+      }
+      if (eventName === SceneEvents.PLACARD_FOCUS_LEAVE) {
+        placardFocusActive = false;
+        return;
+      }
+      if (eventName === SceneEvents.PLACARD_ACTIVATED) {
+        placardActivationGain = 1;
+        return;
+      }
+
       const profile = EVENT_PROFILES[eventName];
       if (!profile) return;
 
@@ -233,6 +307,11 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
     destroy() {
       destroyed = true;
       surges.reset();
+      placardHoverActive = false;
+      placardFocusActive = false;
+      placardHoverGain = 0;
+      placardFocusGain = 0;
+      placardActivationGain = 0;
       destroyRenderer();
       delete stage.dataset.borderEngineState;
       delete stage.dataset.borderRenderingPlane;
@@ -240,6 +319,10 @@ export function createBorderFrameEngine({ compositorEngine, stage }) {
       delete stage.dataset.borderProofMode;
       delete stage.dataset.borderChannelMode;
       delete stage.dataset.borderOrangeMode;
+      delete stage.dataset.borderDiagnosticMode;
+      delete stage.dataset.borderDiagnosticControl;
+      delete stage.dataset.borderPurpleGeometry;
+      delete stage.dataset.borderPurplePhase;
       delete stage.dataset.borderAtlasVariant;
       delete stage.dataset.borderRenderer;
       delete stage.dataset.borderQuality;

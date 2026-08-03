@@ -1,0 +1,162 @@
+{
+  "revision": "5.5.3",
+  "canonicalPlane": {
+    "width": 3840,
+    "height": 2160
+  },
+  "microBridgePolygon": [
+    [
+      1215,
+      2002
+    ],
+    [
+      1285,
+      2002
+    ],
+    [
+      1350,
+      1968
+    ],
+    [
+      1435,
+      1898
+    ],
+    [
+      1512,
+      1898
+    ],
+    [
+      1512,
+      2159
+    ],
+    [
+      1370,
+      2159
+    ],
+    [
+      1290,
+      2138
+    ],
+    [
+      1215,
+      2138
+    ]
+  ],
+  "physicalPlacardPolygon": [
+    [
+      1380,
+      2077
+    ],
+    [
+      1390,
+      2008
+    ],
+    [
+      1470,
+      1930
+    ],
+    [
+      2385,
+      1930
+    ],
+    [
+      2470,
+      2005
+    ],
+    [
+      2480,
+      2114
+    ],
+    [
+      2400,
+      2158
+    ],
+    [
+      1450,
+      2158
+    ]
+  ],
+  "physicalFacePolygon": [
+    [
+      1460,
+      1992
+    ],
+    [
+      2378,
+      1992
+    ],
+    [
+      2435,
+      2028
+    ],
+    [
+      2435,
+      2075
+    ],
+    [
+      2378,
+      2108
+    ],
+    [
+      1460,
+      2108
+    ],
+    [
+      1405,
+      2075
+    ],
+    [
+      1405,
+      2028
+    ]
+  ],
+  "runtime": {
+    "mask": "purple-border-production-r5.5.3.png",
+    "purplePhase": "purple-flow-phase-r5.5.3.png",
+    "placardInteractionMask": "placard-interaction-mask-r5.5.3.png",
+    "normalAndDiagnosticsShareMask": true,
+    "normalAndDiagnosticsSharePhase": true,
+    "placardControlDrawsDecorativeTrim": false,
+    "hoverFocusActivationOwnedByBorderFrameEngine": true
+  },
+  "metrics": {
+    "totalActivePixels": 242002,
+    "addedMasterDerivedPixels": 3295,
+    "strengthenedExistingPixels": 4318,
+    "microBridgeActivePixels": 24695,
+    "microBridgeConnected": true,
+    "microBridgeConnectedArea": 24620,
+    "microBridgePhaseMinimum": 166,
+    "microBridgePhaseMaximum": 174,
+    "phaseBinMedians": [
+      174.0,
+      174.0,
+      173.0,
+      173.0,
+      173.0,
+      172.0,
+      172.0,
+      172.0,
+      171.0,
+      171.0,
+      171.0,
+      170.0,
+      170.0,
+      170.0,
+      169.0,
+      169.0,
+      169.0,
+      168.0,
+      168.0,
+      168.0,
+      167.0,
+      167.0,
+      167.0,
+      166.0,
+      166.0
+    ],
+    "placardInteractionPixels": 98950,
+    "innerFaceActivePixels": 0,
+    "ringStarAltarActivePixels": 0
+  }
+}

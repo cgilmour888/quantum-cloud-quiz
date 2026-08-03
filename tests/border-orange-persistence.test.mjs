@@ -43,9 +43,9 @@ test('orange is a persistent, faster, counter-clockwise carrier', () => {
   assert.ok(orange.color[1] < 0.20, 'orange must remain deep orange, not yellow');
 });
 
-test('orange remains enabled by default while purple remains staged', () => {
-  assert.equal(resolveBorderFrameChannelMode(undefined), 'dual');
-  assert.deepEqual(BORDER_FRAME_CHANNEL_MODES.dual, [1, 1, 0]);
+test('production defaults to cyan, orange and promoted purple', () => {
+  assert.equal(resolveBorderFrameChannelMode(undefined), 'all');
+  assert.deepEqual(BORDER_FRAME_CHANNEL_MODES.all, [1, 1, 1]);
   assert.deepEqual(BORDER_FRAME_CHANNEL_MODES.orange, [0, 1, 0]);
 });
 

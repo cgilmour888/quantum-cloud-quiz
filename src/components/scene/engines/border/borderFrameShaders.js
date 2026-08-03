@@ -38,15 +38,20 @@ precision highp float;
 
 uniform sampler2D uEmissive;
 uniform sampler2D uData;
+uniform sampler2D uPurpleTrueMask;
+uniform sampler2D uPurplePhase;
+uniform sampler2D uPlacardInteractionMask;
 uniform float uTime;
 uniform vec3 uEventGain;
 uniform vec3 uChannelEnable;
+uniform vec3 uPlacardInteraction;
 uniform float uSpeedGain;
 uniform float uJunctionGain;
 uniform float uReducedMotion;
 uniform float uQuality;
 uniform float uBloomStrength;
 uniform int uProofMode;
+uniform int uDiagnosticMode;
 
 in vec2 vUv;
 out vec4 outColor;
@@ -107,6 +112,24 @@ float cyanPackets(float phase, float timeValue) {
   );
 }
 
+float purpleCyanClonePackets(float phase, float timeValue) {
+  float position = fract(1.0 - timeValue * (CYAN_SPEED + uSpeedGain * 0.022));
+  return max(
+    pulse(phase, position, CYAN_WIDTH),
+    max(
+      pulse(phase, fract(position + 0.347), 0.034),
+      pulse(phase, fract(position + 0.701), 0.027)
+    )
+  );
+}
+
+vec2 purpleCyanTracer(float phase, float timeValue) {
+  float position = fract(1.0 - timeValue * (CYAN_SPEED + 0.020));
+  float head = pulse(phase, position, CYAN_WIDTH * 1.18);
+  float tail = pulse(phase, fract(position + 0.060), CYAN_WIDTH * 3.80);
+  return vec2(head, tail);
+}
+
 vec3 orangeTransport(float phase, float timeValue) {
   // Counter-clockwise travel: increasing time moves toward decreasing route phase.
   float position = fract(1.0 - timeValue * (ORANGE_SPEED + uSpeedGain * 0.030));
@@ -140,6 +163,20 @@ vec3 phaseColor(float phase) {
   return 0.55 + 0.45 * cos(TAU * (phase + vec3(0.0, 0.33, 0.67)));
 }
 
+float purplePathMask(vec2 uv) {
+  // R5.5.1 hard containment: all purple carrier, tracer, tail, glow,
+  // bloom, and event energy must originate from the corrected path mask.
+  // The threshold suppresses linear-filter interpolation outside the traced
+  // circuitry while retaining anti-aliased edges inside the approved path.
+  float sampled = texture(uPurpleTrueMask, uv).r;
+  return smoothstep(0.080, 0.220, sampled);
+}
+
+float placardInteractionPath(vec2 uv) {
+  float sampled = texture(uPlacardInteractionMask, uv).r;
+  return smoothstep(0.080, 0.220, sampled);
+}
+
 float orangeHaloMask(vec2 uv, vec2 texel) {
   float center = texture(uEmissive, uv).g;
   float nearMask = max(
@@ -161,6 +198,65 @@ void main() {
   vec4 emissive = texture(uEmissive, vUv);
   vec4 data = texture(uData, vUv);
   float combinedMask = max(emissive.r, max(emissive.g, emissive.b));
+
+
+  if (uDiagnosticMode == 1) {
+    float timeValue = mix(uTime * 0.08, uTime, 1.0 - uReducedMotion);
+    float flow = purpleCyanClonePackets(data.r, timeValue);
+    float noise = data.b;
+    float voltage = 0.62 + 0.38 * sin(uTime * TAU * CYAN_VOLTAGE_HZ + noise * TAU);
+    float junction = data.g * (0.48 + uJunctionGain * 0.52);
+    float intensity = emissive.r * data.a * min(
+      CYAN_MAXIMUM,
+      CYAN_BASE + flow * (0.47 + voltage * 0.23)
+        + junction * flow * CYAN_JUNCTION
+    );
+    vec3 cloneColor = mix(PURPLE, vec3(0.94, 0.82, 1.0), smoothstep(0.46, 0.82, intensity) * flow);
+    outColor = vec4(cloneColor * intensity, 1.0);
+    return;
+  }
+
+  if (uDiagnosticMode == 2) {
+    float timeValue = mix(uTime * 0.08, uTime, 1.0 - uReducedMotion);
+    vec2 tracer = purpleCyanTracer(data.r, timeValue);
+    float permitted = emissive.r * data.a;
+    float energy = permitted * min(1.0, tracer.x * 0.96 + tracer.y * 0.42);
+    vec3 tracerColor = mix(PURPLE, vec3(1.0, 0.92, 1.0), tracer.x * 0.92);
+    outColor = vec4(tracerColor * energy, 1.0);
+    return;
+  }
+
+  if (uDiagnosticMode == 3) {
+    float timeValue = mix(uTime * 0.08, uTime, 1.0 - uReducedMotion);
+    float purplePhase = texture(uPurplePhase, vUv).r;
+    float flow = purpleCyanClonePackets(purplePhase, timeValue);
+    float noise = data.b;
+    float voltage = 0.62 + 0.38 * sin(uTime * TAU * CYAN_VOLTAGE_HZ + noise * TAU);
+    float junction = data.g * (0.48 + uJunctionGain * 0.52);
+    // R5.4 uses the true purple geometry directly. It intentionally does not
+    // multiply by the legacy placard occlusion atlas because that atlas removed
+    // the lower-center circuit extensions that the user has identified as active.
+    float permitted = purplePathMask(vUv);
+    float intensity = permitted * min(
+      CYAN_MAXIMUM,
+      CYAN_BASE + flow * (0.47 + voltage * 0.23)
+        + junction * flow * CYAN_JUNCTION
+    );
+    vec3 cloneColor = mix(PURPLE, vec3(0.94, 0.82, 1.0), smoothstep(0.46, 0.82, intensity) * flow);
+    outColor = vec4(cloneColor * intensity, 1.0);
+    return;
+  }
+
+  if (uDiagnosticMode == 4) {
+    float timeValue = mix(uTime * 0.08, uTime, 1.0 - uReducedMotion);
+    float purplePhase = texture(uPurplePhase, vUv).r;
+    vec2 tracer = purpleCyanTracer(purplePhase, timeValue);
+    float permitted = purplePathMask(vUv);
+    float energy = permitted * min(1.0, tracer.x * 0.96 + tracer.y * 0.42);
+    vec3 tracerColor = mix(PURPLE, vec3(1.0, 0.92, 1.0), tracer.x * 0.92);
+    outColor = vec4(tracerColor * energy, 1.0);
+    return;
+  }
 
   if (uProofMode == 2) {
     vec3 proof = CYAN * emissive.r + ORANGE * emissive.g + PURPLE * emissive.b;
@@ -193,7 +289,11 @@ void main() {
   float orangePackets = orangeState.x;
   float orangeTrails = orangeState.y;
   float orangeCarrierWave = orangeState.z;
-  float purpleFlow = purplePackets(data.r, timeValue);
+  // R5.5.2 uses a dedicated purple phase texture. Cyan and orange retain
+  // the approved shared data phase byte-for-byte, while the restored left
+  // bridge and placard frame receive continuous counter-clockwise transport.
+  float purplePhase = texture(uPurplePhase, vUv).r;
+  float purpleFlow = purpleCyanClonePackets(purplePhase, timeValue);
   float junction = data.g * (0.48 + uJunctionGain * 0.52);
 
   // Cyan remains byte-for-byte equivalent in visual behavior to the approved channel.
@@ -214,10 +314,19 @@ void main() {
     orangeCarrier + orangeBody + orangeTail + orangeJunction + uEventGain.g
   );
 
-  float purpleIntensity = emissive.b * data.a * uChannelEnable.b * min(
+  // The R5.5.3 micro-bridge containment mask is authoritative. Do not
+  // reintroduce the legacy emissive.b/data.a placard occlusion path here.
+  float purplePermitted = purplePathMask(vUv);
+  float placardPermitted = placardInteractionPath(vUv);
+  float placardEnergy = placardPermitted * (
+    uPlacardInteraction.x * 0.16
+    + uPlacardInteraction.y * 0.22
+    + uPlacardInteraction.z * 0.58
+  );
+  float purpleIntensity = purplePermitted * uChannelEnable.b * min(
     PURPLE_MAXIMUM,
-    PURPLE_BASE + purpleFlow * (0.30 + purpleVoltage * 0.18)
-      + junction * purpleFlow * PURPLE_JUNCTION + uEventGain.b
+    PURPLE_BASE + purpleFlow * (0.47 + purpleVoltage * 0.23)
+      + junction * purpleFlow * PURPLE_JUNCTION + uEventGain.b + placardEnergy
   );
 
   float orangeCoreHeat = smoothstep(0.42, ORANGE_MAXIMUM, orangeIntensity)
@@ -230,7 +339,9 @@ void main() {
   // Quality controls micro-detail only; it may never extinguish the carrier current.
   float detailQuality = mix(0.72, 1.0, clamp(uQuality, 0.0, 1.0));
   float bloomFloor = max(uBloomStrength, 0.68);
-  float glow = emissive.a * aggregate * (0.10 + 0.25 * bloomFloor) * detailQuality;
+  float productionGlowMask = max(emissive.a, max(purplePermitted * 0.58, placardPermitted * placardEnergy));
+  float glow = productionGlowMask * aggregate
+    * (0.10 + 0.25 * bloomFloor) * detailQuality;
 
   vec2 texel = 1.0 / vec2(textureSize(uEmissive, 0));
   float orangeHaloSupport = orangeHaloMask(vUv, texel) * data.a * uChannelEnable.g;

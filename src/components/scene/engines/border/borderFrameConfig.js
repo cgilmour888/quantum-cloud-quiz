@@ -56,7 +56,7 @@ export const BORDER_FRAME_CHANNEL_MODES = Object.freeze({
 
 export function resolveBorderFrameChannelMode(value) {
   const key = typeof value === 'string' ? value.toLowerCase() : '';
-  return Object.hasOwn(BORDER_FRAME_CHANNEL_MODES, key) ? key : 'dual';
+  return Object.hasOwn(BORDER_FRAME_CHANNEL_MODES, key) ? key : 'all';
 }
 
 export const BORDER_FRAME_QUALITY = Object.freeze({

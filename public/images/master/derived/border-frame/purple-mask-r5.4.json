@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "5.4.0",
+  "purpose": "True purple geometry parity with precise inner-face nameplate occlusion",
+  "direction": "counter-clockwise",
+  "phaseSource": "approved cyan phase (border-data-atlas red channel)",
+  "activeGeometry": [
+    "outer purple perimeter",
+    "lower-center purple circuit extensions",
+    "placard-adjacent purple conduit threads"
+  ],
+  "hardExclusions": [
+    "four gyroscope interiors",
+    "music mechanism",
+    "dashboards",
+    "tablet",
+    "physical nameplate inner face and text"
+  ],
+  "pixelCount": 267971,
+  "regions": {
+    "top": 9938,
+    "bottom": 228571,
+    "left": 21292,
+    "right": 23899,
+    "lowerCenter": 222060
+  },
+  "assets": [
+    {
+      "path": "public/images/master/derived/border-frame/source/border-purple-emissive-r5.4.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "L",
+      "sha256": "c5728e29c1f7e87a95e33e26ccd99a7a7a2b3710fe2b598e5b8bc6a638dcd351"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/runtime/1080/purple-true-mask-r5.4.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "L",
+      "sha256": "03040812739e32c2a0e603a03858587e9f497130b19034dad397c23f594019e7"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/runtime/1440/purple-true-mask-r5.4.png",
+      "width": 2560,
+      "height": 1440,
+      "mode": "L",
+      "sha256": "84581bedee0b92c5e361d7783a143ab356a326fec65fcf7939c0f57a33d2e16b"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/runtime/2160/purple-true-mask-r5.4.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "L",
+      "sha256": "c5728e29c1f7e87a95e33e26ccd99a7a7a2b3710fe2b598e5b8bc6a638dcd351"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/proofs/static-4k/purple-true-mask-4k.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "RGBA",
+      "sha256": "42d327f7b8dfeacabde079086d7d115c3331618ac68a53d7e433eac5485b915a"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/proofs/static-4k/purple-lower-center-boundary-4k.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "RGBA",
+      "sha256": "7f2ec8bca9cfc2690702af053b514467b59157d79c01720c30c7d5e536edec2b"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/proofs/static-4k/purple-lower-center-boundary-r5.4.1.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "RGBA",
+      "sha256": "8e2fdab072eb24662a0a3cc591d22ac3fd03eeb0b247bc1601ffc9d01f6966c8"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/proofs/static-4k/purple-lower-center-boundary-r5.4.2.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "RGBA",
+      "sha256": "b550231e6718f76df2ac01e4b34e738c42a0c2cd1f3f3938dabd46acbd065951"
+    },
+    {
+      "path": "public/images/master/derived/border-frame/proofs/static-4k/purple-lower-center-focus-4k.png",
+      "width": 3840,
+      "height": 2160,
+      "mode": "RGBA",
+      "sha256": "dc7259e279d6a861a590e9ac7cf4b419966e46783759b918b4263083f0698001"
+    }
+  ],
+  "revision": "5.4.2",
+  "cleanup": {
+    "strategy": "retain approved perimeter and lower-center circuitry; exclude only the physical inner nameplate face",
+    "removedDisconnectedPixels": 13879,
+    "residualFaceFragmentPixelsRemoved": 44,
+    "retainedComponents": 31,
+    "liveAnimationEquationsChanged": false,
+    "boundaryProofCacheBusted": true,
+    "remainingDisconnectedLowerCenterIslands": 0
+  },
+  "boundaryProof": {
+    "file": "public/images/master/derived/border-frame/proofs/static-4k/purple-lower-center-boundary-r5.4.2.png",
+    "background": "black",
+    "physicalNameplateFace": "solid red with white outline",
+    "activeCircuitry": "bright purple",
+    "redPixelCount": 107366,
+    "liveMaskPixelsInsideRedFace": 0,
+    "cacheBusted": true,
+    "inspection": "repeat Inspection E only"
+  },
+  "nameplateOcclusion": {
+    "classification": "inner physical nameplate face only",
+    "polygon3840x2160": [
+      [
+        1455,
+        1995
+      ],
+      [
+        2385,
+        1995
+      ],
+      [
+        2445,
+        2035
+      ],
+      [
+        2445,
+        2075
+      ],
+      [
+        2385,
+        2100
+      ],
+      [
+        1455,
+        2100
+      ],
+      [
+        1395,
+        2075
+      ],
+      [
+        1395,
+        2035
+      ]
+    ],
+    "maskPixelsRemoved": 17478,
+    "liveMaskPixelsInsideFace": 0,
+    "upperCrownBranchesPreserved": true,
+    "leftPlacardAdjacentThreadsPreserved": true,
+    "rightPlacardAdjacentThreadsPreserved": true
+  }
+}

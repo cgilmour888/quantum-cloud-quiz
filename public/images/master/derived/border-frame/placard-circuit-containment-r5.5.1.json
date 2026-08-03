@@ -1,0 +1,123 @@
+{
+  "revision": "5.5.1",
+  "canonicalPlane": {
+    "width": 3840,
+    "height": 2160
+  },
+  "purpose": "restore original placard-adjacent purple circuitry while hard-excluding unrelated background",
+  "animationAuthority": {
+    "outerContainment": "physical blue-outline placard polygon",
+    "pathSource": "purple pixels traced directly from immutable MASTER.png",
+    "innerExclusion": "physical black nameplate face",
+    "backgroundExclusion": "ring, Star of David, and altar zone above placard"
+  },
+  "physicalPlacardPolygon": [
+    [
+      1380,
+      2077
+    ],
+    [
+      1390,
+      2008
+    ],
+    [
+      1470,
+      1930
+    ],
+    [
+      2385,
+      1930
+    ],
+    [
+      2470,
+      2005
+    ],
+    [
+      2480,
+      2114
+    ],
+    [
+      2400,
+      2158
+    ],
+    [
+      1450,
+      2158
+    ]
+  ],
+  "physicalFacePolygon": [
+    [
+      1460,
+      1992
+    ],
+    [
+      2378,
+      1992
+    ],
+    [
+      2435,
+      2028
+    ],
+    [
+      2435,
+      2075
+    ],
+    [
+      2378,
+      2108
+    ],
+    [
+      1460,
+      2108
+    ],
+    [
+      1405,
+      2075
+    ],
+    [
+      1405,
+      2028
+    ]
+  ],
+  "ringStarProtectionRect": {
+    "x": 850,
+    "y": 1600,
+    "width": 2150,
+    "height": 330
+  },
+  "localCorrectionWindow": {
+    "x": 700,
+    "y": 1600,
+    "width": 2450,
+    "height": 560
+  },
+  "componentPolicy": {
+    "sideRoutes": "retain only connected R5.5 components with area >= 5000 pixels",
+    "frame": "restore MASTER purple pixels inside physical polygon and outside face",
+    "tinyExteriorIslands": "remove components below 250 pixels"
+  },
+  "runtime": {
+    "mask": "purple-border-production-r5.5.1.png",
+    "normalAndDiagnosticsShareMask": true,
+    "allPurpleTermsHardClipped": true,
+    "defaultChannels": [
+      "cyan",
+      "orange",
+      "purple"
+    ]
+  },
+  "metrics": {
+    "top": 56619,
+    "bottom": 37785,
+    "left": 4374,
+    "right": 14312,
+    "totalActivePixels": 238327,
+    "physicalFrameActivePixels": 97873,
+    "innerFaceActivePixels": 0,
+    "ringStarProtectionActivePixels": 0,
+    "removedFromR55LocalPixels": 25069,
+    "addedPlacardFramePixels": 101462,
+    "retainedSideComponents": 2,
+    "faceSafetyMarginPixels": 2
+  }
+}
