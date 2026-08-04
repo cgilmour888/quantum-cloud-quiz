@@ -6,12 +6,19 @@ import {
   BorderFrameProofLayer,
   readBorderFrameProofMode,
 } from './debug/BorderFrameProofLayer.jsx';
+import {
+  TabletMaximumApertureProofLayer,
+  readTabletA21RProofConfig,
+} from './debug/TabletMaximumApertureProofLayer.jsx';
 
 export function Scene() {
   const stageRef = useRef(null);
   const compositorCanvasRef = useRef(null);
   const borderProofMode = readBorderFrameProofMode();
+  const tabletA21RProof = readTabletA21RProofConfig();
 
+  // The normal SceneEngine lifecycle remains authoritative in static and live
+  // tablet proof modes. Live proof mode is only a transparent SVG overlay.
   useSceneEngine({
     stageRef,
     compositorCanvasRef,
@@ -27,6 +34,8 @@ export function Scene() {
         className="scene-stage"
         data-compositor-ready="false"
         data-border-proof-mode={borderProofMode ?? 'live'}
+        data-tablet-a21r-proof-mode={tabletA21RProof?.mode ?? 'live'}
+        data-tablet-a21r-presentation={tabletA21RProof?.presentation ?? 'none'}
       >
         <picture className="scene-artwork scene-artwork--fallback" aria-hidden="true">
           <source
@@ -62,6 +71,7 @@ export function Scene() {
 
         <QuizInterface eventTargetRef={stageRef} />
         <BorderFrameProofLayer mode={borderProofMode} />
+        <TabletMaximumApertureProofLayer {...(tabletA21RProof ?? {})} />
       </div>
     </section>
   );

@@ -291,3 +291,83 @@ textarea {
 .scene-stage[data-border-diagnostic-mode='purple-mask-tracer']::after {
   content: 'R5.4 TRUE PURPLE TRACER · LOWER-CENTER CIRCUIT EXTENSIONS ACTIVE';
 }
+
+/* A2.1R developer-only maximum-aperture registration proofs. */
+.tablet-a21r-proof-layer {
+  --tablet-a21r-overlay-opacity: 1;
+
+  position: absolute;
+  inset: 0;
+  z-index: 1200;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  pointer-events: none;
+}
+
+/*
+ * Live mode is deliberately transparent. It does not introduce a replacement
+ * MASTER, pause the SceneEngine, hide the quiz interface, or intercept input.
+ */
+.tablet-a21r-proof-layer[data-presentation='live'] {
+  background: transparent;
+}
+
+.tablet-a21r-proof-layer__master,
+.tablet-a21r-proof-layer__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tablet-a21r-proof-layer__master {
+  object-fit: fill;
+  object-position: center;
+  user-select: none;
+}
+
+.tablet-a21r-proof-layer__svg {
+  overflow: visible;
+  opacity: var(--tablet-a21r-overlay-opacity);
+}
+
+.tablet-a21r-proof-layer[data-presentation='live'] .tablet-a21r-proof-layer__svg {
+  filter:
+    drop-shadow(0 0 2px rgba(0, 0, 0, 0.95))
+    drop-shadow(0 0 4px rgba(0, 232, 255, 0.34));
+}
+
+.tablet-a21r-proof-layer__banner {
+  position: absolute;
+  top: max(12px, 1.2vw);
+  left: 50%;
+  display: grid;
+  gap: 0.18rem;
+  min-width: min(930px, calc(100vw - 32px));
+  padding: 0.6rem 1rem;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 225, 67, 0.92);
+  border-radius: 0.5rem;
+  color: #f5fbff;
+  background: rgba(0, 5, 12, 0.92);
+  box-shadow: 0 0 20px rgba(0, 225, 255, 0.22);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(0.66rem, 0.72vw, 0.94rem);
+  line-height: 1.28;
+  text-align: center;
+  letter-spacing: 0.025em;
+}
+
+.tablet-a21r-proof-layer[data-presentation='live'] .tablet-a21r-proof-layer__banner {
+  background: rgba(0, 5, 12, 0.78);
+  backdrop-filter: blur(5px);
+}
+
+.tablet-a21r-proof-layer__banner strong {
+  color: #ffe143;
+  letter-spacing: 0.12em;
+}
