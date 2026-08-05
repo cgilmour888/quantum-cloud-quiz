@@ -1,0 +1,5 @@
+{
+  "status": "AWAITING_TARGET_MAC",
+  "reason": "Playwright and a running target build are required for rendered DOM measurements.",
+  "requiredViewports": [[1280,720],[1366,768],[1440,778],[1440,900],[1920,1080]]
+}

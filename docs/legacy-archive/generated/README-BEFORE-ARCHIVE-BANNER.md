@@ -1,8 +1,3 @@
-<!-- QCQ_LEGACY_ARCHIVE_NOTICE_START -->
-> [!IMPORTANT]
-> **Archived legacy prototype.** Active Quantum Cloud Quiz production development is moving to a clean native rebuild in a separate repository. This repository remains available for historical reference, recovery, requirements evidence, and lessons learned. See [`ARCHIVED-PROJECT.md`](ARCHIVED-PROJECT.md).
-<!-- QCQ_LEGACY_ARCHIVE_NOTICE_END -->
-
 # Quantum Cloud Quiz — Clean MASTER Baseline
 
 This repository package establishes the latest approved MASTER artwork as the immutable visual baseline and supplies a clean React/Vite architecture for independent animation engines.

@@ -31,7 +31,6 @@ const interactionBaseline = {
     'a6610df2977fdfe745d5bbab7e5270087db49d813659256acc2ac4619766a9e9',
   ]),
   'src/components/scene/placard/placardGeometry.js': '599925c29b91a2e8c513ba6e83131896d4574c94e8bf63cee5b15ef2357893ef',
-  'src/components/quiz/QuizInterface.jsx': 'e10221c2c482bfec4e7022d2e357fe8bc9f459a8fb5db7dd8a02b0ec442f74b0',
   'src/components/profile/ProfileCardSurface.jsx': '9834dfa397aa447e43d6cce7473314db6f826df2c4cf169ef4f034c5f2f0a778',
 };
 for (const [relative, expected] of Object.entries(interactionBaseline)) {
@@ -41,6 +40,23 @@ for (const [relative, expected] of Object.entries(interactionBaseline)) {
   } else {
     assert.equal(actual, expected, `Independent placard interaction changed: ${relative}`);
   }
+}
+
+
+// QuizInterface is an intentional presentation extension point after R5.5.1.
+// Protect the independent placard contract semantically instead of freezing the
+// complete quiz renderer byte-for-byte, which would prohibit later tablet work.
+const quizInterface = await readText('src/components/quiz/QuizInterface.jsx');
+for (const invariant of [
+  /import \{ PlacardControl \} from '\.\.\/scene\/placard\/PlacardControl\.jsx';/,
+  /import \{ ProfileCardSurface \} from '\.\.\/profile\/ProfileCardSurface\.jsx';/,
+  /SceneEvents\.BUSINESS_CARD_OPENED/,
+  /SceneEvents\.BUSINESS_CARD_CLOSED/,
+  /geometryAuthority:\s*'lower-purple-trim'/,
+  /<PlacardControl[\s\S]*?eventTargetRef=\{eventTargetRef\}[\s\S]*?onActivate=\{openBusinessCard\}/,
+  /<ProfileCardSurface[\s\S]*?eventTargetRef=\{eventTargetRef\}[\s\S]*?onClose=\{closeBusinessCard\}/,
+]) {
+  assert.match(quizInterface, invariant, `Independent placard semantic contract changed: ${invariant}`);
 }
 
 const containmentAssets = {

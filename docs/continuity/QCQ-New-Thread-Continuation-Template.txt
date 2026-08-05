@@ -1,0 +1,47 @@
+QUANTUM CLOUD QUIZ — NEW THREAD CONTINUATION TEMPLATE
+
+PROJECT:
+Quantum Cloud Quiz Native
+
+AUTHORITATIVE MILESTONE:
+[QCQ-NATIVE-M## — NAME]
+
+RECOVERY PACKAGE:
+[exact filename]
+
+RECOVERY SHA-256:
+[checksum]
+
+ACTIVE REPOSITORY:
+[repository URL or uploaded ZIP]
+
+ACTIVE BRANCH:
+[branch]
+
+GIT HEAD:
+[commit]
+
+COMPLETED:
+[verified completed work]
+
+TEST RESULTS:
+[exact results]
+
+KNOWN LIMITATIONS:
+[exact limitations]
+
+CURRENT TARGET:
+[next milestone and objective]
+
+FILES PROVIDED IN THIS THREAD:
+[list]
+
+INSTRUCTIONS TO THE ASSISTANT:
+1. Treat the recovery package, manifest, and PROJECT-STATE files as authoritative.
+2. Verify package integrity before proposing changes.
+3. Summarize the verified state before implementation.
+4. Do not rely upon prior conversation memory.
+5. Do not modify approved assets without explicit authorization.
+6. Do not commit or push without explicit authorization.
+7. End this milestone with a new recovery ZIP, checksum, project-state update,
+   restoration test, safe-cleanup manifest, and next-thread prompt.

@@ -21,11 +21,26 @@ const protectedAssets = {
   'public/images/master/derived/border-frame/source/border-cyan-emissive.png': '31f562f7dc9136fdfbc0a8e563ba55a1c5896a6e370948d45e4807c6272c3337',
   'public/images/master/derived/border-frame/source/border-flow-phase.png': '8413b3e5c32a8eeb0fb8d824d91ab171dc7470970f3a67083c0f230fddafc195',
   'src/components/scene/placard/placardGeometry.js': '599925c29b91a2e8c513ba6e83131896d4574c94e8bf63cee5b15ef2357893ef',
-  'src/components/quiz/QuizInterface.jsx': 'e10221c2c482bfec4e7022d2e357fe8bc9f459a8fb5db7dd8a02b0ec442f74b0',
   'src/components/profile/ProfileCardSurface.jsx': '9834dfa397aa447e43d6cce7473314db6f826df2c4cf169ef4f034c5f2f0a778',
 };
 for (const [relative, expected] of Object.entries(protectedAssets)) {
   assert.equal(await sha(relative), expected, `Protected baseline changed: ${relative}`);
+}
+
+
+// Preserve the placard/business-card contract semantically so later tablet
+// presentation phases can evolve without weakening the protected interaction.
+const quizInterface = await readText('src/components/quiz/QuizInterface.jsx');
+for (const invariant of [
+  /import \{ PlacardControl \} from '\.\.\/scene\/placard\/PlacardControl\.jsx';/,
+  /import \{ ProfileCardSurface \} from '\.\.\/profile\/ProfileCardSurface\.jsx';/,
+  /SceneEvents\.BUSINESS_CARD_OPENED/,
+  /SceneEvents\.BUSINESS_CARD_CLOSED/,
+  /geometryAuthority:\s*'lower-purple-trim'/,
+  /<PlacardControl[\s\S]*?eventTargetRef=\{eventTargetRef\}[\s\S]*?onActivate=\{openBusinessCard\}/,
+  /<ProfileCardSurface[\s\S]*?eventTargetRef=\{eventTargetRef\}[\s\S]*?onClose=\{closeBusinessCard\}/,
+]) {
+  assert.match(quizInterface, invariant, `Independent placard semantic contract changed: ${invariant}`);
 }
 
 const requiredAssets = [

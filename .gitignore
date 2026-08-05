@@ -5,3 +5,16 @@ dist/
 .env
 .env.*
 !.env.example
+
+# QCQ LEGACY CLOSEOUT GENERATED-FILE RULES
+node_modules/
+dist/
+coverage/
+.vite/
+playwright-report/
+test-results/
+.DS_Store
+*.log
+*.tmp
+*.swp
+# END QCQ LEGACY CLOSEOUT GENERATED-FILE RULES

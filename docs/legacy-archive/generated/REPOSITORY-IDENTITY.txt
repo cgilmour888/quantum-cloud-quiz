@@ -1,0 +1,10 @@
+QCQ LEGACY REPOSITORY CLOSEOUT — PREPARATION STATE
+Captured: 2026-08-05T11:28:25-0500
+Repository: /Users/carlgilmour/projects/quantum-cloud-quiz
+Branch: archive/legacy-final
+HEAD: fcb984626b15d926fa85c093764d29573359e622
+Short HEAD: fcb984626b15
+Git: git version 2.37.1 (Apple Git-137.1)
+Node: v24.18.1
+npm: 11.16.0
+Operating system: 12.7.6

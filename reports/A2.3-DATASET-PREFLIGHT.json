@@ -1,0 +1,74 @@
+{
+  "exams": 23,
+  "questions": 1142,
+  "options": 4830,
+  "fiveOptionQuestions": 264,
+  "typographyOutliers": [
+    {
+      "exam": 1,
+      "question": "exam-1-q24",
+      "promptLength": 337,
+      "longestOption": 31
+    },
+    {
+      "exam": 1,
+      "question": "exam-1-q50",
+      "promptLength": 399,
+      "longestOption": 15
+    },
+    {
+      "exam": 4,
+      "question": "exam-4-q17",
+      "promptLength": 88,
+      "longestOption": 184
+    },
+    {
+      "exam": 5,
+      "question": "exam-5-q11",
+      "promptLength": 379,
+      "longestOption": 36
+    },
+    {
+      "exam": 5,
+      "question": "exam-5-q25",
+      "promptLength": 420,
+      "longestOption": 89
+    },
+    {
+      "exam": 6,
+      "question": "exam-6-q10",
+      "promptLength": 379,
+      "longestOption": 37
+    },
+    {
+      "exam": 6,
+      "question": "exam-6-q15",
+      "promptLength": 402,
+      "longestOption": 30
+    },
+    {
+      "exam": 6,
+      "question": "exam-6-q47",
+      "promptLength": 81,
+      "longestOption": 178
+    },
+    {
+      "exam": 8,
+      "question": "exam-8-q30",
+      "promptLength": 372,
+      "longestOption": 20
+    },
+    {
+      "exam": 8,
+      "question": "exam-8-q33",
+      "promptLength": 349,
+      "longestOption": 120
+    },
+    {
+      "exam": 22,
+      "question": "exam-22-q37",
+      "promptLength": 65,
+      "longestOption": 188
+    }
+  ]
+}

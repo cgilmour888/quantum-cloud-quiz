@@ -1,0 +1,21 @@
+* archive/legacy-final                                    fcb9846 feat(tablet): approve A2.1R maximum-aperture live registration
+  archive/orange-r4.6-unapproved                          2839592 [origin/archive/orange-r4.6-unapproved] release(border-frame): lock R5.5.3 final engine
+  archive/tablet-a2.1r-approved-v1.1.1                    fcb9846 feat(tablet): approve A2.1R maximum-aperture live registration
+  audit/live-gameplay-r2-2026-08-02                       33c1d7e [origin/audit/live-gameplay-r2-2026-08-02: ahead 2] feat(border): validate clockwise cyan plasma conduit
+  backup/local-before-animation-install                   8b91843 Add React src layout + placeholder components, hook; create public asset directories and move media into public/
+  backup/pre-final-install-20260730-190423                8b91843 Add React src layout + placeholder components, hook; create public asset directories and move media into public/
++ backup/pre-master-reset-20260801-125647                 1da4d2a (/Users/carlgilmour/projects/quantum-cloud-quiz-legacy-125647) backup: preserve repository before MASTER reset
+  backup/pre-master-reset-20260801-140912                 8b91843 Add React src layout + placeholder components, hook; create public asset directories and move media into public/
+  feature/react-living-scene                              dea78bb [origin/feature/react-living-scene] feat(scene): add dedicated border frame canvas
+  feature/restore-gameplay-core                           d141a1f [origin/feature/restore-gameplay-core] feat(gameplay): restore validated quiz data and session core
+  feature/tablet-question-answer-engine-t1                fcb9846 [origin/feature/tablet-question-answer-engine-t1] feat(tablet): approve A2.1R maximum-aperture live registration
+  main                                                    f95700f [origin/main] chore: update wrangler.jsonc configuration
+  remotes/origin/HEAD                                     -> origin/main
+  remotes/origin/archive/orange-r4.6-unapproved           2839592 release(border-frame): lock R5.5.3 final engine
+  remotes/origin/archive/tablet-a2.1r-approved-v1.1.1     fcb9846 feat(tablet): approve A2.1R maximum-aperture live registration
+  remotes/origin/audit/live-gameplay-r2-2026-08-02        4ca91f8 checkpoint(gameplay): preserve current R2 interface and verification gates
+  remotes/origin/backup/copilot-checkpoint                8b91843 Add React src layout + placeholder components, hook; create public asset directories and move media into public/
+  remotes/origin/feature/react-living-scene               dea78bb feat(scene): add dedicated border frame canvas
+  remotes/origin/feature/restore-gameplay-core            d141a1f feat(gameplay): restore validated quiz data and session core
+  remotes/origin/feature/tablet-question-answer-engine-t1 fcb9846 feat(tablet): approve A2.1R maximum-aperture live registration
+  remotes/origin/main                                     f95700f chore: update wrangler.jsonc configuration

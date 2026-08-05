@@ -1,0 +1,17 @@
+{
+  "project": "Quantum Cloud Quiz",
+  "status": "legacy-closeout-in-progress",
+  "repository_path": "/Users/carlgilmour/projects/quantum-cloud-quiz",
+  "branch": "archive/legacy-final",
+  "head": "fcb984626b15d926fa85c093764d29573359e622",
+  "captured_at": "2026-08-05T11:28:25-0500",
+  "tracked_file_count": 203,
+  "untracked_nonignored_count": 69,
+  "working_tree_status_entry_count": 27,
+  "next_repository": "quantum-cloud-quiz-native",
+  "next_milestone": "QCQ-NATIVE-M00 — Legacy Archive and Source Vault",
+  "commit_performed": false,
+  "push_performed": false,
+  "tag_created": false,
+  "github_archived": false
+}

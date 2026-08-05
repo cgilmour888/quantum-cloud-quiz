@@ -1,0 +1,28 @@
+## archive/legacy-final
+ M .gitignore
+ M package.json
+ M scripts/verify-border-containment-r5-5-1.mjs
+ M scripts/verify-border-left-bridge-r5-5-2.mjs
+ M scripts/verify-border-microbridge-r5-5-3.mjs
+ M src/components/quiz/QuizInterface.jsx
+ M src/styles/quiz-interface.css
+?? ARCHIVED-PROJECT.md
+?? docs/
+?? public/assets/
+?? reports/
+?? scripts/audit-tablet-a23-browser.mjs
+?? scripts/launch-tablet-a2-3.sh
+?? scripts/legacy-closeout/
+?? scripts/report-tablet-a23-dataset.mjs
+?? scripts/verify-tablet-a23.mjs
+?? src/components/quiz/AutoFitText.jsx
+?? src/components/quiz/PixelLockedTablet.jsx
+?? src/components/quiz/TabletAnswerOption.jsx
+?? src/components/quiz/TabletContentPlane.jsx
+?? src/components/quiz/TabletProgressRegion.jsx
+?? src/components/quiz/TabletQuestionRegion.jsx
+?? src/components/quiz/tabletA23Geometry.js
+?? tests/tablet-a23-architecture.test.mjs
+?? tests/tablet-a23-assets.test.mjs
+?? tests/tablet-a23-border-contract.test.mjs
+?? tests/tablet-a23-geometry.test.mjs

@@ -3,7 +3,6 @@ import { useQuizController } from '../../hooks/useQuizController.js';
 import {
   DASHBOARD_CONTROLS,
   METRIC_FIELDS,
-  TABLET_REGIONS,
   geometryStyle,
 } from './tabletGeometry.js';
 import { createDashboardPanel } from './dashboardModels.js';
@@ -18,9 +17,13 @@ import {
 } from '../scene/sceneEvents.js';
 import { PlacardControl } from '../scene/placard/PlacardControl.jsx';
 import { ProfileCardSurface } from '../profile/ProfileCardSurface.jsx';
+import { PixelLockedTablet } from './PixelLockedTablet.jsx';
+import { TabletQuestionRegion } from './TabletQuestionRegion.jsx';
+import { TabletAnswerOption } from './TabletAnswerOption.jsx';
+import { TabletProgressRegion } from './TabletProgressRegion.jsx';
+import { A23_REGIONS } from './tabletA23Geometry.js';
 import '../../styles/quiz-interface.css';
 
-const ROW_TONES = Object.freeze(['cyan', 'magenta', 'emerald', 'orange']);
 
 function isCalibrationMode() {
   try {
@@ -68,111 +71,20 @@ function DashboardControls({ activePanel, onNavigate }) {
   );
 }
 
-function stateGlyph(state) {
-  if (state === 'correct-selected' || state === 'correct-answer') return '✓';
-  if (state === 'incorrect-selected') return '×';
-  if (state === 'selected') return '◆';
-  return '';
-}
-
-function TabletRow({
-  geometry,
-  tone,
-  option,
-  state = 'idle',
-  disabled = false,
-  onActivate,
-  role,
-  checked,
-  detail = '',
-  panelState = null,
-}) {
-  const bakedKeyMatches = option?.key === geometry.bakedKey;
-  const empty = !option;
-  const label = option?.text ?? '';
-  const glyph = panelState === 'complete' ? '✓' : panelState === 'locked' ? '◇' : stateGlyph(state);
-
-  return (
-    <>
-      <span
-        className="qcq-answer-veil"
-        data-empty={empty ? 'true' : 'false'}
-        style={geometryStyle(geometry.text)}
-        aria-hidden="true"
-      />
-
-      {(!bakedKeyMatches || empty) && (
-        <span
-          className="qcq-badge-veil"
-          style={geometryStyle(geometry.badge)}
-          aria-hidden="true"
-        />
-      )}
-
-      {!empty && !bakedKeyMatches && (
-        <span
-          className="qcq-dynamic-key"
-          data-tone={tone}
-          style={geometryStyle(geometry.badge)}
-          aria-hidden="true"
-        >
-          {option.key}
-        </span>
-      )}
-
-      {!empty && (
-        <span
-          className="qcq-answer-copy"
-          data-state={state}
-          data-panel-state={panelState ?? ''}
-          style={geometryStyle(geometry.text)}
-          aria-hidden="true"
-        >
-          <span className="qcq-answer-copy__text">{label}</span>
-          {detail && <span className="qcq-answer-copy__detail">{detail}</span>}
-          {glyph && <span className="qcq-answer-copy__glyph">{glyph}</span>}
-        </span>
-      )}
-
-      <button
-        type="button"
-        className="qcq-answer-hit"
-        data-tone={tone}
-        data-state={state}
-        data-empty={empty ? 'true' : 'false'}
-        style={geometryStyle(geometry.hit)}
-        disabled={disabled || empty}
-        role={role}
-        aria-checked={checked}
-        aria-label={empty ? undefined : `${option.key}. ${label}${detail ? `, ${detail}` : ''}`}
-        onClick={onActivate}
-      />
-    </>
-  );
-}
-
-function PanelSurface({ panelModel }) {
+function A23PanelSurface({ panelModel }) {
   const rows = [...(panelModel?.rows ?? [])].slice(0, 4);
   while (rows.length < 4) rows.push(null);
-
   return (
     <>
-      <div className="qcq-tablet-title" style={geometryStyle(TABLET_REGIONS.title)}>
-        {panelModel?.title ?? 'DASHBOARD'}
-      </div>
-      <div className="qcq-tablet-prompt" style={geometryStyle(TABLET_REGIONS.prompt)}>
-        {panelModel?.prompt ?? ''}
-      </div>
-      {TABLET_REGIONS.rows.map((geometry, index) => {
+      <TabletQuestionRegion title={panelModel?.title ?? 'DASHBOARD'} prompt={panelModel?.prompt ?? ''} />
+      {A23_REGIONS.rows.map((geometry, index) => {
         const item = rows[index];
         return (
-          <TabletRow
+          <TabletAnswerOption
             key={geometry.slot}
             geometry={geometry}
-            tone={ROW_TONES[index]}
             option={item ? { key: geometry.bakedKey, text: item.text } : null}
             detail={item?.detail ?? ''}
-            panelState={item?.state ?? null}
             disabled={!item?.action}
             onActivate={item?.action ?? undefined}
           />
@@ -182,36 +94,22 @@ function PanelSurface({ panelModel }) {
   );
 }
 
-function CompletionSurface({ controller, onRestart }) {
+function A23CompletionSurface({ controller, onRestart }) {
   const rows = [
     { key: 'A', text: 'Correct Answers', detail: String(controller.summary.correct ?? 0) },
     { key: 'B', text: 'Incorrect Answers', detail: String(controller.summary.incorrect ?? 0) },
     { key: 'C', text: 'Final Accuracy', detail: controller.metrics.accuracy },
     { key: 'D', text: 'Time Played', detail: controller.metrics.elapsed },
   ];
-
   return (
     <>
-      <button
-        type="button"
-        className="qcq-tablet-title qcq-tablet-title--action"
-        style={geometryStyle(TABLET_REGIONS.title)}
-        onClick={onRestart}
-      >
-        RESTART EXAM
-      </button>
-      <div className="qcq-tablet-prompt" style={geometryStyle(TABLET_REGIONS.prompt)}>
-        SESSION COMPLETE · {controller.summary.correct}/{controller.summary.total} CORRECT
-      </div>
-      {TABLET_REGIONS.rows.map((geometry, index) => (
-        <TabletRow
-          key={geometry.slot}
-          geometry={geometry}
-          tone={ROW_TONES[index]}
-          option={rows[index]}
-          detail={rows[index].detail}
-          disabled
-        />
+      <TabletQuestionRegion
+        title="RESTART EXAM"
+        prompt={`SESSION COMPLETE · ${controller.summary.correct}/${controller.summary.total} CORRECT`}
+        action={onRestart}
+      />
+      {A23_REGIONS.rows.map((geometry, index) => (
+        <TabletAnswerOption key={geometry.slot} geometry={geometry} option={rows[index]} detail={rows[index].detail} disabled />
       ))}
     </>
   );
@@ -221,7 +119,6 @@ export function QuizInterface({ eventTargetRef }) {
   const controller = useQuizController({ eventTargetRef });
   const [activePanel, setActivePanel] = useState('quiz');
   const [optionPage, setOptionPage] = useState(0);
-  const actionRef = useRef(null);
   const priorPanelRef = useRef('quiz');
   const calibration = useMemo(isCalibrationMode, []);
 
@@ -318,9 +215,6 @@ export function QuizInterface({ eventTargetRef }) {
     restartAndReturn,
   ]);
 
-  useEffect(() => {
-    if (titleAction) actionRef.current?.focus({ preventScroll: true });
-  }, [titleAction?.label]);
 
   function handleKeyDown(event) {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
@@ -373,63 +267,34 @@ export function QuizInterface({ eventTargetRef }) {
 
   function renderQuizSurface() {
     if (controller.phase === 'completed') {
-      return <CompletionSurface controller={controller} onRestart={restartAndReturn} />;
+      return <A23CompletionSurface controller={controller} onRestart={restartAndReturn} />;
     }
 
     const title = titleAction?.label
       ?? (question ? `QUESTION ${controller.questionNumber}` : 'INITIALIZING');
+    const prompt = controller.phase === 'loading'
+      ? 'Loading the validated question collection…'
+      : controller.phase === 'error'
+        ? 'Question collection unavailable.'
+        : controller.phase === 'paused'
+          ? 'Session paused. Activate the title to resume.'
+          : question?.prompt ?? '';
+    const instruction = question?.selectionType === 'multiple' && controller.phase === 'ready'
+      ? `CHOOSE ${question.selectionCount} · ${controller.selected.length}/${question.selectionCount}`
+      : '';
 
     return (
       <>
-        {titleAction ? (
-          <button
-            ref={actionRef}
-            type="button"
-            className="qcq-tablet-title qcq-tablet-title--action"
-            style={geometryStyle(TABLET_REGIONS.title)}
-            onClick={titleAction.handler}
-          >
-            {title}
-          </button>
-        ) : (
-          <div className="qcq-tablet-title" style={geometryStyle(TABLET_REGIONS.title)}>
-            {title}
-          </div>
-        )}
-
-        <div
-          className="qcq-tablet-prompt"
-          data-density={density}
-          style={geometryStyle(TABLET_REGIONS.prompt)}
-          aria-live="polite"
-        >
-          {controller.phase === 'loading' && 'Loading the validated question collection…'}
-          {controller.phase === 'error' && 'Question collection unavailable.'}
-          {controller.phase === 'paused'
-            ? 'Session paused. Activate the title to resume.'
-            : question?.prompt}
-          {question?.selectionType === 'multiple' && controller.phase === 'ready' && (
-            <span className="qcq-selection-instruction">
-              CHOOSE {question.selectionCount} · {controller.selected.length}/{question.selectionCount}
-            </span>
-          )}
-        </div>
-
-        {TABLET_REGIONS.rows.map((geometry, index) => {
+        <TabletQuestionRegion title={title} prompt={prompt} action={titleAction?.handler} selectionInstruction={instruction} />
+        {A23_REGIONS.rows.map((geometry, index) => {
           const option = optionPages.visible[index] ?? null;
           const state = option
-            ? getOptionState({
-              optionKey: option.key,
-              selected: controller.selected,
-              response: controller.response,
-            })
+            ? getOptionState({ optionKey: option.key, selected: controller.selected, response: controller.response })
             : 'disabled';
-
           return (
-            <TabletRow
+            <TabletAnswerOption
               key={`${question?.id ?? 'loading'}-${optionPages.page}-${geometry.slot}`}
               geometry={geometry}
-              tone={ROW_TONES[index]}
               option={option}
               state={state}
               role={question?.selectionType === 'multiple' ? 'checkbox' : 'radio'}
@@ -439,22 +304,13 @@ export function QuizInterface({ eventTargetRef }) {
             />
           );
         })}
-
-        <span className="qcq-progress-marker" style={geometryStyle(TABLET_REGIONS.progress)} aria-hidden="true">
-          {controller.questionNumber || 0} / {controller.summary.total || 0}
-        </span>
-
-        {optionPages.pageCount > 1 && (
-          <button
-            type="button"
-            className="qcq-option-pager"
-            style={geometryStyle(TABLET_REGIONS.pager)}
-            onClick={() => setOptionPage((page) => (page + 1) % optionPages.pageCount)}
-            aria-label={`Show option page ${((optionPages.page + 1) % optionPages.pageCount) + 1} of ${optionPages.pageCount}`}
-          >
-            {optionPages.page === 0 ? 'MORE OPTIONS  ›' : '‹  OPTIONS A–D'}
-          </button>
-        )}
+        <TabletProgressRegion
+          current={controller.questionNumber}
+          total={controller.summary.total}
+          pageCount={optionPages.pageCount}
+          page={optionPages.page}
+          onPage={() => setOptionPage((page) => (page + 1) % optionPages.pageCount)}
+        />
       </>
     );
   }
@@ -470,18 +326,13 @@ export function QuizInterface({ eventTargetRef }) {
       <MetricsOverlay metrics={controller.metrics} />
       <DashboardControls activePanel={activePanel} onNavigate={navigate} />
 
-      <section className="qcq-tablet-surface" aria-label="Quantum Cloud Quiz live tablet">
-        {activePanel === 'profile'
-          ? (
-            <ProfileCardSurface
-              eventTargetRef={eventTargetRef}
-              onClose={closeBusinessCard}
-            />
-          )
-          : activePanel === 'quiz'
-            ? renderQuizSurface()
-            : <PanelSurface panelModel={panelModel} />}
-      </section>
+      <PixelLockedTablet>
+        {activePanel === 'quiz' ? renderQuizSurface() : activePanel === 'profile' ? null : <A23PanelSurface panelModel={panelModel} />}
+      </PixelLockedTablet>
+
+      {activePanel === 'profile' && (
+        <ProfileCardSurface eventTargetRef={eventTargetRef} onClose={closeBusinessCard} />
+      )}
 
       <PlacardControl
         eventTargetRef={eventTargetRef}

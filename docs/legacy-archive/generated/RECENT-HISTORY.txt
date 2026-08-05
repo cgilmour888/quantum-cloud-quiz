@@ -1,0 +1,13 @@
+* fcb9846 (HEAD -> archive/legacy-final, tag: tablet-a2.1r-approved-v1.1.1, origin/feature/tablet-question-answer-engine-t1, origin/archive/tablet-a2.1r-approved-v1.1.1, feature/tablet-question-answer-engine-t1, archive/tablet-a2.1r-approved-v1.1.1) feat(tablet): approve A2.1R maximum-aperture live registration
+* 2839592 (tag: border-frame-r5.5.3-final, origin/archive/orange-r4.6-unapproved, archive/orange-r4.6-unapproved) release(border-frame): lock R5.5.3 final engine
+* 1457479 checkpoint(border): preserve unapproved orange route experiments
+* 33c1d7e (audit/live-gameplay-r2-2026-08-02) feat(border): validate clockwise cyan plasma conduit
+* 7e7c527 feat(scene): migrate MASTER to unified compositor foundation
+* 4ca91f8 (origin/audit/live-gameplay-r2-2026-08-02) checkpoint(gameplay): preserve current R2 interface and verification gates
+* d141a1f (tag: gameplay-restoration-r1-core-v1, origin/feature/restore-gameplay-core, feature/restore-gameplay-core) feat(gameplay): restore validated quiz data and session core
+* dea78bb (tag: pre-gameplay-r1-20260801-170300, tag: border-frame-phase-2-canvas-v1, origin/feature/react-living-scene, feature/react-living-scene) feat(scene): add dedicated border frame canvas
+* e1be7d1 (tag: pre-border-frame-phase-2, tag: master-viewport-baseline-v1) reset: establish approved MASTER full-viewport baseline
+* 8b91843 (origin/backup/copilot-checkpoint, backup/pre-master-reset-20260801-140912, backup/pre-final-install-20260730-190423, backup/local-before-animation-install) Add React src layout + placeholder components, hook; create public asset directories and move media into public/
+* 27f4e3c Add files via upload
+* f31cebe Initialize README with project overview and setup
+* 9e0dd5d Add files via upload
