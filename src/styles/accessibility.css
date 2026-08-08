@@ -1,0 +1,86 @@
+.qcq-skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: max(0.75rem, env(safe-area-inset-top));
+  left: 50%;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--qcq-focus);
+  border-radius: var(--qcq-radius-sm);
+  background: var(--qcq-canvas);
+  color: var(--qcq-text);
+  font-weight: 800;
+  text-decoration: none;
+  transform: translate(-50%, -180%);
+  transition: transform 120ms ease-out;
+}
+
+.qcq-skip-link:focus-visible {
+  transform: translate(-50%, 0);
+}
+
+:focus-visible {
+  outline: 3px solid var(--qcq-focus);
+  outline-offset: 3px;
+}
+
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .qcq-instrument,
+  .qcq-tablet__surface {
+    backdrop-filter: none;
+    background: var(--qcq-surface-strong);
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --qcq-border: hsl(208 100% 90% / 0.92);
+    --qcq-muted: hsl(216 26% 86%);
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --qcq-canvas: Canvas;
+    --qcq-surface: Canvas;
+    --qcq-surface-strong: Canvas;
+    --qcq-text: CanvasText;
+    --qcq-muted: CanvasText;
+    --qcq-cyan: LinkText;
+    --qcq-violet: LinkText;
+    --qcq-border: CanvasText;
+    --qcq-focus: Highlight;
+  }
+
+  .qcq-stage::before,
+  .qcq-stage::after {
+    display: none;
+  }
+
+  .qcq-runtime-badge > span {
+    background: Highlight;
+    box-shadow: none;
+  }
+}
+
+@media (pointer: coarse) {
+  button,
+  a {
+    min-height: 48px;
+  }
+}

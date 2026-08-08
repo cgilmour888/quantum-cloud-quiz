@@ -1,0 +1,632 @@
+/**
+ * Artifact ID: QCQ-APP-001-007
+ * Artifact Name: ApplicationShellStyles
+ * Artifact Purpose: Token-consuming responsive shell chrome, circuit depth, energy rails, corner nodes, accessibility states, and 4K/8K-safe visual containment.
+ * Artifact Layer: Phase 1 — Application Shell / VIS
+ * Artifact Dependencies: QCQ-TBL-036, QCQ-TBL-037, QCQ-TBL-038, QCQ-TBL-039, QCQ-THM-001 through QCQ-THM-008
+ * Artifact Dependents: QCQ-APP-001-001, QCQ-APP-001-003, QCQ-APP-001-017
+ * Dependency Graph: Phase 9 CSS variables -> ApplicationShellStyles -> ApplicationShell
+ * Repository Path: QCQ/frontend/src/app
+ * Source File: ApplicationShell.module.css
+ */
+
+.shell {
+  position: relative;
+  isolation: isolate;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 100dvb;
+  overflow: clip;
+  color: var(--qcq-text-primary);
+  background:
+    radial-gradient(
+      circle at 50% 22%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-violet-500) 14%,
+        transparent
+      ),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 68%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-blue-500) 16%,
+        transparent
+      ),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      var(--qcq-canvas),
+      var(--qcq-color-void-0)
+    );
+  font-family: var(--qcq-font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  container-type: inline-size;
+}
+
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 3.5rem,
+      color-mix(
+        in srgb,
+        var(--qcq-color-cyan-400) 5%,
+        transparent
+      ) 3.5625rem
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3.5rem,
+      color-mix(
+        in srgb,
+        var(--qcq-color-violet-400) 4%,
+        transparent
+      ) 3.5625rem
+    );
+  opacity: var(--qcq-cyber-circuit-opacity);
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 8%,
+      transparent 76%
+    );
+}
+
+.shell::after {
+  content: "";
+  position: absolute;
+  inset: var(--qcq-space-xs);
+  z-index: 1;
+  pointer-events: none;
+  border: var(--qcq-border-thin) solid
+    color-mix(
+      in srgb,
+      var(--qcq-frame-edge-cold) 72%,
+      transparent
+    );
+  border-radius: var(--qcq-radius-xl);
+  box-shadow:
+    inset 0 0 0 var(--qcq-border-hairline)
+      color-mix(
+        in srgb,
+        var(--qcq-frame-edge-highlight) 44%,
+        transparent
+      ),
+    var(--qcq-frame-outer-shadow);
+}
+
+.composition {
+  position: relative;
+  z-index: 10;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 100dvb;
+}
+
+.chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint style;
+}
+
+.depthField {
+  position: absolute;
+  inset: 0;
+  opacity: calc(
+    0.68 * var(--qcq-a11y-transparency-factor)
+  );
+  background:
+    radial-gradient(
+      ellipse at 50% 52%,
+      transparent 0 28%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-blue-400) 5%,
+        transparent
+      ) 50%,
+      transparent 72%
+    ),
+    conic-gradient(
+      from 45deg at 50% 50%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-cyan-400) 5%,
+        transparent
+      ),
+      transparent 12.5%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-violet-400) 5%,
+        transparent
+      ) 25%,
+      transparent 37.5%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-orange-500) 4%,
+        transparent
+      ) 50%,
+      transparent 62.5%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-blue-400) 5%,
+        transparent
+      ) 75%,
+      transparent 87.5%
+    );
+  filter: var(--qcq-cyber-filter);
+  animation:
+    depthDrift
+    var(--qcq-duration-ambient)
+    var(--qcq-ease-standard)
+    infinite alternate;
+}
+
+.circuitField {
+  position: absolute;
+  inset:
+    clamp(
+      var(--qcq-space-sm),
+      1.2cqi,
+      var(--qcq-space-xxl)
+    );
+  border-radius: var(--qcq-radius-xl);
+  opacity: var(--qcq-cyber-circuit-opacity);
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 8%,
+      color-mix(
+        in srgb,
+        var(--qcq-frame-edge-cold) 24%,
+        transparent
+      ) 8% 8.15%,
+      transparent 8.15% 91.85%,
+      color-mix(
+        in srgb,
+        var(--qcq-frame-edge-hot) 20%,
+        transparent
+      ) 91.85% 92%,
+      transparent 92%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 0 7%,
+      color-mix(
+        in srgb,
+        var(--qcq-frame-edge-cold) 16%,
+        transparent
+      ) 7% 7.15%,
+      transparent 7.15% 92.85%,
+      color-mix(
+        in srgb,
+        var(--qcq-frame-edge-hot) 18%,
+        transparent
+      ) 92.85% 93%,
+      transparent 93%
+    );
+}
+
+.rail {
+  position: absolute;
+  border-radius: var(--qcq-radius-pill, 999px);
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--qcq-frame-edge-cold),
+      var(--qcq-frame-edge-highlight),
+      var(--qcq-frame-edge-hot),
+      transparent
+    );
+  box-shadow:
+    var(--qcq-glow-rail-flow-box-shadow),
+    inset 0 0 0 var(--qcq-border-hairline)
+      color-mix(
+        in srgb,
+        var(--qcq-frame-edge-highlight) 52%,
+        transparent
+      );
+  opacity: 0.9;
+  animation:
+    railCharge
+    var(--qcq-duration-ambient)
+    linear
+    infinite;
+}
+
+.railTop,
+.railBottom {
+  inset-inline:
+    clamp(
+      5rem,
+      8cqi,
+      12rem
+    );
+  block-size:
+    clamp(
+      2px,
+      0.16cqi,
+      var(--qcq-border-medium)
+    );
+}
+
+.railTop {
+  inset-block-start:
+    clamp(
+      var(--qcq-space-xs),
+      0.8cqi,
+      var(--qcq-space-xl)
+    );
+}
+
+.railBottom {
+  inset-block-end:
+    clamp(
+      var(--qcq-space-xs),
+      0.8cqi,
+      var(--qcq-space-xl)
+    );
+  transform: rotate(180deg);
+}
+
+.railLeft,
+.railRight {
+  inset-block:
+    clamp(
+      5rem,
+      8cqi,
+      12rem
+    );
+  inline-size:
+    clamp(
+      2px,
+      0.16cqi,
+      var(--qcq-border-medium)
+    );
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      var(--qcq-frame-edge-cold),
+      var(--qcq-frame-edge-highlight),
+      var(--qcq-frame-edge-hot),
+      transparent
+    );
+}
+
+.railLeft {
+  inset-inline-start:
+    clamp(
+      var(--qcq-space-xs),
+      0.8cqi,
+      var(--qcq-space-xl)
+    );
+}
+
+.railRight {
+  inset-inline-end:
+    clamp(
+      var(--qcq-space-xs),
+      0.8cqi,
+      var(--qcq-space-xl)
+    );
+  transform: rotate(180deg);
+}
+
+.cornerNode {
+  position: absolute;
+  inline-size:
+    clamp(
+      3.25rem,
+      6.4cqi,
+      9.5rem
+    );
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: var(--qcq-border-medium) solid
+    color-mix(
+      in srgb,
+      var(--qcq-frame-edge-cold) 82%,
+      transparent
+    );
+  background:
+    radial-gradient(
+      circle,
+      var(--qcq-frame-edge-highlight) 0 2%,
+      transparent 3% 13%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-violet-400) 34%,
+        transparent
+      ) 14% 16%,
+      transparent 17% 28%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-blue-400) 34%,
+        transparent
+      ) 29% 34%,
+      transparent 35% 48%,
+      color-mix(
+        in srgb,
+        var(--qcq-color-orange-500) 30%,
+        transparent
+      ) 49% 53%,
+      transparent 54%
+    );
+  box-shadow:
+    var(--qcq-glow-node-active-box-shadow),
+    inset 0 0
+      clamp(
+        1rem,
+        2cqi,
+        3rem
+      )
+      color-mix(
+        in srgb,
+        var(--qcq-color-blue-400) 28%,
+        transparent
+      );
+}
+
+.cornerNode::before,
+.cornerNode::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: var(--qcq-border-thin) solid
+    color-mix(
+      in srgb,
+      var(--qcq-frame-edge-highlight) 64%,
+      transparent
+    );
+}
+
+.cornerNode::before {
+  inset: 13%;
+  border-inline-color:
+    var(--qcq-frame-edge-hot);
+  animation:
+    nodeSpin
+    calc(var(--qcq-duration-ambient) * 2.4)
+    linear
+    infinite;
+}
+
+.cornerNode::after {
+  inset: 28%;
+  border-block-color:
+    var(--qcq-color-violet-400);
+  animation:
+    nodeSpinReverse
+    calc(var(--qcq-duration-ambient) * 1.7)
+    linear
+    infinite;
+}
+
+.cornerTopLeft {
+  inset-block-start:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+  inset-inline-start:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+}
+
+.cornerTopRight {
+  inset-block-start:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+  inset-inline-end:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+}
+
+.cornerBottomLeft {
+  inset-block-end:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+  inset-inline-start:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+}
+
+.cornerBottomRight {
+  inset-block-end:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+  inset-inline-end:
+    clamp(
+      var(--qcq-space-sm),
+      1.1cqi,
+      var(--qcq-space-xxl)
+    );
+}
+
+.statusBeacon {
+  position: absolute;
+  inset-block-start:
+    clamp(
+      var(--qcq-space-md),
+      1.6cqi,
+      var(--qcq-space-xxl)
+    );
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size:
+    clamp(
+      4rem,
+      10cqi,
+      12rem
+    );
+  block-size: var(--qcq-border-medium);
+  border-radius: 999px;
+  background: var(--qcq-frame-edge-cold);
+  box-shadow: var(--qcq-glow-frame-energized-box-shadow);
+  opacity: 0.76;
+}
+
+.shell[data-qcq-shell-status="degraded"]
+  .statusBeacon {
+  background: var(--qcq-color-amber-400);
+}
+
+.shell[data-qcq-shell-status="faulted"]
+  .statusBeacon {
+  background: var(--qcq-color-red-400);
+}
+
+.shell[data-qcq-shell-online="false"]
+  .rail {
+  opacity: 0.45;
+}
+
+.shell[data-qcq-shell-focus="false"]
+  .chrome {
+  filter: saturate(0.82);
+}
+
+.shell[data-qcq-shell-viewport="4k"] {
+  --qcq-shell-chrome-density: 1.15;
+}
+
+.shell[data-qcq-shell-viewport="8k"] {
+  --qcq-shell-chrome-density: 1.3;
+}
+
+@container (max-width: 62rem) {
+  .cornerNode {
+    inline-size:
+      clamp(
+        2.75rem,
+        8cqi,
+        5.5rem
+      );
+  }
+
+  .railTop,
+  .railBottom {
+    inset-inline: 4.5rem;
+  }
+
+  .railLeft,
+  .railRight {
+    inset-block: 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depthField,
+  .rail,
+  .cornerNode::before,
+  .cornerNode::after {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .shell {
+    color: CanvasText;
+    background: Canvas;
+    forced-color-adjust: auto;
+  }
+
+  .shell::before {
+    display: none;
+  }
+
+  .shell::after {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+
+  .chrome {
+    opacity: 0.22;
+  }
+
+  .rail,
+  .cornerNode,
+  .statusBeacon {
+    background: CanvasText;
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+@keyframes railCharge {
+  0% {
+    filter: brightness(0.82);
+    opacity: 0.58;
+  }
+
+  48% {
+    filter: brightness(1.22);
+    opacity: 0.96;
+  }
+
+  100% {
+    filter: brightness(0.88);
+    opacity: 0.66;
+  }
+}
+
+@keyframes nodeSpin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes nodeSpinReverse {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+
+@keyframes depthDrift {
+  from {
+    transform: scale(1);
+    opacity: 0.54;
+  }
+
+  to {
+    transform: scale(1.035);
+    opacity: 0.72;
+  }
+}
