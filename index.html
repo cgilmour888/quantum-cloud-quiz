@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#020306" />
   <title>Quantum Certification Quest</title>
-  <meta http-equiv="refresh" content="0; url=./qcq-current/" />
+  <meta http-equiv="refresh" content="0; url=/qcq-current/index.html" />
   <script>
     (function () {
-      var target = new URL('./qcq-current/', window.location.href).href;
-      if (window.location.href !== target) window.location.replace(target);
+      var targetPath = '/qcq-current/index.html';
+      var target = targetPath + window.location.search + window.location.hash;
+      if (window.location.pathname !== targetPath) {
+        window.location.replace(target);
+      }
     }());
   </script>
 </head>
 <body style="margin:0;background:#020306;color:#fff;font-family:system-ui,sans-serif">
-  <noscript><a href="./qcq-current/" style="color:#69e8ff">Open Quantum Certification Quest</a></noscript>
+  <noscript><a href="/qcq-current/index.html" style="color:#69e8ff">Open Quantum Certification Quest</a></noscript>
 </body>
 </html>
