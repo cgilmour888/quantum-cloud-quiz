@@ -5,18 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#020306" />
   <title>Quantum Certification Quest</title>
-  <meta http-equiv="refresh" content="0; url=/qcq-current/index.html" />
+  <style>
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020306}
+    #qcq-authority-frame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#020306;display:block}
+  </style>
+</head>
+<body>
+  <iframe
+    id="qcq-authority-frame"
+    title="Quantum Certification Quest"
+    src="/qcq-current/index.html"
+    allow="autoplay; fullscreen"
+  ></iframe>
+  <noscript><a href="/qcq-current/index.html" style="color:#69e8ff">Open Quantum Certification Quest</a></noscript>
   <script>
     (function () {
-      var targetPath = '/qcq-current/index.html';
-      var target = targetPath + window.location.search + window.location.hash;
-      if (window.location.pathname !== targetPath) {
-        window.location.replace(target);
+      var frame = document.getElementById('qcq-authority-frame');
+      var STYLE_ID = 'qcq-approved-aux-monitor-style';
+      var SCRIPT_ID = 'qcq-approved-aux-monitor-script';
+
+      function injectApprovedMonitorRenderer() {
+        var doc = frame.contentDocument;
+        if (!doc || !doc.head) return;
+
+        if (!doc.getElementById(STYLE_ID)) {
+          var link = doc.createElement('link');
+          link.id = STYLE_ID;
+          link.rel = 'stylesheet';
+          link.href = '/qcq-current/assets/approved-monitor/approved-monitor.css';
+          doc.head.appendChild(link);
+        }
+
+        if (!doc.getElementById(SCRIPT_ID)) {
+          var script = doc.createElement('script');
+          script.id = SCRIPT_ID;
+          script.src = '/qcq-current/assets/approved-monitor/approved-monitor.js';
+          script.async = false;
+          doc.body.appendChild(script);
+        }
       }
+
+      frame.addEventListener('load', injectApprovedMonitorRenderer);
     }());
   </script>
-</head>
-<body style="margin:0;background:#020306;color:#fff;font-family:system-ui,sans-serif">
-  <noscript><a href="/qcq-current/index.html" style="color:#69e8ff">Open Quantum Certification Quest</a></noscript>
 </body>
 </html>
