@@ -1,23 +1,19 @@
 <!doctype html>
-<html lang="en" data-qcq-runtime="bootstrapping">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="rgb(2 5 11)" />
-    <meta
-      name="description"
-      content="Quantum Certification Quest — adaptive certification training and learning intelligence."
-    />
-    <meta name="application-name" content="Quantum Certification Quest" />
-    <title>Quantum Certification Quest</title>
-  </head>
-  <body>
-    <noscript>
-      Quantum Certification Quest requires JavaScript because certification sessions,
-      accessibility state, progress, and interactive controls are generated at runtime.
-    </noscript>
-    <div id="root" data-qcq-bootstrap="pending"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#020306" />
+  <title>Quantum Certification Quest</title>
+  <meta http-equiv="refresh" content="0; url=./qcq-current/" />
+  <script>
+    (function () {
+      var target = new URL('./qcq-current/', window.location.href).href;
+      if (window.location.href !== target) window.location.replace(target);
+    }());
+  </script>
+</head>
+<body style="margin:0;background:#020306;color:#fff;font-family:system-ui,sans-serif">
+  <noscript><a href="./qcq-current/" style="color:#69e8ff">Open Quantum Certification Quest</a></noscript>
+</body>
 </html>
