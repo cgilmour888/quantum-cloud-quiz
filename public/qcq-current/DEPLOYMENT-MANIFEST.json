@@ -1,5 +1,5 @@
 {
-  "schema": "qcq.f1e36r4r1.holistic-website-business-card-deployment",
+  "schema": "qcq.f1e37.deterministic-select-two-projection-deployment",
   "visualAuthority": {
     "package": "QCQ_STEP_3C_F1E35R2_POINTER_GHOST_OUTLINE_SUPPRESSION_LIVE_TEST_PACKAGE_20260814.zip",
     "sha256": "2fd7c780825dfa67d535d06e5dec01b70121d7f2dcabe5d0e2106cef30a420dc",
@@ -43,8 +43,8 @@
     "legacyReactPresentationRole": false
   },
   "sourceCommit": "8c8971f4cd66ba1f1817cbde3fc175c85af8ec0d",
-  "revisionBaseCommit": "17bce22bf458360798d5cb0644450e7fce7abb53",
-  "revision": "F1E36R4R1",
+  "revisionBaseCommit": "b06f9a504746a39f290f2e850e6bc89a6b396ef9",
+  "revision": "F1E37",
   "businessCardAuthority": {
     "visualModel": "APPROVED_CHAT_RASTER_RECONCILIATION",
     "rasterAsset": "business-card-raster-authority.png",
@@ -63,6 +63,22 @@
     "interactionModel": "LIVE_SEMANTIC_HIT_REGIONS_OVER_APPROVED_RASTER",
     "rasterPointerEvents": "NONE",
     "semanticLinkPointerEvents": "AUTO",
-    "holisticTest": "FULL_QCQ_PAGE_IFRAME_RUNTIME_NAMEPLATE_OPEN_AND_HIT_TEST"
+    "holisticTest": "FULL_QCQ_PAGE_IFRAME_RUNTIME_NAMEPLATE_OPEN_AND_HIT_TEST",
+    "ghostOutlinePolicy": "NO_RECTANGULAR_POINTER_HOVER_ACTIVE_OR_FOCUS_OUTLINE",
+    "keyboardFocusIndicator": "SMALL_NON_RECTANGULAR_CYAN_LOCATOR_DOT"
+  },
+  "answerProjectionAuthority": {
+    "policy": "DETERMINISTIC_FIVE_TO_FOUR_WHEN_SELECT_TWO_HIDES_CORRECT_OPTION",
+    "canonicalDatasetMutation": false,
+    "gradingIdentity": "CANONICAL_OPTION_IDS_PRESERVED",
+    "replacementPolicy": "REPLACE_LAST_VISIBLE_INCORRECT_DISTRACTOR_WITH_HIDDEN_CORRECT_OPTION_THEN_CANONICAL_SORT",
+    "scope": "GENERIC_FOR_ANY_FUTURE_5_OPTION_SELECT_TWO_QUESTION_WITH_HIDDEN_CORRECT_OPTION",
+    "fallback": "LEGACY_PAGER_RETAINED_FOR_NON_PROJECTED_GT4_OPTION_QUESTIONS",
+    "integrityGate": {
+      "selectionCountEqualsUniqueCorrectCount": true,
+      "correctIdsMustExist": true,
+      "duplicateCorrectIdsRejected": true,
+      "duplicateOptionIdsRejected": true
+    }
   }
 }

@@ -180,8 +180,9 @@ body.aux-open #auxMonitor{animation:auxIn .16s ease-out}
 .business-card-raster-stage{position:absolute;inset:0;overflow:hidden;background:#06080a;isolation:isolate;pointer-events:none}
 .business-card-raster{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-drag:none}
 .business-card-link{position:absolute;z-index:7;display:block;pointer-events:auto;border:1px solid transparent;background:rgba(255,255,255,.001);cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
-.business-card-link:hover{box-shadow:inset 0 0 0 2px rgba(116,236,255,.34),0 0 16px rgba(82,218,255,.22);background:rgba(84,219,255,.018)}
-.business-card-link:focus-visible{border-color:rgba(123,240,255,.82);box-shadow:0 0 0 2px rgba(126,92,255,.72),0 0 22px rgba(78,225,255,.44);background:rgba(84,219,255,.025)}
+.business-card-link:hover,.business-card-link:active{border-color:transparent;box-shadow:none;background:rgba(255,255,255,.001);outline:none}
+.business-card-link:focus-visible{border-color:transparent;box-shadow:none;background:rgba(255,255,255,.001);outline:none}
+.business-card-link:focus-visible::after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;right:4px;bottom:4px;background:#68ebff;box-shadow:0 0 8px rgba(104,235,255,.72);pointer-events:none}
 .business-card-link-name{left:18.0%;top:10.0%;width:65.5%;height:43.0%}
 .business-card-link-email{left:21.5%;top:54.0%;width:58.0%;height:10.5%}
 .business-card-link-instagram{left:6.5%;top:68.0%;width:17.0%;height:27.0%}
@@ -684,11 +685,66 @@ function verifySocketContract(){
  }
 }
 function current(){return P.questions[state.index]}
+function validateQuestionIntegrity(q){
+ if(!q||!Array.isArray(q.options)||!Array.isArray(q.correct))throw new Error('QCQ DATASET INTEGRITY FAILURE · malformed question');
+ const ids=q.options.map(o=>String(o.id)),uniqueIds=new Set(ids),correct=q.correct.map(String),uniqueCorrect=new Set(correct);
+ if(uniqueIds.size!==ids.length)throw new Error(`QCQ DATASET INTEGRITY FAILURE · ${q.id} duplicate option ids`);
+ if(uniqueCorrect.size!==correct.length)throw new Error(`QCQ DATASET INTEGRITY FAILURE · ${q.id} duplicate correct ids`);
+ if(correct.length!==Number(q.selectionCount))throw new Error(`QCQ DATASET INTEGRITY FAILURE · ${q.id} selectionCount ${q.selectionCount} != correct-count ${correct.length}`);
+ for(const id of correct)if(!uniqueIds.has(id))throw new Error(`QCQ DATASET INTEGRITY FAILURE · ${q.id} missing correct option ${id}`);
+ return true;
+}
+function projectionPlan(q){
+ validateQuestionIntegrity(q);
+ const canonical=q.options;
+ if(Number(q.selectionCount)!==2||canonical.length!==5)return null;
+ const firstFour=canonical.slice(0,4),visibleIds=new Set(firstFour.map(o=>String(o.id)));
+ const missing=q.correct.map(String).filter(id=>!visibleIds.has(id));
+ if(!missing.length)return null;
+ const projected=firstFour.slice();
+ for(const correctId of missing){
+   let victim=-1;
+   for(let i=projected.length-1;i>=0;i--){
+     if(!q.correct.map(String).includes(String(projected[i].id))){victim=i;break}
+   }
+   if(victim<0)throw new Error(`QCQ PROJECTION FAILURE · ${q.id} no removable distractor`);
+   const replacement=canonical.find(o=>String(o.id)===correctId);
+   if(!replacement)throw new Error(`QCQ PROJECTION FAILURE · ${q.id} missing canonical replacement ${correctId}`);
+   projected[victim]=replacement;
+ }
+ projected.sort((a,b)=>canonical.indexOf(a)-canonical.indexOf(b));
+ const projectedIds=new Set(projected.map(o=>String(o.id)));
+ for(const id of q.correct.map(String))if(!projectedIds.has(id))throw new Error(`QCQ PROJECTION FAILURE · ${q.id} correct option ${id} remains hidden`);
+ return {options:projected,reason:'SURFACE_HIDDEN_CORRECT_OPTION_WITHOUT_MUTATING_CANONICAL_DATASET'};
+}
 function visibleOptions(){
  const q=current();if(!q)return[];
+ validateQuestionIntegrity(q);
  if(q.options.length<=4)return q.options;
+ const plan=projectionPlan(q);
+ if(plan)return plan.options;
  return state.answerPage===0?q.options.slice(0,4):q.options.slice(1,5);
 }
+function validateDatasetProjectionContract(){
+ let selectTwo=0,projected=0,projectionFailures=0;
+ for(const q of P.questions){
+   validateQuestionIntegrity(q);
+   if(Number(q.selectionCount)===2)selectTwo++;
+   const plan=projectionPlan(q);
+   if(plan){
+     projected++;
+     const ids=new Set(plan.options.map(o=>String(o.id)));
+     if(!q.correct.map(String).every(id=>ids.has(id)))projectionFailures++;
+   }
+ }
+ if(projectionFailures)throw new Error(`QCQ PROJECTION AUDIT FAILURE · ${projectionFailures} questions hide required answers`);
+ document.body.dataset.qcqDatasetIntegrity='pass';
+ document.body.dataset.qcqProjectionIntegrity='pass';
+ document.body.dataset.qcqSelectTwoCount=String(selectTwo);
+ document.body.dataset.qcqProjectedCount=String(projected);
+ return {selectTwo,projected,projectionFailures};
+}
+const QCQ_PROJECTION_AUDIT=validateDatasetProjectionContract();
 function renderPrompt(q){
  const qb=box(P.tablet.questionSafe);
  questionEl.style.height=`${qb.h}px`;
@@ -728,8 +784,9 @@ function renderAnswers(){
    }
  });
  for(let i=vis.length;i<4;i++){const e=answerEls[i];e.hit.disabled=true;e.hit.dataset.option='';e.hit.className='answer-hit';e.hit.title='';e.letter.textContent='';e.copy.textContent=''}
- pageLeft.style.visibility=q.options.length>4?'visible':'hidden';pageRight.style.visibility=q.options.length>4?'visible':'hidden';
- pageLeft.disabled=state.answerPage===0;pageRight.disabled=q.options.length<=4||state.answerPage===1;
+ const projected=Boolean(projectionPlan(q));
+ pageLeft.style.visibility=q.options.length>4&&!projected?'visible':'hidden';pageRight.style.visibility=q.options.length>4&&!projected?'visible':'hidden';
+ pageLeft.disabled=projected||state.answerPage===0;pageRight.disabled=projected||q.options.length<=4||state.answerPage===1;
  actionCenter.textContent='';
 }
 function toggleSlot(i){
@@ -739,7 +796,7 @@ function toggleSlot(i){
  renderAnswers();
 }
 function changePage(d){
- if(state.graded||state.completed)return;const q=current();if(q.options.length<=4)return;
+ if(state.graded||state.completed)return;const q=current();if(q.options.length<=4||projectionPlan(q))return;
  state.answerPage=Math.max(0,Math.min(1,state.answerPage+d));renderAnswers();
 }
 
