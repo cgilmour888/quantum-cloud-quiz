@@ -1,5 +1,5 @@
 {
-  "schema": "qcq.f1e36r3.current-authority-living-business-card-deployment",
+  "schema": "qcq.f1e36r4r1.holistic-website-business-card-deployment",
   "visualAuthority": {
     "package": "QCQ_STEP_3C_F1E35R2_POINTER_GHOST_OUTLINE_SUPPRESSION_LIVE_TEST_PACKAGE_20260814.zip",
     "sha256": "2fd7c780825dfa67d535d06e5dec01b70121d7f2dcabe5d0e2106cef30a420dc",
@@ -43,24 +43,26 @@
     "legacyReactPresentationRole": false
   },
   "sourceCommit": "8c8971f4cd66ba1f1817cbde3fc175c85af8ec0d",
-  "revisionBaseCommit": "5e56494bfc28153e7ec9582be2b4e22d51d28392",
-  "revision": "F1E36R3",
+  "revisionBaseCommit": "17bce22bf458360798d5cb0644450e7fce7abb53",
+  "revision": "F1E36R4R1",
   "businessCardAuthority": {
-    "visualModel": "POLISHED_GUNMETAL_RAISED_METAL_PROMO",
-    "nameLayout": "TWO_LINE_MAX_REAL_ESTATE",
-    "visibleControls": "FIVE_LIVE_LINKED_3D_ICONS",
-    "iconSource": "USER_SUPPLIED_ORIGINAL_PNG_BYTES",
-    "circuitThreads": [
-      "electric-cyan",
-      "deep-neon-purple",
-      "electric-orange"
-    ],
-    "assets": {
-      "instagram": "instagram-3d.png",
-      "vimeo": "vimeo-3d.png",
-      "researchgate": "researchgate-3d.png",
-      "facebook": "facebook-3d.png",
-      "youtube": "youtube-3d.png"
-    }
+    "visualModel": "APPROVED_CHAT_RASTER_RECONCILIATION",
+    "rasterAsset": "business-card-raster-authority.png",
+    "rasterPlacement": "FULL_BUSINESS_CARD_FACE",
+    "semanticLinks": {
+      "name": "https://www.museivaticani.va/content/museivaticani/en.html",
+      "email": "mailto:cgilmour@ymail.com",
+      "instagram": "https://instagram.com/carlgilmour",
+      "vimeo": "https://vimeo.com/user27519220",
+      "researchgate": "https://www.researchgate.net/profile/Carl-Gilmour",
+      "facebook": "https://www.facebook.com/carl.gilmour.1",
+      "youtube": "https://www.youtube.com/@carlgilmour4543"
+    },
+    "hyperlinkGeometry": "PERCENT_REGISTERED_TO_RASTER",
+    "emailHandler": "MAILTO_DEFAULT_USER_HANDLER",
+    "interactionModel": "LIVE_SEMANTIC_HIT_REGIONS_OVER_APPROVED_RASTER",
+    "rasterPointerEvents": "NONE",
+    "semanticLinkPointerEvents": "AUTO",
+    "holisticTest": "FULL_QCQ_PAGE_IFRAME_RUNTIME_NAMEPLATE_OPEN_AND_HIT_TEST"
   }
 }

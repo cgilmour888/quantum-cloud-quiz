@@ -174,33 +174,22 @@ body.aux-open #auxMonitor{animation:auxIn .16s ease-out}
  .f1e34-analytics{display:grid;grid-template-columns:1.18fr .82fr;grid-template-rows:1fr;gap:18px;height:100%}.f1e34-analytics-donut{display:grid;grid-template-rows:auto 1fr;padding:22px 24px}.f1e34-analytics-donut .topic-donut{width:min(100%,470px);max-height:485px}.f1e34-analytics-stack{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(4,1fr);gap:18px}.f1e34-analytics-kpi{display:flex;flex-direction:column;justify-content:center;padding:22px 24px}.f1e34-analytics-kpi .aux-big{font-size:76px}.f1e34-analytics-kpi.rank .aux-big{font-size:60px}
 .f1e30r1-settings{display:grid;grid-template-columns:1fr 1fr;gap:18px;height:100%}.f1e30r1-settings .aux-card{display:flex;flex-direction:column;justify-content:center;padding:30px 34px}.f1e30r1-settings h3{font-size:38px;margin-bottom:24px}.f1e30r1-settings .range-row{grid-template-columns:170px 1fr 95px;font-size:30px;padding:28px 0}.f1e30r1-settings input[type=range]{height:28px;accent-color:#65e7ff}.f1e30r1-settings .aux-setting{font-size:30px;padding:28px 0}.f1e30r1-settings .aux-setting input{width:42px;height:42px;accent-color:#a369ff}
 .f1e30r1-logout{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;height:100%}.f1e30r1-logout .aux-card{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.f1e30r1-logout .aux-big{font-size:84px}.f1e30r1-logout .aux-action{min-width:390px;font-size:30px;padding:22px 30px}
-.business-card-face{position:absolute;display:none;z-index:26;overflow:hidden;pointer-events:none;
-  border:5px solid rgba(93,235,255,.96);
-  background:#080b0e;
-  box-shadow:inset 0 0 0 2px rgba(42,228,255,.34),inset 0 0 86px rgba(0,111,155,.12),0 0 30px rgba(50,221,255,.32);
-  clip-path:polygon(1.5% 0,98.5% 0,100% 3%,100% 97%,98.5% 100%,1.5% 100%,0 97%,0 3%)}
-.business-card-face::before,.business-card-face::after{content:"";position:absolute;pointer-events:none;clip-path:inherit;z-index:4}
-.business-card-face::before{inset:12px;border:5px solid rgba(154,88,255,.96);box-shadow:0 0 18px rgba(155,80,255,.44),inset 0 0 22px rgba(155,80,255,.16)}
-.business-card-face::after{inset:25px;border:5px solid rgba(255,125,24,.98);box-shadow:0 0 18px rgba(255,118,13,.42),inset 0 0 20px rgba(255,118,13,.14)}
-.business-card-inner{position:relative;width:94%;height:88%;padding:3.4% 4.8% 3.2%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;overflow:hidden;
-  border:2px solid rgba(202,235,246,.20);
-  background:linear-gradient(112deg,transparent 0 27%,rgba(255,255,255,.075) 36%,rgba(255,255,255,.018) 47%,transparent 59%),radial-gradient(ellipse at 50% -5%,rgba(226,241,246,.16),transparent 42%),radial-gradient(ellipse at 50% 110%,rgba(32,104,124,.13),transparent 45%),repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,rgba(0,0,0,.022) 1px 3px),linear-gradient(145deg,#20262b 0%,#11161a 24%,#2a3035 48%,#0d1114 74%,#262b30 100%);
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.055),inset 0 22px 50px rgba(255,255,255,.045),inset 0 -24px 62px rgba(0,0,0,.58),0 0 28px rgba(0,0,0,.52)}
-.business-card-inner::before{content:"";position:absolute;inset:-20% -38%;pointer-events:none;z-index:1;background:linear-gradient(108deg,transparent 0 41%,rgba(230,249,255,.13) 47%,rgba(255,255,255,.22) 50%,rgba(138,232,255,.10) 53%,transparent 60%);transform:translateX(-42%);animation:qcqBusinessCardSheen 8.8s ease-in-out infinite}
-.business-card-inner::after{content:"";position:absolute;inset:18px;pointer-events:none;z-index:1;border:1px solid rgba(230,248,255,.10);box-shadow:inset 0 0 52px rgba(255,255,255,.025),0 0 26px rgba(0,0,0,.22)}
-@keyframes qcqBusinessCardSheen{0%,18%{transform:translateX(-48%)}52%,70%{transform:translateX(48%)}100%{transform:translateX(48%)}}
-.business-card-name{position:relative;z-index:3;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font:900 224px Georgia,"Times New Roman",serif;letter-spacing:.035em;line-height:.80;text-align:center;text-transform:uppercase;color:#e8ecef;background:linear-gradient(180deg,#ffffff 0%,#dfe4e7 15%,#8b9399 34%,#f7f9fa 49%,#777f85 66%,#d7dcdf 80%,#646b71 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.4px rgba(250,252,253,.88);filter:drop-shadow(0 16px 11px rgba(0,0,0,.64));text-shadow:0 1px 0 #fff,0 3px 0 #c7ccd0,0 6px 0 #7f868c,0 10px 0 #454b50,0 14px 16px rgba(0,0,0,.72),0 0 15px rgba(109,231,255,.18)}
-.business-card-name span{display:block;white-space:nowrap}
-.business-card-email{position:relative;z-index:3;margin:23px 0 3px;font:900 82px Georgia,"Times New Roman",serif;letter-spacing:.026em;line-height:1;text-align:center;white-space:nowrap;color:#edf1f3;background:linear-gradient(180deg,#ffffff 0%,#dce1e4 20%,#92999f 39%,#f7f8f9 54%,#70777c 76%,#c6ccd0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-text-stroke:1px rgba(250,252,253,.82);filter:drop-shadow(0 9px 8px rgba(0,0,0,.58));text-shadow:0 1px 0 #fff,0 3px 0 #92999e,0 6px 0 #444a4f,0 10px 13px rgba(0,0,0,.68),0 0 13px rgba(104,226,255,.15)}
-.business-card-icon-rail{display:none;position:relative;z-index:3;margin-top:20px;width:97%;height:286px;padding:0;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;align-items:center;justify-items:center;background:none;border:0;box-shadow:none}
-.business-card-icon-rail.has-icons{display:grid}
-.business-card-icon-slot{position:relative;width:100%;height:278px;display:grid;place-items:center;border:0;background:none;box-shadow:none;clip-path:none;text-decoration:none;cursor:pointer;transform-style:preserve-3d;perspective:900px;transition:transform 180ms ease,filter 180ms ease;-webkit-tap-highlight-color:transparent;outline:none}
-.business-card-icon-slot::before{content:"";position:absolute;left:12%;right:12%;bottom:5px;height:24px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.58),rgba(0,0,0,0) 70%);filter:blur(8px);opacity:.78;transition:opacity 180ms ease,transform 180ms ease}
-.business-card-icon-slot:hover,.business-card-icon-slot:focus-visible{outline:none;transform:translateY(-11px) scale(1.075);filter:brightness(1.12) saturate(1.05) drop-shadow(0 0 15px rgba(91,227,255,.24)) drop-shadow(0 0 12px rgba(161,92,255,.16))}
-.business-card-icon-slot:hover::before,.business-card-icon-slot:focus-visible::before{opacity:.52;transform:scale(.92)}
-.business-card-icon-slot img{display:block;width:282px;height:260px;max-width:100%;object-fit:contain;transform:translateZ(22px);filter:drop-shadow(0 13px 8px rgba(0,0,0,.52)) drop-shadow(0 23px 18px rgba(0,0,0,.32)) drop-shadow(0 0 9px rgba(219,247,255,.12));user-select:none;-webkit-user-drag:none}
-.business-card-icon-slot[data-brand="youtube"] img{width:310px}
-@media (prefers-reduced-motion:reduce){.business-card-inner::before{animation:none;transform:translateX(0);opacity:.32}.business-card-icon-slot{transition:none}}
+.business-card-face{position:absolute;display:none;z-index:26;overflow:hidden;pointer-events:none;border:0;background:#06080a;box-shadow:0 0 34px rgba(0,0,0,.52);clip-path:polygon(1.5% 0,98.5% 0,100% 3%,100% 97%,98.5% 100%,1.5% 100%,0 97%,0 3%)}
+.business-card-face::before,.business-card-face::after{content:none}
+.business-card-close{display:none}
+.business-card-raster-stage{position:absolute;inset:0;overflow:hidden;background:#06080a;isolation:isolate;pointer-events:none}
+.business-card-raster{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.business-card-link{position:absolute;z-index:7;display:block;pointer-events:auto;border:1px solid transparent;background:rgba(255,255,255,.001);cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.business-card-link:hover{box-shadow:inset 0 0 0 2px rgba(116,236,255,.34),0 0 16px rgba(82,218,255,.22);background:rgba(84,219,255,.018)}
+.business-card-link:focus-visible{border-color:rgba(123,240,255,.82);box-shadow:0 0 0 2px rgba(126,92,255,.72),0 0 22px rgba(78,225,255,.44);background:rgba(84,219,255,.025)}
+.business-card-link-name{left:18.0%;top:10.0%;width:65.5%;height:43.0%}
+.business-card-link-email{left:21.5%;top:54.0%;width:58.0%;height:10.5%}
+.business-card-link-instagram{left:6.5%;top:68.0%;width:17.0%;height:27.0%}
+.business-card-link-vimeo{left:24.0%;top:68.0%;width:17.0%;height:27.0%}
+.business-card-link-researchgate{left:43.0%;top:67.0%;width:18.0%;height:28.0%}
+.business-card-link-facebook{left:63.5%;top:67.0%;width:12.0%;height:29.0%}
+.business-card-link-youtube{left:77.0%;top:68.0%;width:18.0%;height:27.0%}
+#businessCardIconRail[hidden]{display:none!important}
 
 /* F1E36R2 — audio belongs exclusively to the left-dashboard SETTINGS surface.
    No dedicated floating music icon or viewport audio menu exists. */
@@ -222,7 +211,7 @@ body.aux-open #auxMonitor{animation:auxIn .16s ease-out}
     <div id="leftLayer" class="layer"></div>
       <div id="rightLayer" class="layer"></div>
       <div id="tabletLayer" class="layer"></div>
-      <div id="businessCardFace" class="business-card-face" role="region" aria-label="Carl Gilmour business card" aria-hidden="true"><button id="businessCardClose" class="business-card-close" type="button" aria-label="Close business card"></button><div class="business-card-inner"><div class="business-card-name" aria-label="Carl Gilmour"><span>CARL</span><span>GILMOUR</span></div><div class="business-card-email">cgilmour@ymail.com</div><div id="businessCardIconRail" class="business-card-icon-rail"></div></div></div>
+      <div id="businessCardFace" class="business-card-face" role="region" aria-label="Carl Gilmour business card" aria-hidden="true"><button id="businessCardClose" class="business-card-close" type="button" aria-label="Close business card" tabindex="-1" hidden></button><div class="business-card-raster-stage"><img class="business-card-raster" src="./assets/business-card/business-card-raster-authority.png" alt="Carl Gilmour business card"><a class="business-card-link business-card-link-name" href="https://www.museivaticani.va/content/museivaticani/en.html" target="_blank" rel="noopener noreferrer" aria-label="Carl Gilmour — open Vatican Museums"></a><a class="business-card-link business-card-link-email" href="mailto:cgilmour@ymail.com" aria-label="Email Carl Gilmour at cgilmour@ymail.com"></a><a class="business-card-link business-card-link-instagram" href="https://instagram.com/carlgilmour" target="_blank" rel="noopener noreferrer" aria-label="Carl Gilmour on Instagram"></a><a class="business-card-link business-card-link-vimeo" href="https://vimeo.com/user27519220" target="_blank" rel="noopener noreferrer" aria-label="Carl Gilmour on Vimeo"></a><a class="business-card-link business-card-link-researchgate" href="https://www.researchgate.net/profile/Carl-Gilmour" target="_blank" rel="noopener noreferrer" aria-label="Carl Gilmour on ResearchGate"></a><a class="business-card-link business-card-link-facebook" href="https://www.facebook.com/carl.gilmour.1" target="_blank" rel="noopener noreferrer" aria-label="Carl Gilmour on Facebook"></a><a class="business-card-link business-card-link-youtube" href="https://www.youtube.com/@carlgilmour4543" target="_blank" rel="noopener noreferrer" aria-label="Carl Gilmour on YouTube"></a><div id="businessCardIconRail" hidden aria-hidden="true"></div></div></div></div>
       <div id="auxLayer" class="layer"><div id="auxMonitor" class="aux-monitor"><button id="auxClose" class="aux-close" type="button" aria-label="Close monitor"></button><div id="auxHeader" class="aux-header"></div><div id="auxBody" class="aux-body"></div></div></div>
       <button id="nameplateHit" class="nameplate-hit" type="button" aria-label="Open Carl Gilmour profile"></button>
       <svg id="debugSvg" viewBox="0 0 3840 2160"></svg>
@@ -767,7 +756,7 @@ function metricCard(title,value,sub=''){return `<section class="aux-card"><h3>${
 const TOPIC_COLORS=['#62edff','#aa73ff','#ff8a2d','#6dff98','#f9d156','#ff6da8'];
 const BUSINESS_CARD_LINKS=[
  {"label":"Instagram","brand":"instagram","url":"https://instagram.com/carlgilmour","src":"./assets/business-card/instagram-3d.png"},
- {"label":"Vimeo","brand":"vimeo","url":"https://vimeo.com/user27519220/likes","src":"./assets/business-card/vimeo-3d.png"},
+ {"label":"Vimeo","brand":"vimeo","url":"https://vimeo.com/user27519220","src":"./assets/business-card/vimeo-3d.png"},
  {"label":"ResearchGate","brand":"researchgate","url":"https://www.researchgate.net/profile/Carl-Gilmour","src":"./assets/business-card/researchgate-3d.png"},
  {"label":"Facebook","brand":"facebook","url":"https://www.facebook.com/carl.gilmour.1","src":"./assets/business-card/facebook-3d.png"},
  {"label":"YouTube","brand":"youtube","url":"https://www.youtube.com/@carlgilmour4543","src":"./assets/business-card/youtube-3d.png"}
