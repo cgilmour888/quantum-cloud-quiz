@@ -75,6 +75,17 @@ vi.mock(
   }),
 );
 
+vi.mock(
+  './audio/AudioMenuButton',
+  () => ({
+    AudioMenuButton() {
+      return (
+        <div data-testid="audio-menu-button" />
+      );
+    },
+  }),
+);
+
 import {
   App,
 } from './App';
@@ -123,7 +134,7 @@ describe(
     );
 
     it(
-      'mounts lifecycle and ambient authorities alongside routing without nesting them in the router',
+      'mounts lifecycle, ambient, menu, and routing authorities as audio-provider siblings',
       () => {
         render(
           <App />,
@@ -142,7 +153,7 @@ describe(
         expect(
           children,
         ).toHaveLength(
-          3,
+          4,
         );
 
         expect(
@@ -161,6 +172,13 @@ describe(
 
         expect(
           children[2],
+        ).toHaveAttribute(
+          'data-testid',
+          'audio-menu-button',
+        );
+
+        expect(
+          children[3],
         ).toHaveAttribute(
           'data-testid',
           'app-router',

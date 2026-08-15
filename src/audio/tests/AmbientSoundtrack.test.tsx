@@ -2,7 +2,6 @@ import {
   cleanup,
   fireEvent,
   render,
-  waitFor,
 } from '@testing-library/react';
 import {
   afterEach,
@@ -15,39 +14,22 @@ import {
 const audioMocks =
   vi.hoisted(
     () => ({
-      unlock:
-        vi.fn(),
       start:
-        vi.fn(
-          () =>
-            Promise.resolve({
-              status:
-                'started' as const,
-              assetId:
-                'music.ambient.quantum-cloud',
-            }),
-        ),
+        vi.fn(),
       stop:
         vi.fn(),
     }),
   );
 
 vi.mock(
-  '../useAudio',
-  () => ({
-    useAudio:
-      () => ({
-        unlock:
-          audioMocks.unlock,
-      }),
-  }),
-);
-
-vi.mock(
   '../useAmbientAudio',
   () => ({
     useAmbientAudio:
       () => ({
+        unlocked:
+          false,
+        muted:
+          false,
         start:
           audioMocks.start,
         stop:
@@ -68,28 +50,24 @@ afterEach(
 );
 
 describe(
-  'QCQ AmbientSoundtrack activation',
+  'QCQ AmbientSoundtrack lifecycle',
   () => {
     it(
-      'does not unlock or start audio merely because the component mounted',
+      'does not start playback merely because the lifecycle component mounted',
       () => {
         render(
           <AmbientSoundtrack />,
         );
 
         expect(
-          audioMocks.unlock,
-        ).not.toHaveBeenCalled();
-
-        expect(
           audioMocks.start,
         ).not.toHaveBeenCalled();
       },
     );
 
     it(
-      'starts only after a primary pointer activation and does not duplicate playback after success',
-      async () => {
+      'remains silent for generic document pointer and keyboard activation',
+      () => {
         render(
           <AmbientSoundtrack />,
         );
@@ -100,45 +78,6 @@ describe(
             button:
               0,
           },
-        );
-
-        await waitFor(
-          () => {
-            expect(
-              audioMocks.start,
-            ).toHaveBeenCalledTimes(
-              1,
-            );
-          },
-        );
-
-        expect(
-          audioMocks.unlock,
-        ).toHaveBeenCalledTimes(
-          1,
-        );
-
-        fireEvent.pointerDown(
-          document,
-          {
-            button:
-              0,
-          },
-        );
-
-        expect(
-          audioMocks.start,
-        ).toHaveBeenCalledTimes(
-          1,
-        );
-      },
-    );
-
-    it(
-      'treats keyboard Enter as an explicit user activation',
-      async () => {
-        render(
-          <AmbientSoundtrack />,
         );
 
         fireEvent.keyDown(
@@ -149,20 +88,38 @@ describe(
           },
         );
 
-        await waitFor(
-          () => {
-            expect(
-              audioMocks.unlock,
-            ).toHaveBeenCalledTimes(
-              1,
-            );
+        expect(
+          audioMocks.start,
+        ).not.toHaveBeenCalled();
+      },
+    );
 
-            expect(
-              audioMocks.start,
-            ).toHaveBeenCalledTimes(
-              1,
-            );
-          },
+    it(
+      'stops ambient playback when disabled and again when the authority unmounts',
+      () => {
+        const view =
+          render(
+            <AmbientSoundtrack />,
+          );
+
+        view.rerender(
+          <AmbientSoundtrack
+            enabled={false}
+          />,
+        );
+
+        expect(
+          audioMocks.stop,
+        ).toHaveBeenCalledTimes(
+          1,
+        );
+
+        view.unmount();
+
+        expect(
+          audioMocks.stop,
+        ).toHaveBeenCalledTimes(
+          2,
         );
       },
     );

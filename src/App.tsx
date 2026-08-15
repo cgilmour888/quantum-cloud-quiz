@@ -7,6 +7,7 @@
 import { AppProviders } from './app/AppProviders';
 import { AppRouter } from './app/AppRouter';
 import { AmbientSoundtrack } from './audio/AmbientSoundtrack';
+import { AudioMenuButton } from './audio/AudioMenuButton';
 import { AudioLifecycle } from './audio/AudioLifecycle';
 import { AudioProvider } from './audio/AudioProvider';
 
@@ -16,6 +17,7 @@ export function App() {
       <AudioProvider>
         <AudioLifecycle />
         <AmbientSoundtrack />
+        <AudioMenuButton />
         <AppRouter />
       </AudioProvider>
     </AppProviders>
