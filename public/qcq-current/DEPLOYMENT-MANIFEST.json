@@ -1,5 +1,5 @@
 {
-  "schema": "qcq.f1e36r2.current-authority-settings-audio-deployment",
+  "schema": "qcq.f1e36r3.current-authority-living-business-card-deployment",
   "visualAuthority": {
     "package": "QCQ_STEP_3C_F1E35R2_POINTER_GHOST_OUTLINE_SUPPRESSION_LIVE_TEST_PACKAGE_20260814.zip",
     "sha256": "2fd7c780825dfa67d535d06e5dec01b70121d7f2dcabe5d0e2106cef30a420dc",
@@ -43,6 +43,24 @@
     "legacyReactPresentationRole": false
   },
   "sourceCommit": "8c8971f4cd66ba1f1817cbde3fc175c85af8ec0d",
-  "revisionBaseCommit": "300d983825751ba05ed9ddf8030fc055043aa1d5",
-  "revision": "F1E36R2"
+  "revisionBaseCommit": "5e56494bfc28153e7ec9582be2b4e22d51d28392",
+  "revision": "F1E36R3",
+  "businessCardAuthority": {
+    "visualModel": "POLISHED_GUNMETAL_RAISED_METAL_PROMO",
+    "nameLayout": "TWO_LINE_MAX_REAL_ESTATE",
+    "visibleControls": "FIVE_LIVE_LINKED_3D_ICONS",
+    "iconSource": "USER_SUPPLIED_ORIGINAL_PNG_BYTES",
+    "circuitThreads": [
+      "electric-cyan",
+      "deep-neon-purple",
+      "electric-orange"
+    ],
+    "assets": {
+      "instagram": "instagram-3d.png",
+      "vimeo": "vimeo-3d.png",
+      "researchgate": "researchgate-3d.png",
+      "facebook": "facebook-3d.png",
+      "youtube": "youtube-3d.png"
+    }
+  }
 }
