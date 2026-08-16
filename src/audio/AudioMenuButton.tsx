@@ -3,7 +3,7 @@
  * Reuses the historical QCQ-AUD-110 web-native icon while binding to the
  * current AudioRuntimeContext / AudioEngine implementation.
  */
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 
 import { AudioMenuIcon } from './AudioMenuIcon';
 import { AudioMenuPopover } from './AudioMenuPopover';
@@ -56,14 +56,6 @@ export function AudioMenuButton({
     stop();
     setPlaying(false);
   }, [stop]);
-
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') setPlaying(false);
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
 
   return (
     <span
