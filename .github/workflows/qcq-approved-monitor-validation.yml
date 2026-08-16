@@ -1,0 +1,57 @@
+name: QCQ Approved Monitor Validation
+
+on:
+  push:
+    branches:
+      - qcq/approved-monitor-validation-20260815-ci
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Preserve immutable current authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object public/qcq-current/index.html)" = "b9575d024d93261a8e6d3257f30f1a75cbc9b1ef"
+
+      - name: Verify governed monitor assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f public/qcq-current/assets/approved-monitor/approved-monitor.css
+          test -f public/qcq-current/assets/approved-monitor/approved-monitor.js
+          grep -Fq 'qcq-authority-frame' index.html
+          grep -Fq 'approved-monitor.css' index.html
+          grep -Fq 'approved-monitor.js' index.html
+          grep -Fq "view === 'L4'" public/qcq-current/assets/approved-monitor/approved-monitor.js
+          grep -Fq "decorateDataset" public/qcq-current/assets/approved-monitor/approved-monitor.js
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
