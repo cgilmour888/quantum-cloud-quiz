@@ -1,0 +1,89 @@
+{
+  "package": "QCQ_F1E40_APPROVED_RASTER_MONITOR",
+  "version": "F1E40.1",
+  "scope": "central auxiliary monitor only",
+  "frozenAuthority": {
+    "path": "public/qcq-current/index.html",
+    "gitBlob": "b9575d024d93261a8e6d3257f30f1a75cbc9b1ef"
+  },
+  "sourceCrop": {
+    "x": 420,
+    "y": 140,
+    "width": 840,
+    "height": 580,
+    "sourceWidth": 1672,
+    "sourceHeight": 941
+  },
+  "authorities": [
+    {
+      "view": "L1",
+      "name": "Dashboard",
+      "file": "dashboard-authority.webp",
+      "sha256": "0ada0f830c568ed414ba15603bb1f425bc788db9c56c878112d60117b46a999b",
+      "bytes": 14726,
+      "width": 320,
+      "height": 221
+    },
+    {
+      "view": "L2",
+      "name": "Leaderboard",
+      "file": "leaderboard-authority.webp",
+      "sha256": "bac7c072f5cb60a19afe1fc8885f68e807599eb4830ed0983a7c02c825cb7008",
+      "bytes": 12396,
+      "width": 320,
+      "height": 221
+    },
+    {
+      "view": "L3",
+      "name": "Achievements",
+      "file": "achievements-authority.webp",
+      "sha256": "971ed5593d1cef3216455b54bc39a8732fed3aa8cd9c1b8484170aed9c272f38",
+      "bytes": 7996,
+      "width": 320,
+      "height": 221
+    },
+    {
+      "view": "L4",
+      "name": "Dataset",
+      "file": "dataset-authority.webp",
+      "sha256": "9f2d36bb90383c1c247810bd8043de1222c6564df01a70885234708edefb655f",
+      "bytes": 7678,
+      "width": 320,
+      "height": 221
+    },
+    {
+      "view": "L5",
+      "name": "Analytics",
+      "file": "analytics-authority.webp",
+      "sha256": "f688b0abbfabd34a127946d34cc0796fd932cd4af27d3c75bc9edad2d6f9d78f",
+      "bytes": 7466,
+      "width": 320,
+      "height": 221
+    },
+    {
+      "view": "L6",
+      "name": "Settings",
+      "file": "settings-authority.webp",
+      "sha256": "5a6893bed07635abe9714d29a86b3d6543066d9f8a38c0c68502c80714f08424",
+      "bytes": 6082,
+      "width": 320,
+      "height": 221
+    }
+  ],
+  "routing": {
+    "L4PhysicalControl": "History",
+    "L4MonitorAuthority": "Dataset",
+    "L7": "existing governed Logout controller"
+  },
+  "invariants": [
+    "do not modify public/qcq-current/index.html",
+    "do not modify right-side metrics",
+    "do not modify business-card authority or nameplate behavior",
+    "do not paint auxiliary physical panels with CSS",
+    "live values may cover only registered sockets over approved raster authorities"
+  ],
+  "authorityDimensions": {
+    "width": 320,
+    "height": 221
+  }
+}
