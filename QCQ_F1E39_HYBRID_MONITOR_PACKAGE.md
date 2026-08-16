@@ -39,14 +39,16 @@ This package upgrades only the central auxiliary monitor opened by the left-side
 - `b6ad5ae61156655cfbe8786e934912c3d53abd44` — restore all auxiliary hybrid views.
 - `e42ffdc05df2a183a52ac2ff8f5eed6521c0206d` — apply certified raster hybrid treatment.
 - `f84dcf775eb962c22d274f0f322011e25f515a43` — package F1E39 hybrid visual acceptance.
+- `6e891062535455dd231c7c51e0ebcc79e799ed08` — add the F1E39 package manifest.
 
 ## Change boundary proof
 
-Relative to F1E38 base `cadff61ca74f648e3be814b021a3fb76768f1470`, the implementation changes only:
+Relative to F1E38 base `cadff61ca74f648e3be814b021a3fb76768f1470`, the complete F1E39 package changes only:
 
 1. `public/qcq-current/assets/approved-monitor/approved-monitor.js`
 2. `public/qcq-current/assets/approved-monitor/approved-monitor.css`
 3. `QCQ_APPROVED_MONITOR_VISUAL_ACCEPTANCE.command`
+4. `QCQ_F1E39_HYBRID_MONITOR_PACKAGE.md`
 
 The F1E37 authority blob remains `b9575d024d93261a8e6d3257f30f1a75cbc9b1ef`.
 
