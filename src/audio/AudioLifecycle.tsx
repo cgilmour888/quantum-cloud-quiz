@@ -2,6 +2,11 @@
  * Artifact ID: QCQ-AUD-015
  * Artifact Name: AudioLifecycle
  * Repository Path: QCQ/frontend/src/audio/AudioLifecycle.tsx
+ *
+ * Long-session policy: once the user explicitly enables the study soundtrack,
+ * ordinary document visibility changes must never destroy the music voice.
+ * Environmental audio may still be suspended while hidden. Full teardown is
+ * reserved for pagehide/unmount lifecycle boundaries.
  */
 
 import {
@@ -39,10 +44,8 @@ export function AudioLifecycle() {
             return;
           }
 
-          stopBus(
-            'music',
-          );
-
+          // Keep the user-authorized study soundtrack alive for all-day
+          // sessions. Only transient environmental audio is suspended here.
           stopBus(
             'environment',
           );
