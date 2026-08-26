@@ -1,0 +1,13 @@
+{
+  "project": "Quantum Certification Quest (QCQ)",
+  "artifact": "Welcome Page",
+  "status": "FINAL_APPROVED_FOR_DEVELOPMENT",
+  "approved_on": "2026-08-26",
+  "source_upload": "Master.png",
+  "canonical_asset": "authority/QCQ_WELCOME_PAGE_FINAL_AUTHORITY_20260826.png",
+  "width_px": 1672,
+  "height_px": 941,
+  "color_mode": "RGBA",
+  "sha256": "f89a7497ba05858d2e32dc6c6864a37771708c43b96410c2196285a57554a95f",
+  "change_policy": "No visual changes unless explicitly superseded by a later approved authority."
+}
