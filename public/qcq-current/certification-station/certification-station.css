@@ -1,0 +1,155 @@
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+}
+
+body{
+  color:#fff;
+  font-family:Inter,Arial,sans-serif;
+}
+
+#viewport{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  background:#000;
+}
+
+#stageWrap{
+  position:absolute;
+  left:0;
+  top:0;
+  width:3840px;
+  height:2160px;
+  transform-origin:0 0;
+  will-change:transform;
+}
+
+#stage{
+  position:relative;
+  width:3840px;
+  height:2160px;
+  overflow:hidden;
+  background:#000;
+  isolation:isolate;
+}
+
+#certificationStationMaster{
+  position:absolute;
+
+  left:84px;
+  top:78px;
+
+  width:3672px;
+  height:2004px;
+
+  z-index:1;
+
+  object-fit:fill;
+  object-position:center center;
+
+  transform:none;
+
+  user-select:none;
+  pointer-events:none;
+
+  image-rendering:auto;
+}
+
+#qcqStaticMainFrame{
+  position:absolute;
+  inset:0;
+
+  width:3840px;
+  height:2160px;
+
+  z-index:10;
+
+  pointer-events:none;
+  overflow:visible;
+}
+
+#historicalBorderPlasma{
+  position:absolute;
+  inset:0;
+
+  width:3840px;
+  height:2160px;
+
+  z-index:20;
+
+  pointer-events:none;
+
+  mix-blend-mode:screen;
+  opacity:1;
+
+  filter:
+    brightness(8)
+    saturate(2.4)
+    contrast(1.4);
+}
+
+#frameFallbackStatus{
+  display:none;
+}
+
+html[data-qcq-frame-state="static-fallback"]
+#historicalBorderPlasma{
+  display:none;
+}
+
+@media (prefers-reduced-motion:reduce){
+  #certificationStationMaster{
+    transform:scale(1.035);
+  }
+}
+
+
+/* QCQ_WELCOME_FRAME_NEST_20260826:BEGIN */
+
+/*
+  APPROVED QCQ WELCOME LAYER ORDER
+
+  BACK:
+    final approved Welcome raster
+
+  MIDDLE:
+    exact static perimeter
+    CARL GILMOUR placard removed
+
+  FRONT:
+    existing W1 animated plasma
+
+  Existing W1 animation JavaScript is untouched.
+*/
+
+#qcqWelcomeStaticBorder {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: fill;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  z-index: 40;
+}
+
+#historicalBorderPlasma {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 50 !important;
+}
+
+/* QCQ_WELCOME_FRAME_NEST_20260826:END */
