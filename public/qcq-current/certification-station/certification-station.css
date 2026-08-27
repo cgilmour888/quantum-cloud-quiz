@@ -113,43 +113,80 @@ html[data-qcq-frame-state="static-fallback"]
 }
 
 
-/* QCQ_WELCOME_FRAME_NEST_20260826:BEGIN */
+
+
+
+/* QCQ_WELCOME_BORDER_REPAIR_R1_1:BEGIN */
 
 /*
-  APPROVED QCQ WELCOME LAYER ORDER
+  ONE COORDINATE SYSTEM:
+  static chassis      z6
+  bottommost bridge   z7
+  original plasma     z8
+  tiny upper-lip mute z9
 
-  BACK:
-    final approved Welcome raster
-
-  MIDDLE:
-    exact static perimeter
-    CARL GILMOUR placard removed
-
-  FRONT:
-    existing W1 animated plasma
-
-  Existing W1 animation JavaScript is untouched.
+  All are children of the historical 3840 x 2160 #stage.
 */
 
+#qcqWelcomeStaticBorder,
+#qcqWelcomeBottommostChassis,
+#qcqWelcomeUpperLipAnimationMute {
+  position:absolute !important;
+  left:0 !important;
+  top:0 !important;
+  right:auto !important;
+  bottom:auto !important;
+  width:3840px !important;
+  height:2160px !important;
+  display:block !important;
+  pointer-events:none !important;
+  user-select:none !important;
+}
+
 #qcqWelcomeStaticBorder {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: fill;
-  display: block;
-  pointer-events: none;
-  user-select: none;
-  z-index: 40;
+  z-index:6 !important;
+}
+
+#qcqWelcomeBottommostChassis {
+  z-index:7 !important;
 }
 
 #historicalBorderPlasma {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  pointer-events: none !important;
-  z-index: 50 !important;
+  position:absolute !important;
+  left:0 !important;
+  top:0 !important;
+  right:auto !important;
+  bottom:auto !important;
+  width:3840px !important;
+  height:2160px !important;
+  z-index:8 !important;
+  pointer-events:none !important;
+  mix-blend-mode:screen !important;
+  opacity:1 !important;
 }
 
-/* QCQ_WELCOME_FRAME_NEST_20260826:END */
+/*
+  WELCOME-ONLY OBSOLETE PURPLE UPPER-LIP ROUTE
+
+  The old placard upper lip no longer physically exists.
+  The exact Welcome raster is replayed only over that tiny footprint.
+
+  Stage-space footprint:
+    x 1470..2370
+    y 1924..1997
+
+  This region sits above the surviving bottommost purple run.
+*/
+
+#qcqWelcomeUpperLipAnimationMute {
+  z-index:9 !important;
+  mix-blend-mode:normal !important;
+  clip-path:inset(
+    89.074074%
+    38.281250%
+    7.546296%
+    38.281250%
+  ) !important;
+}
+
+/* QCQ_WELCOME_BORDER_REPAIR_R1_1:END */
