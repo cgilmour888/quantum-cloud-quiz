@@ -1,16 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+
   <meta
     name="viewport"
-    content="width=device-width,initial-scale=1,viewport-fit=cover"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
-  <meta
-    name="description"
-    content="Quantum Certification Quest — Certification Station"
-  >
-  <title>QCQ — Certification Station</title>
+
+  <title>Certification Station</title>
+
   <link
     rel="stylesheet"
     href="./certification-station.css"
@@ -18,159 +17,20 @@
 </head>
 
 <body>
-  <div
-    id="viewport"
-    aria-label="Quantum Certification Quest Certification Station"
+
+  <main
+    id="qcqWelcomeStandalone"
+    aria-label="Certification Station"
   >
-    <div id="stageWrap">
-      <main id="stage">
 
-        <img
-          id="certificationStationMaster"
-          src="./assets/certification-station-master.png"
-          alt="Quantum Certification Quest Certification Station welcome interface"
-          draggable="false"
-        >
+    <img
+      id="qcqWelcomeAuthority"
+      src="./assets/certification-station-master.png"
+      alt="Certification Station"
+      draggable="false"
+    >
 
-        <svg
-          id="qcqStaticMainFrame"
-          viewBox="0 0 3840 2160"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <defs>
-            <mask
-              id="qcqMainFrameRingMask"
-              maskUnits="userSpaceOnUse"
-            >
-              <rect
-                x="0"
-                y="0"
-                width="3840"
-                height="2160"
-                fill="white"
-              />
-
-              <rect
-                x="145"
-                y="145"
-                width="3550"
-                height="1870"
-                rx="36"
-                fill="black"
-              />
-
-              <rect
-                x="1360"
-                y="1880"
-                width="1120"
-                height="280"
-                fill="black"
-              />
-            </mask>
-          </defs>
-
-          <image
-            href="../assets/master-static-4k.png"
-            x="0"
-            y="0"
-            width="3840"
-            height="2160"
-            preserveAspectRatio="none"
-            mask="url(#qcqMainFrameRingMask)"
-          />
-        </svg>
-
-        <canvas
-          id="historicalBorderPlasma"
-          width="960"
-          height="540"
-          aria-hidden="true"
-        ></canvas>
-
-        <div
-          id="frameFallbackStatus"
-          aria-hidden="true"
-        ></div>
-
-      </main>
-    </div>
-  </div>
-
-  <script src="./certification-station-frame.js"></script>
-
-
-
-
-<!-- QCQ_WELCOME_BORDER_REPAIR_R1_1:BEGIN -->
-<script id="qcqWelcomeBorderRepairR11">
-(() => {
-  const install = () => {
-    const stage = document.getElementById('stage');
-    const plasma = document.getElementById('historicalBorderPlasma');
-
-    if (!stage || !plasma) return false;
-
-    let staticBorder = document.getElementById('qcqWelcomeStaticBorder');
-
-    if (!staticBorder) {
-      staticBorder = document.createElement('img');
-      staticBorder.id = 'qcqWelcomeStaticBorder';
-      staticBorder.src = './assets/qcq-static-border-no-nameplate.png';
-      staticBorder.alt = '';
-      staticBorder.setAttribute('aria-hidden','true');
-    }
-
-    let bridge = document.getElementById('qcqWelcomeBottommostChassis');
-
-    if (!bridge) {
-      bridge = document.createElement('img');
-      bridge.id = 'qcqWelcomeBottommostChassis';
-      bridge.src = './assets/qcq-welcome-bottommost-chassis-bridge-r1.png';
-      bridge.alt = '';
-      bridge.setAttribute('aria-hidden','true');
-    }
-
-    let mute = document.getElementById('qcqWelcomeUpperLipAnimationMute');
-
-    if (!mute) {
-      mute = document.createElement('img');
-      mute.id = 'qcqWelcomeUpperLipAnimationMute';
-      mute.src = './assets/certification-station-master.png';
-      mute.alt = '';
-      mute.setAttribute('aria-hidden','true');
-    }
-
-    /*
-      Re-parent ONLY presentation layers.
-      The animation engine and canvas object remain intact.
-    */
-    stage.appendChild(staticBorder);
-    stage.appendChild(bridge);
-    stage.appendChild(plasma);
-    stage.appendChild(mute);
-
-    document.documentElement.dataset.qcqWelcomeBorderRepairR11 = 'ready';
-    return true;
-  };
-
-  if (install()) return;
-
-  const observer = new MutationObserver(() => {
-    if (install()) observer.disconnect();
-  });
-
-  observer.observe(document.documentElement, {
-    childList:true,
-    subtree:true
-  });
-
-  window.addEventListener('load', () => {
-    if (install()) observer.disconnect();
-  }, {once:true});
-})();
-</script>
-<!-- QCQ_WELCOME_BORDER_REPAIR_R1_1:END -->
+  </main>
 
 </body>
 </html>
